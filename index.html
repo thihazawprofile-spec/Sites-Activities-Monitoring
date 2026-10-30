@@ -1,118 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OCK-Site Activities Dashboard</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background: #f7f7f7; color: #1f1f1f; padding: 20px; }
-  .container { max-width: 1200px; margin: auto; }
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
-  .header h1 { font-size: 1.4em; }
-  .search-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-  .search-box { position: relative; flex: 1; min-width: 220px; }
-  .search-box input { width: 100%; padding: 11px 36px 11px 38px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95em; font-family: inherit; background: white; }
-  .search-box input:focus { outline: none; border-color: #6D3EF3; box-shadow: 0 0 0 3px rgba(109,62,243,0.12); }
-  .search-box .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; font-size: 1em; pointer-events: none; }
-  .search-box .clear-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: none; background: #eee; color: #666; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-size: 0.9em; line-height: 1; display: none; }
-  .search-box.has-value .clear-btn { display: block; }
-  .search-box .clear-btn:hover { background: #ddd; }
-  .btn-clear { border: 1px solid #ddd; background: white; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; color: #666; display: none; }
-  .btn-clear.show { display: inline-block; }
-  .btn-clear:hover { background: #f0f0f0; }
-  .site-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-  .site-tab { background: white; border: 1px solid #e0e0e0; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9em; transition: all 0.15s; }
-  .site-tab:hover { border-color: #6D3EF3; }
-  .site-tab.active { background: #6D3EF3; color: white; border-color: #6D3EF3; }
-  .site-tab .count { opacity: 0.7; font-size: 0.85em; margin-left: 4px; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
-  .stat-card { background: white; padding: 14px 16px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.06); transition: all 0.15s; border: 2px solid transparent; user-select: none; }
-  .stat-card.filterable { cursor: pointer; }
-  .stat-card.filterable:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-  .stat-card.active { border-color: #6D3EF3; box-shadow: 0 4px 12px rgba(109,62,243,0.2); }
-  .stat-card .stat-label { font-size: 0.75em; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-  .stat-card .stat-value { font-size: 1.5em; font-weight: bold; }
-  .stat-value.purple { color: #6D3EF3; }
-  .stat-value.green { color: #28a745; }
-  .stat-value.yellow { color: #d39e00; }
-  .stat-value.red { color: #dc3545; }
-  .stat-value.gray { color: #6c757d; }
-  .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
-  .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 10px; flex-wrap: wrap; }
-  .card-title { font-size: 1.05em; font-weight: bold; }
-  .filter-badge { display: inline-block; background: #eef0ff; color: #6D3EF3; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; margin-left: 8px; font-weight: 600; }
-  .btn { border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: opacity 0.15s; }
-  .btn:hover { opacity: 0.85; }
-  .btn-primary { background: #6D3EF3; color: white; }
-  .btn-secondary { background: #e8e8e8; color: #333; }
-  .btn-danger { background: #dc3545; color: white; }
-  .btn-sm { padding: 5px 10px; font-size: 0.8em; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCK-Site Activities Dashboard · Editor/Viewer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; background: #f7f7f7; color: #1f1f1f; padding: 20px; }
+    .container { max-width: 1200px; margin: auto; }
 
-  .activity-row { display: grid; grid-template-columns: 2fr 200px 150px 130px; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid #eee; }
-  .activity-row:last-child { border-bottom: none; }
-  .activity-name { font-weight: 600; }
-  .activity-meta { font-size: 0.82em; color: #666; margin-top: 2px; }
+    /* ---- header & auth ---- */
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; flex-wrap: wrap; }
+    .header h1 { font-size: 1.4em; }
+    .auth-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .role-badge { background: #eef0ff; color: #6D3EF3; padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 700; }
+    .role-badge.viewer { background: #e2e3e5; color: #383d41; }
+    .btn-login { background: #6D3EF3; color: white; border: none; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 600; cursor: pointer; }
+    .btn-logout { background: transparent; color: #6D3EF3; border: 1px solid #6D3EF3; padding: 6px 14px; border-radius: 20px; font-size: 0.8em; font-weight: 600; cursor: pointer; }
+    .btn-logout:hover { background: #f0eaff; }
 
-  .status-block { display: flex; flex-direction: column; gap: 4px; }
-  select.status-select { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85em; font-weight: 600; width: 100%; cursor: pointer; }
-  select.status-select.Done { background: #d4edda; color: #155724; border-color: #c3e6cb; }
-  select.status-select.InProgress { background: #fff3cd; color: #856404; border-color: #ffeeba; }
-  select.status-select.Blocked { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
-  select.status-select.NotStarted { background: #e2e3e5; color: #383d41; border-color: #d6d8db; }
+    /* ---- search & filters ---- */
+    .search-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .search-box { position: relative; flex: 1; min-width: 220px; }
+    .search-box input { width: 100%; padding: 11px 36px 11px 38px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95em; font-family: inherit; background: white; }
+    .search-box input:focus { outline: none; border-color: #6D3EF3; box-shadow: 0 0 0 3px rgba(109,62,243,0.12); }
+    .search-box .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; font-size: 1em; pointer-events: none; }
+    .search-box .clear-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); border: none; background: #eee; color: #666; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; font-size: 0.9em; line-height: 1; display: none; }
+    .search-box.has-value .clear-btn { display: block; }
+    .search-box .clear-btn:hover { background: #ddd; }
+    .btn-clear { border: 1px solid #ddd; background: white; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; color: #666; display: none; }
+    .btn-clear.show { display: inline-block; }
+    .btn-clear:hover { background: #f0f0f0; }
 
-  /* Date + duration block */
-  .date-block { display: flex; flex-direction: column; gap: 3px; font-size: 0.78em; color: #555; }
-  .date-row { display: flex; justify-content: space-between; gap: 8px; }
-  .date-row .lbl { color: #888; font-weight: 600; }
-  .date-row .val { font-weight: 600; }
-  .date-row.overdue .val { color: #dc3545; }
-  .date-row.soon .val { color: #d39e00; }
-  .duration-row {
-    display: flex; justify-content: space-between; gap: 8px;
-    margin-top: 4px; padding-top: 5px; border-top: 1px dashed #e0e0e0;
-  }
-  .duration-row .lbl { color: #6D3EF3; font-weight: 700; }
-  .duration-row .val { font-weight: 700; color: #6D3EF3; }
-  .duration-row.running .val { color: #856404; }
-  .duration-row.running .lbl { color: #856404; }
+    .site-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .site-tab { background: white; border: 1px solid #e0e0e0; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.9em; transition: all 0.15s; }
+    .site-tab:hover { border-color: #6D3EF3; }
+    .site-tab.active { background: #6D3EF3; color: white; border-color: #6D3EF3; }
+    .site-tab .count { opacity: 0.7; font-size: 0.85em; margin-left: 4px; }
 
-  .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .stat-card { background: white; padding: 14px 16px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.06); transition: all 0.15s; border: 2px solid transparent; user-select: none; }
+    .stat-card.filterable { cursor: pointer; }
+    .stat-card.filterable:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .stat-card.active { border-color: #6D3EF3; box-shadow: 0 4px 12px rgba(109,62,243,0.2); }
+    .stat-card .stat-label { font-size: 0.75em; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .stat-card .stat-value { font-size: 1.5em; font-weight: bold; }
+    .stat-value.purple { color: #6D3EF3; }
+    .stat-value.green { color: #28a745; }
+    .stat-value.yellow { color: #d39e00; }
+    .stat-value.red { color: #dc3545; }
+    .stat-value.gray { color: #6c757d; }
 
-  @media (max-width: 800px) {
-    .activity-row { grid-template-columns: 1fr; gap: 8px; }
-    .row-actions { justify-content: flex-start; }
-  }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 10px; flex-wrap: wrap; }
+    .card-title { font-size: 1.05em; font-weight: bold; }
+    .filter-badge { display: inline-block; background: #eef0ff; color: #6D3EF3; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; margin-left: 8px; font-weight: 600; }
+    .btn { border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: opacity 0.15s; }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: #6D3EF3; color: white; }
+    .btn-secondary { background: #e8e8e8; color: #333; }
+    .btn-danger { background: #dc3545; color: white; }
+    .btn-sm { padding: 5px 10px; font-size: 0.8em; }
 
-  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
-  .modal-backdrop.show { display: flex; }
-  .modal { background: white; border-radius: 10px; padding: 24px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; }
-  .modal h2 { font-size: 1.2em; margin-bottom: 16px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .form-group { margin-bottom: 12px; }
-  .form-group label { display: block; font-size: 0.85em; font-weight: 600; margin-bottom: 4px; color: #444; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9em; font-family: inherit; }
-  .form-group textarea { resize: vertical; min-height: 60px; }
-  .form-group .hint { font-size: 0.75em; color: #888; margin-top: 4px; }
-  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+    .activity-row { display: grid; grid-template-columns: 2fr 200px 150px 130px; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid #eee; }
+    .activity-row:last-child { border-bottom: none; }
+    .activity-name { font-weight: 600; }
+    .activity-meta { font-size: 0.82em; color: #666; margin-top: 2px; }
 
-  .toast { position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 12px 18px; border-radius: 8px; font-size: 0.9em; opacity: 0; transform: translateY(20px); transition: all 0.3s; z-index: 200; pointer-events: none; }
-  .toast.show { opacity: 1; transform: translateY(0); }
-  .toast.success { background: #28a745; }
-  .toast.error { background: #dc3545; }
+    .status-block { display: flex; flex-direction: column; gap: 4px; }
+    select.status-select { padding: 6px 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 0.85em; font-weight: 600; width: 100%; cursor: pointer; }
+    select.status-select.Done { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+    select.status-select.InProgress { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+    select.status-select.Blocked { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+    select.status-select.NotStarted { background: #e2e3e5; color: #383d41; border-color: #d6d8db; }
 
-  .loading { text-align: center; padding: 40px; color: #666; }
-  .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #6D3EF3; border-radius: 50%; width: 28px; height: 28px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
-  @keyframes spin { 100% { transform: rotate(360deg); } }
-  .empty { text-align: center; padding: 40px; color: #999; }
-</style>
+    .date-block { display: flex; flex-direction: column; gap: 3px; font-size: 0.78em; color: #555; }
+    .date-row { display: flex; justify-content: space-between; gap: 8px; }
+    .date-row .lbl { color: #888; font-weight: 600; }
+    .date-row .val { font-weight: 600; }
+    .date-row.overdue .val { color: #dc3545; }
+    .date-row.soon .val { color: #d39e00; }
+    .duration-row { display: flex; justify-content: space-between; gap: 8px; margin-top: 4px; padding-top: 5px; border-top: 1px dashed #e0e0e0; }
+    .duration-row .lbl { color: #6D3EF3; font-weight: 700; }
+    .duration-row .val { font-weight: 700; color: #6D3EF3; }
+    .duration-row.running .val { color: #856404; }
+    .duration-row.running .lbl { color: #856404; }
+
+    .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+
+    @media (max-width: 800px) {
+      .activity-row { grid-template-columns: 1fr; gap: 8px; }
+      .row-actions { justify-content: flex-start; }
+    }
+
+    /* ---- modal ---- */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+    .modal-backdrop.show { display: flex; }
+    .modal { background: white; border-radius: 10px; padding: 24px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal h2 { font-size: 1.2em; margin-bottom: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 0.85em; font-weight: 600; margin-bottom: 4px; color: #444; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9em; font-family: inherit; }
+    .form-group textarea { resize: vertical; min-height: 60px; }
+    .form-group .hint { font-size: 0.75em; color: #888; margin-top: 4px; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+
+    /* ---- login modal ---- */
+    .login-modal { max-width: 380px; }
+    .login-modal .error-msg { color: #dc3545; font-size: 0.85em; margin-top: 8px; display: none; }
+
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #333; color: white; padding: 12px 18px; border-radius: 8px; font-size: 0.9em; opacity: 0; transform: translateY(20px); transition: all 0.3s; z-index: 200; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: #28a745; }
+    .toast.error { background: #dc3545; }
+
+    .loading { text-align: center; padding: 40px; color: #666; }
+    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #6D3EF3; border-radius: 50%; width: 28px; height: 28px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .empty { text-align: center; padding: 40px; color: #999; }
+  </style>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
     <h1>🏗️ OCK-Site Activities Dashboard</h1>
-    <button class="btn btn-secondary btn-sm" onclick="fetchLive()" title="Refresh">🔄 Refresh</button>
+    <div class="auth-bar" id="auth-bar">
+      <!-- dynamically populated -->
+    </div>
   </div>
 
   <div class="search-row">
@@ -122,6 +138,7 @@
       <button class="clear-btn" onclick="clearSearch()" title="Clear">×</button>
     </div>
     <button class="btn-clear" id="btn-clear-filters" onclick="clearAllFilters()">Clear filters</button>
+    <button class="btn btn-secondary btn-sm" onclick="fetchLive()" title="Refresh" id="refresh-btn">🔄 Refresh</button>
   </div>
 
   <div id="site-tabs" class="site-tabs"></div>
@@ -133,7 +150,7 @@
         Activities
         <span id="filter-summary"></span>
       </div>
-      <button class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>
+      <button id="btn-new-activity" class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>
     </div>
     <div id="dashboard" class="loading">
       <div class="spinner"></div>
@@ -142,6 +159,7 @@
   </div>
 </div>
 
+<!-- ========== ACTIVITY MODAL (create/edit) ========== -->
 <div id="modal" class="modal-backdrop">
   <div class="modal">
     <h2 id="modal-title">New Activity</h2>
@@ -189,16 +207,139 @@
   </div>
 </div>
 
+<!-- ========== LOGIN MODAL ========== -->
+<div id="login-modal" class="modal-backdrop">
+  <div class="modal login-modal">
+    <h2>🔐 Sign in</h2>
+    <div class="form-group">
+      <label>Email</label>
+      <input id="login-email" type="email" placeholder="editor@ock" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div id="login-error" class="error-msg"></div>
+    <div class="hint" style="font-size:0.78em; color:#888; margin-top:8px;">
+      Credentials: <strong> </strong> · 
+      <strong> </strong>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeLoginModal()">Cancel</button>
+      <button id="btn-login-submit" class="btn btn-primary" onclick="attemptLogin()">Login</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
+/* =========================================================
+   CONFIG
+   ========================================================= */
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTmDmNiTlDPfLPeMOe-TTvaZ2L5vAA6lF9yKIUo_FLfBNcQ-niGGsqaAm0OGkbyJLdAA/exec';
 
+/* =========================================================
+   DEMO AUTH (replace with real API in production)
+   ========================================================= */
+const AUTH_USERS = {
+  'editor@ock':  { password: 'editor@123', role: 'editor' },
+  'viewer@ock':  { password: 'viewer@123', role: 'viewer' }
+};
+
+let currentUser = null;          // { email, role }
 let currentSite = null;
 let currentStatus = null;
 let searchQuery = '';
 let editingId = null;
 let state = { sites: [], activities: [] };
+
+/* =========================================================
+   ROLE HELPERS
+   ========================================================= */
+function isEditor() {
+  return currentUser && currentUser.role === 'editor';
+}
+function isViewer() {
+  return currentUser && currentUser.role === 'viewer';
+}
+function isLoggedIn() {
+  return !!currentUser;
+}
+
+/* =========================================================
+   UI – AUTH BAR
+   ========================================================= */
+function renderAuthBar() {
+  const bar = document.getElementById('auth-bar');
+  if (!isLoggedIn()) {
+    bar.innerHTML = `<button class="btn-login" onclick="openLoginModal()">🔐 Login</button>`;
+    return;
+  }
+  const badgeClass = isEditor() ? 'role-badge' : 'role-badge viewer';
+  const roleLabel = isEditor() ? 'Editor' : 'Viewer';
+  bar.innerHTML = `
+    <span class="${badgeClass}">${roleLabel} · ${escapeHtml(currentUser.email)}</span>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  `;
+}
+
+/* =========================================================
+   UI – PERMISSIONS (hide buttons / disable controls)
+   ========================================================= */
+function applyPermissions() {
+  const newBtn = document.getElementById('btn-new-activity');
+  if (newBtn) newBtn.style.display = isEditor() ? 'inline-block' : 'none';
+
+  // disable status selects & edit/delete buttons for viewers
+  document.querySelectorAll('.status-select').forEach(sel => {
+    sel.disabled = !isEditor();
+  });
+  document.querySelectorAll('[data-edit], [data-del]').forEach(btn => {
+    if (!isEditor()) btn.style.display = 'none';
+  });
+}
+
+/* =========================================================
+   LOGIN / LOGOUT
+   ========================================================= */
+function openLoginModal() {
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('login-modal').classList.add('show');
+  setTimeout(() => document.getElementById('login-email').focus(), 50);
+}
+
+function closeLoginModal() {
+  document.getElementById('login-modal').classList.remove('show');
+}
+
+function attemptLogin() {
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const pass  = document.getElementById('login-password').value;
+  const errorEl = document.getElementById('login-error');
+
+  const user = AUTH_USERS[email];
+  if (!user || user.password !== pass) {
+    errorEl.textContent = 'Invalid email or password.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  currentUser = { email, role: user.role };
+  closeLoginModal();
+  renderAuthBar();
+  renderAll();               // re‑render everything (role may hide buttons)
+  toast(`Logged in as ${user.role}`, 'success');
+}
+
+function logout() {
+  currentUser = null;
+  renderAuthBar();
+  renderAll();
+  toast('Logged out', 'success');
+}
 
 /* =========================================================
    FETCH LIVE DATA
@@ -285,6 +426,7 @@ function renderAll() {
   renderStats();
   renderDashboard();
   updateClearButton();
+  applyPermissions();
 }
 
 function renderSiteTabs() {
@@ -377,6 +519,7 @@ function renderDashboard() {
 
   dash.innerHTML = '';
   list.forEach(a => dash.appendChild(renderRow(a)));
+  applyPermissions();          // important: disable controls after rendering
 }
 
 function renderFilterSummary(list) {
@@ -422,7 +565,6 @@ function renderRow(a) {
     datesHtml += '<div class="date-row"><span class="val" style="color:#aaa;">No dates</span></div>';
   }
 
-  // Duration calculation
   const dur = computeDuration(a);
   if (dur) {
     const durCls = dur.running ? ' running' : '';
@@ -452,13 +594,14 @@ function renderRow(a) {
     '</div>';
 
   row.querySelector('select.status-select').addEventListener('change', function () {
+    if (!isEditor()) { this.value = a.Status; return; }
     changeStatus(this.dataset.id, this.value);
   });
   row.querySelector('[data-edit]').addEventListener('click', function () {
-    openEditModal(this.dataset.edit);
+    if (isEditor()) openEditModal(this.dataset.edit);
   });
   row.querySelector('[data-del]').addEventListener('click', function () {
-    deleteActivity(this.dataset.del);
+    if (isEditor()) deleteActivity(this.dataset.del);
   });
 
   return row;
@@ -466,8 +609,6 @@ function renderRow(a) {
 
 /* =========================================================
    DURATION LOGIC
-   - Done     → start date to due date
-   - Not done → start date to today
    ========================================================= */
 function computeDuration(a) {
   const startRaw = a['Start Date'];
@@ -480,21 +621,19 @@ function computeDuration(a) {
   let end;
 
   if (isDone) {
-    if (!a['Due Date']) return null;   // Done but no due date → can't calculate
+    if (!a['Due Date']) return null;
     end = new Date(a['Due Date']);
     if (isNaN(end.getTime())) return null;
   } else {
     end = new Date();
   }
 
-  // Normalize both to midnight to count whole days
   start.setHours(0, 0, 0, 0);
   end.setHours(0, 0, 0, 0);
 
   const diffMs = end - start;
   const days = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
-  // If due date is before start date, show 0 with a note
   if (days < 0) {
     return { label: '0 days', running: !isDone };
   }
@@ -505,7 +644,6 @@ function computeDuration(a) {
   };
 }
 
-/* Returns 'overdue' if past due and not Done, 'soon' if within 3 days */
 function dueClass(dueRaw, status) {
   if (status === 'Done' || !dueRaw) return '';
   const due = new Date(dueRaw);
@@ -556,9 +694,10 @@ function clearAllFilters() {
 }
 
 /* =========================================================
-   ACTIONS
+   ACTIONS (guarded by role)
    ========================================================= */
 async function changeStatus(id, status) {
+  if (!isEditor()) { toast('Viewers cannot change status', 'error'); return; }
   try {
     await postAction({ action: 'updateStatus', data: { id: id, Status: status } });
     updateLocal(id, { Status: status });
@@ -566,6 +705,7 @@ async function changeStatus(id, status) {
     toast('Status → ' + status, 'success');
   } catch (err) {
     toast('Error: ' + err.message, 'error');
+    renderAll(); // revert UI to real state
   }
 }
 
@@ -575,6 +715,7 @@ function updateLocal(id, changes) {
 }
 
 async function deleteActivity(id) {
+  if (!isEditor()) { toast('Viewers cannot delete', 'error'); return; }
   if (!confirm('Delete this activity?')) return;
   try {
     await postAction({ action: 'deleteActivity', id: id });
@@ -588,9 +729,10 @@ async function deleteActivity(id) {
 }
 
 /* =========================================================
-   MODAL
+   ACTIVITY MODAL
    ========================================================= */
 function openCreateModal() {
+  if (!isEditor()) { toast('Viewers cannot create activities', 'error'); return; }
   editingId = null;
   document.getElementById('modal-title').textContent = 'New Activity';
   document.getElementById('f-site').value = currentSite || '';
@@ -605,6 +747,7 @@ function openCreateModal() {
 }
 
 function openEditModal(id) {
+  if (!isEditor()) { toast('Viewers cannot edit activities', 'error'); return; }
   const a = state.activities.find(x => String(x.ID) === String(id));
   if (!a) return;
   editingId = id;
@@ -625,6 +768,8 @@ function closeModal() {
 }
 
 async function saveActivity() {
+  if (!isEditor()) { toast('Viewers cannot save activities', 'error'); return; }
+
   const site = document.getElementById('f-site').value.trim();
   const name = document.getElementById('f-name').value.trim();
 
@@ -708,16 +853,30 @@ document.getElementById('modal').addEventListener('click', function (e) {
   if (e.target === this) closeModal();
 });
 
+document.getElementById('login-modal').addEventListener('click', function (e) {
+  if (e.target === this) closeLoginModal();
+});
+
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
     const modal = document.getElementById('modal');
     if (modal.classList.contains('show')) closeModal();
+    const loginModal = document.getElementById('login-modal');
+    if (loginModal.classList.contains('show')) closeLoginModal();
+  }
+  // Enter key inside login modal submits
+  if (e.key === 'Enter') {
+    const loginModal = document.getElementById('login-modal');
+    if (loginModal.classList.contains('show')) {
+      attemptLogin();
+    }
   }
 });
 
 /* =========================================================
    INIT
    ========================================================= */
+renderAuthBar();
 fetchLive();
 </script>
 </body>
