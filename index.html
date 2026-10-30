@@ -221,8 +221,8 @@
     </div>
     <div id="login-error" class="error-msg"></div>
     <div class="hint" style="font-size:0.78em; color:#888; margin-top:8px;">
-      Credentials: <strong> </strong> · 
-      <strong> </strong>
+      Credentials: <strong>editor@ock / editor@123</strong> · 
+      <strong>viewer@ock / viewer@123</strong>
     </div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeLoginModal()">Cancel</button>
@@ -400,11 +400,9 @@ function getBaseList() {
   return list;
 }
 
-function getFilteredActivities() {
+// site + search only (ignores status) — used for stat cards
+function getSearchFilteredList() {
   let list = getBaseList();
-  if (currentStatus) {
-    list = list.filter(a => a.Status === currentStatus);
-  }
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     list = list.filter(a => {
@@ -413,6 +411,15 @@ function getFilteredActivities() {
           || String(a.Owner || '').toLowerCase().includes(q)
           || String(a.ID || '').toLowerCase().includes(q);
     });
+  }
+  return list;
+}
+
+// site + status + search — used for the activity list
+function getFilteredActivities() {
+  let list = getSearchFilteredList();
+  if (currentStatus) {
+    list = list.filter(a => a.Status === currentStatus);
   }
   return list;
 }
@@ -466,7 +473,7 @@ function renderDatalist() {
 
 function renderStats() {
   const statsEl = document.getElementById('stats');
-  const list = getBaseList();
+  const list = getSearchFilteredList();   // search-aware, status-agnostic
   const total = list.length;
   const done = list.filter(a => a.Status === 'Done').length;
   const inProg = list.filter(a => a.Status === 'In Progress').length;
@@ -665,6 +672,7 @@ function onSearchInput() {
   const box = document.getElementById('search-box');
   searchQuery = input.value.trim();
   box.classList.toggle('has-value', searchQuery.length > 0);
+  renderStats();              // <-- keep stat cards in sync with search
   renderDashboard();
   updateClearButton();
 }
@@ -673,6 +681,7 @@ function clearSearch() {
   document.getElementById('search-input').value = '';
   searchQuery = '';
   document.getElementById('search-box').classList.remove('has-value');
+  renderStats();              // <-- keep stat cards in sync with search
   renderDashboard();
   updateClearButton();
   document.getElementById('search-input').focus();
