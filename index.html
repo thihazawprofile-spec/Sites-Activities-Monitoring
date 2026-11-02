@@ -137,7 +137,7 @@
     .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 16px; }
     .stat-card { 
       background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      padding: 18px 16px; border-radius: 12px; 
+      padding: 10px 14px; border-radius: 12px; 
       transition: all 0.2s; border: 1px solid var(--glass-border); user-select: none; 
     }
     .stat-card.filterable { cursor: pointer; }
@@ -163,13 +163,25 @@
 
     .card { 
       background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-      padding: 14px; border-radius: 14px; border: 1px solid var(--glass-border); 
+      padding: 20px 16px; border-radius: 14px; border: 1px solid var(--glass-border); 
       margin-bottom: 16px;
     }
     .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; flex-wrap: wrap; }
     .card-title { font-size: 1em; font-weight: 700; letter-spacing: -0.01em; }
-    .filter-badge { display: inline-block; background: rgba(88,86,214,0.15); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-size: 0.7em; margin-left: 6px; font-weight: 700; }
     
+    /* Interactive Filter Chips */
+    .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .filter-chip { 
+      display: inline-flex; align-items: center; gap: 6px; 
+      background: rgba(88,86,214,0.15); color: var(--accent); 
+      padding: 3px 10px; border-radius: 8px; font-size: 0.75em; font-weight: 700; 
+    }
+    .filter-chip button { 
+      background: none; border: none; color: var(--accent); cursor: pointer; 
+      font-size: 1.1em; line-height: 1; padding: 0; opacity: 0.6; transition: opacity 0.15s; 
+    }
+    .filter-chip button:hover { opacity: 1; }
+
     .btn { border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85em; font-weight: 600; transition: all 0.2s; }
     .btn:hover { opacity: 0.9; }
     .btn-primary { background: var(--accent); color: white; }
@@ -380,6 +392,7 @@
     </div>
 
     <button class="btn-clear" id="btn-clear-filters" onclick="clearAllFilters()">Clear filters</button>
+    <button class="btn btn-secondary" onclick="exportCsv()" title="Export CSV">📥 Export</button>
     <button class="btn btn-secondary" onclick="fetchLive()" title="Refresh" id="refresh-btn">🔄 Refresh</button>
   </div>
 
@@ -401,28 +414,17 @@
       </div>
       
       <div class="charts-grid">
-        <!-- Status Doughnut -->
         <div class="chart-card">
           <h3>Status Breakdown</h3>
-          <div class="chart-wrapper doughnut">
-            <canvas id="chartStatus"></canvas>
-          </div>
+          <div class="chart-wrapper doughnut"><canvas id="chartStatus"></canvas></div>
         </div>
-
-        <!-- Owner Bar -->
         <div class="chart-card">
           <h3>Activities by Owner</h3>
-          <div class="chart-wrapper">
-            <canvas id="chartOwner"></canvas>
-          </div>
+          <div class="chart-wrapper"><canvas id="chartOwner"></canvas></div>
         </div>
-
-        <!-- Activity Type Bar -->
         <div class="chart-card" style="grid-column: 1 / -1;">
           <h3>Activities by Type</h3>
-          <div class="chart-wrapper">
-            <canvas id="chartActivity"></canvas>
-          </div>
+          <div class="chart-wrapper"><canvas id="chartActivity"></canvas></div>
         </div>
       </div>
     </div>
@@ -437,7 +439,9 @@
         <button id="btn-new-activity-summary" class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>
       </div>
       
-      <div class="table-container">
+      <div class="filter-chips" id="filter-chips-summary"></div>
+
+      <div class="table-container" style="margin-top: 12px;">
         <div class="table-view">
           <div class="table-header">
             <div class="th-sort" onclick="sortData('Site')"><span>Site</span> <span class="sort-icon">↕</span></div>
@@ -466,8 +470,10 @@
         </div>
         <button id="btn-new-activity" class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>
       </div>
-      
-      <div class="table-container">
+
+      <div class="filter-chips" id="filter-chips-list"></div>
+
+      <div class="table-container" style="margin-top: 12px;">
         <div class="table-view">
           <div class="table-header">
             <div class="th-sort" onclick="sortData('Site')"><span>Site</span> <span class="sort-icon">↕</span></div>
@@ -487,7 +493,7 @@
   </div>
 </div>
 
-<!-- ========== ACTIVITY MODAL (create/edit) ========== -->
+<!-- ========== ACTIVITY MODAL ========== -->
 <div id="modal" class="modal-backdrop">
   <div class="modal">
     <h2 id="modal-title">New Activity</h2>
@@ -549,7 +555,7 @@
     </div>
     <div id="login-error" class="error-msg"></div>
     <div class="hint" style="font-size:0.7em; color:#888; margin-top:6px;">
-      Credentials: <strong> contact admin </strong> · 
+      Credentials: <strong>Contact Admin</strong> · 
       <strong> </strong>
     </div>
     <div class="modal-actions">
@@ -574,6 +580,11 @@ const AUTH_USERS = {
 
 const ALL_STATUSES = ['Not Started', 'In Progress', 'Blocked', 'Done'];
 
+// Storage keys for persistence
+const LS_USER_KEY = 'ock_user';
+const LS_FILTERS_KEY = 'ock_filters';
+const LS_VIEW_KEY = 'ock_view';
+
 let currentUser = null;
 let selectedSites = [];
 let selectedStatuses = [];
@@ -595,6 +606,58 @@ let sortDir = 'asc';
 let charts = { status: null, owner: null, activity: null };
 
 /* =========================================================
+   PERSISTENCE (localStorage)
+   ========================================================= */
+function saveFilters() {
+  const data = {
+    selectedSites, selectedStatuses, searchQuery,
+    selectedActivities, selectedDueDates,
+    chartFilterStatus, chartFilterOwner, chartFilterActivity,
+    sortCol, sortDir
+  };
+  try { localStorage.setItem(LS_FILTERS_KEY, JSON.stringify(data)); } catch (e) {}
+}
+
+function loadFilters() {
+  try {
+    const raw = localStorage.getItem(LS_FILTERS_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    selectedSites = d.selectedSites || [];
+    selectedStatuses = d.selectedStatuses || [];
+    searchQuery = d.searchQuery || '';
+    selectedActivities = d.selectedActivities || [];
+    selectedDueDates = d.selectedDueDates || [];
+    chartFilterStatus = d.chartFilterStatus || null;
+    chartFilterOwner = d.chartFilterOwner || null;
+    chartFilterActivity = d.chartFilterActivity || null;
+    sortCol = d.sortCol || null;
+    sortDir = d.sortDir || 'asc';
+
+    // Repopulate search input
+    const inp = document.getElementById('search-input');
+    if (inp && searchQuery) {
+      inp.value = searchQuery;
+      document.getElementById('search-box').classList.add('has-value');
+    }
+  } catch (e) {}
+}
+
+function saveUser() {
+  try {
+    if (currentUser) localStorage.setItem(LS_USER_KEY, JSON.stringify(currentUser));
+    else localStorage.removeItem(LS_USER_KEY);
+  } catch (e) {}
+}
+
+function loadUser() {
+  try {
+    const raw = localStorage.getItem(LS_USER_KEY);
+    if (raw) currentUser = JSON.parse(raw);
+  } catch (e) {}
+}
+
+/* =========================================================
    VIEW NAVIGATION
    ========================================================= */
 function switchView(viewId) {
@@ -603,6 +666,8 @@ function switchView(viewId) {
 
   document.getElementById('tab-' + viewId).classList.add('active');
   document.getElementById('view-' + viewId).classList.add('active');
+
+  try { localStorage.setItem(LS_VIEW_KEY, viewId); } catch (e) {}
 
   if (viewId === 'summary') {
     renderCharts();
@@ -626,13 +691,13 @@ function onChartClick(type, index) {
     const label = list[index];
     chartFilterActivity = (chartFilterActivity === label) ? null : label;
   }
+  saveFilters();
   renderAll();
 }
 
 /* =========================================================
    FILTER HELPERS (define cross-filtered source for charts)
    ========================================================= */
-// Base list applies search, site, due (sidebar filters)
 function getBaseFilteredList() {
   let list = state.activities;
 
@@ -659,7 +724,6 @@ function getBaseFilteredList() {
   return list;
 }
 
-// Applies everything EXCEPT status — used to compute Status chart
 function getActivitiesFilteredExceptStatusChart() {
   let list = getBaseFilteredList();
   if (selectedActivities.length) {
@@ -674,43 +738,24 @@ function getActivitiesFilteredExceptStatusChart() {
   return list;
 }
 
-// Applies everything EXCEPT owner — used to compute Owner chart
 function getActivitiesFilteredExceptOwnerChart() {
   let list = getBaseFilteredList();
-  if (selectedStatuses.length) {
-    list = list.filter(a => selectedStatuses.includes(a.Status));
-  }
-  if (selectedActivities.length) {
-    list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
-  }
-  if (chartFilterStatus) {
-    list = list.filter(a => a.Status === chartFilterStatus);
-  }
-  if (chartFilterActivity) {
-    list = list.filter(a => String(a['Activity Name'] || 'Unknown').trim() === chartFilterActivity);
-  }
+  if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
+  if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
+  if (chartFilterStatus) list = list.filter(a => a.Status === chartFilterStatus);
+  if (chartFilterActivity) list = list.filter(a => String(a['Activity Name'] || 'Unknown').trim() === chartFilterActivity);
   return list;
 }
 
-// Applies everything EXCEPT activity — used to compute Activity chart
 function getActivitiesFilteredExceptActivityChart() {
   let list = getBaseFilteredList();
-  if (selectedStatuses.length) {
-    list = list.filter(a => selectedStatuses.includes(a.Status));
-  }
-  if (selectedActivities.length) {
-    list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
-  }
-  if (chartFilterStatus) {
-    list = list.filter(a => a.Status === chartFilterStatus);
-  }
-  if (chartFilterOwner) {
-    list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
-  }
+  if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
+  if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
+  if (chartFilterStatus) list = list.filter(a => a.Status === chartFilterStatus);
+  if (chartFilterOwner) list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
   return list;
 }
 
-// Table list applies all chart cross-filters on top
 function getTableActivities() {
   let list = getBaseFilteredList();
   if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
@@ -722,7 +767,6 @@ function getTableActivities() {
 }
 
 function getFilteredActivities() {
-  // Used only for the "list" badge count (ignores cross-chart filters)
   let list = getBaseFilteredList();
   if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
   if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
@@ -733,7 +777,7 @@ function getFilteredActivities() {
    CHARTS — each chart uses data filtered by the OTHER two chart-filters
    ========================================================= */
 function renderCharts() {
-  // ---- 1. Status Doughnut ----
+  // 1. Status Doughnut
   const statusData = getActivitiesFilteredExceptStatusChart();
   const statusCounts = { 'Done': 0, 'In Progress': 0, 'Blocked': 0, 'Not Started': 0 };
   statusData.forEach(a => { if (statusCounts[a.Status] !== undefined) statusCounts[a.Status]++; });
@@ -755,17 +799,13 @@ function renderCharts() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      onClick: (evt, elements) => {
-        if (elements.length > 0) onChartClick('status', elements[0].index);
-      },
-      plugins: {
-        legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 6, font: { family: 'inherit', size: 10 } } }
-      },
-      cutout: '60%'
+      onClick: (evt, elements) => { if (elements.length > 0) onChartClick('status', elements[0].index); },
+      plugins: { legend: { position: 'right', labels: { usePointStyle: true, boxWidth: 6, font: { family: 'inherit', size: 10 } } } },
+      cutout: '50%'
     }
   });
 
-  // ---- 2. Activities by Owner ----
+  // 2. Owner Bar
   const ownerData = getActivitiesFilteredExceptOwnerChart();
   const ownerCounts = {};
   ownerData.forEach(a => {
@@ -790,9 +830,7 @@ function renderCharts() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      onClick: (evt, elements) => {
-        if (elements.length > 0) onChartClick('owner', elements[0].index);
-      },
+      onClick: (evt, elements) => { if (elements.length > 0) onChartClick('owner', elements[0].index); },
       plugins: { legend: { display: false } },
       scales: {
         y: { beginAtZero: true, ticks: { stepSize: 1, font: { family: 'inherit', size: 10 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
@@ -802,7 +840,7 @@ function renderCharts() {
   });
   charts.owner._sortedLabels = sortedOwners.map(o => o[0]);
 
-  // ---- 3. Activities by Type ----
+  // 3. Activity Bar
   const actData = getActivitiesFilteredExceptActivityChart();
   const actCounts = {};
   actData.forEach(a => {
@@ -829,9 +867,7 @@ function renderCharts() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      onClick: (evt, elements) => {
-        if (elements.length > 0) onChartClick('activity', elements[0].index);
-      },
+      onClick: (evt, elements) => { if (elements.length > 0) onChartClick('activity', elements[0].index); },
       plugins: { legend: { display: false } },
       scales: {
         y: { beginAtZero: true, ticks: { stepSize: 1, font: { family: 'inherit', size: 10 } }, grid: { color: 'rgba(0,0,0,0.05)' } },
@@ -904,6 +940,7 @@ function attemptLogin() {
     return;
   }
   currentUser = { email, role: user.role };
+  saveUser();
   closeLoginModal();
   renderAuthBar();
   renderAll();
@@ -911,6 +948,7 @@ function attemptLogin() {
 }
 function logout() {
   currentUser = null;
+  saveUser();
   renderAuthBar();
   renderAll();
   toast('Logged out', 'success');
@@ -995,6 +1033,7 @@ function toggleSelectAll(type) {
     } else {
       selectedStatuses = [...ALL_STATUSES];
     }
+    saveFilters();
     renderMsStatusOptions();
     renderActivityTabs();
     renderStats();
@@ -1047,6 +1086,7 @@ function toggleActivitySelection(name, checked) {
   } else {
     selectedActivities = selectedActivities.filter(n => n !== name);
   }
+  saveFilters();
   renderActivityTabs(); 
   renderStats();
   renderDashboard();
@@ -1084,6 +1124,7 @@ function toggleStatusSelection(status, checked) {
   } else {
     selectedStatuses = selectedStatuses.filter(s => s !== status);
   }
+  saveFilters();
   renderActivityTabs();
   renderStats();
   renderDashboard();
@@ -1134,6 +1175,7 @@ function toggleDueSelection(date, checked) {
   } else {
     selectedDueDates = selectedDueDates.filter(d => d !== date);
   }
+  saveFilters();
   renderActivityTabs();
   renderStats();
   renderDashboard();
@@ -1148,6 +1190,7 @@ function addSpecificDueDate() {
   if (!val) return;
   if (!selectedDueDates.includes(val)) selectedDueDates.push(val);
   input.value = '';
+  saveFilters();
   renderMsDueOptions();
   renderActivityTabs();
   renderStats();
@@ -1178,6 +1221,7 @@ function sortData(col) {
     sortCol = col;
     sortDir = 'asc';
   }
+  saveFilters();
   
   document.querySelectorAll('.th-sort').forEach(el => {
     el.classList.remove('active');
@@ -1203,7 +1247,6 @@ function sortList(list) {
   
   return [...list].sort((a, b) => {
     let valA, valB;
-    
     if (sortCol === 'Activity Name') {
       valA = String(a['Activity Name'] || '').toLowerCase();
       valB = String(b['Activity Name'] || '').toLowerCase();
@@ -1214,7 +1257,6 @@ function sortList(list) {
       valA = String(a[sortCol] || '').toLowerCase();
       valB = String(b[sortCol] || '').toLowerCase();
     }
-
     if (valA < valB) return sortDir === 'asc' ? -1 : 1;
     if (valA > valB) return sortDir === 'asc' ? 1 : -1;
     return 0;
@@ -1281,6 +1323,7 @@ function makeTab(id, label, count) {
         selectedActivities.push(id);
       }
     }
+    saveFilters();
     renderAll();
   };
   return tab;
@@ -1292,7 +1335,7 @@ function renderDatalist() {
 }
 
 /* =========================================================
-   STATS — respect chart cross-filters
+   STATS
    ========================================================= */
 function renderStats() {
   const statsEl = document.getElementById('stats');
@@ -1333,6 +1376,7 @@ function toggleStatusCard(status) {
   } else {
     selectedStatuses.push(status);
   }
+  saveFilters();
   renderMsStatusOptions();
   renderActivityTabs();
   renderStats();
@@ -1341,6 +1385,9 @@ function toggleStatusCard(status) {
   updateClearButton();
 }
 
+/* =========================================================
+   DASHBOARD RENDER
+   ========================================================= */
 function renderDashboard() {
   const tableList = sortList(getTableActivities());
   const listList = sortList(getFilteredActivities());
@@ -1348,6 +1395,7 @@ function renderDashboard() {
   renderFilterSummary(tableList, listList);
   populateTable('dashboard', tableList);
   populateTable('dashboard-summary', tableList);
+  renderFilterChips();
 }
 
 function populateTable(containerId, list) {
@@ -1365,32 +1413,92 @@ function populateTable(containerId, list) {
 }
 
 function renderFilterSummary(tableList, listList) {
-  const parts = [];
-  if (selectedSites.length) parts.push('Site: ' + selectedSites.join(', '));
-  if (selectedStatuses.length) parts.push('Status: ' + selectedStatuses.join(', '));
-  if (searchQuery) parts.push('Search: "' + searchQuery + '"');
-  if (selectedActivities.length) parts.push('Activity: ' + selectedActivities.join(', '));
-  if (selectedDueDates.length) parts.push('Due: ' + selectedDueDates.join(', '));
-  if (chartFilterStatus) parts.push('🔗 Status: ' + chartFilterStatus);
-  if (chartFilterOwner) parts.push('🔗 Owner: ' + chartFilterOwner);
-  if (chartFilterActivity) parts.push('🔗 Activity: ' + chartFilterActivity);
-
-  const badges = parts.map(p =>
-    '<span class="filter-badge">' + escapeHtml(p) + '</span>'
-  ).join('');
-
   const countText = (n) => '<span style="color:#636366; font-weight:normal; font-size:0.85em; margin-left:8px;">' + n + ' shown</span>';
 
   const elMain = document.getElementById('filter-summary');
-  if (elMain) elMain.innerHTML = badges + countText(tableList.length);
+  if (elMain) elMain.innerHTML = countText(tableList.length);
 
   const elList = document.getElementById('filter-summary-list');
-  if (elList) elList.innerHTML = badges + countText(listList.length);
+  if (elList) elList.innerHTML = countText(listList.length);
 
   const elSum = document.getElementById('filter-summary-summary');
-  if (elSum) elSum.innerHTML = badges + countText(tableList.length);
+  if (elSum) elSum.innerHTML = countText(tableList.length);
 }
 
+/* =========================================================
+   FILTER CHIPS (Interactive, individually removable)
+   ========================================================= */
+function renderFilterChips() {
+  const parts = [];
+
+  // Site
+  selectedSites.forEach(s => {
+    parts.push({ label: 'Site: ' + s, remove: `removeChip('site','${escapeHtmlAttr(s)}')` });
+  });
+  // Status
+  selectedStatuses.forEach(s => {
+    parts.push({ label: 'Status: ' + s, remove: `removeChip('status','${escapeHtmlAttr(s)}')` });
+  });
+  // Search
+  if (searchQuery) {
+    parts.push({ label: 'Search: "' + searchQuery + '"', remove: `removeChip('search')` });
+  }
+  // Activity (via tabs)
+  selectedActivities.forEach(a => {
+    parts.push({ label: 'Activity: ' + a, remove: `removeChip('activity','${escapeHtmlAttr(a)}')` });
+  });
+  // Due
+  selectedDueDates.forEach(d => {
+    parts.push({ label: 'Due: ' + d, remove: `removeChip('due','${escapeHtmlAttr(d)}')` });
+  });
+  // Chart filters
+  if (chartFilterStatus) {
+    parts.push({ label: '🔗 Status: ' + chartFilterStatus, remove: `removeChip('chartStatus')` });
+  }
+  if (chartFilterOwner) {
+    parts.push({ label: '🔗 Owner: ' + chartFilterOwner, remove: `removeChip('chartOwner')` });
+  }
+  if (chartFilterActivity) {
+    parts.push({ label: '🔗 Activity: ' + chartFilterActivity, remove: `removeChip('chartActivity')` });
+  }
+
+  const html = parts.map(p => 
+    `<span class="filter-chip">${escapeHtml(p.label)} <button onclick="${p.remove}" title="Remove">×</button></span>`
+  ).join('');
+
+  ['filter-chips-summary', 'filter-chips-list'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  });
+}
+
+function removeChip(type, value) {
+  if (type === 'site') {
+    selectedSites = selectedSites.filter(s => s !== value);
+  } else if (type === 'status') {
+    selectedStatuses = selectedStatuses.filter(s => s !== value);
+  } else if (type === 'search') {
+    searchQuery = '';
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-box').classList.remove('has-value');
+  } else if (type === 'activity') {
+    selectedActivities = selectedActivities.filter(a => a !== value);
+  } else if (type === 'due') {
+    selectedDueDates = selectedDueDates.filter(d => d !== value);
+  } else if (type === 'chartStatus') {
+    chartFilterStatus = null;
+  } else if (type === 'chartOwner') {
+    chartFilterOwner = null;
+  } else if (type === 'chartActivity') {
+    chartFilterActivity = null;
+  }
+  saveFilters();
+  renderAll();
+}
+
+/* =========================================================
+   ROW RENDER
+   ========================================================= */
 function renderRow(a) {
   const row = document.createElement('div');
   row.className = 'activity-row';
@@ -1504,6 +1612,7 @@ function onSearchInput() {
   const box = document.getElementById('search-box');
   searchQuery = input.value.trim();
   box.classList.toggle('has-value', searchQuery.length > 0);
+  saveFilters();
   renderActivityTabs();
   renderStats();
   renderCharts();
@@ -1515,6 +1624,7 @@ function clearSearch() {
   document.getElementById('search-input').value = '';
   searchQuery = '';
   document.getElementById('search-box').classList.remove('has-value');
+  saveFilters();
   renderActivityTabs();
   renderStats();
   renderCharts();
@@ -1546,7 +1656,47 @@ function clearAllFilters() {
   document.getElementById('ms-activity-search').value = '';
   document.getElementById('ms-due-search').value = '';
 
+  saveFilters();
   renderAll();
+}
+
+/* =========================================================
+   CSV EXPORT
+   ========================================================= */
+function exportCsv() {
+  const list = sortList(getTableActivities());
+
+  if (!list.length) {
+    toast('No data to export', 'error');
+    return;
+  }
+
+  const headers = ['Site', 'Activity Name', 'Owner', 'Status', 'Start Date', 'Due Date', 'Notes'];
+  const rows = list.map(a => [
+    a.Site || '',
+    a['Activity Name'] || '',
+    a.Owner || '',
+    a.Status || '',
+    a['Start Date'] || '',
+    a['Due Date'] || '',
+    a.Notes || ''
+  ]);
+
+  const escape = (val) => '"' + String(val).replace(/"/g, '""') + '"';
+  const csv = [headers.map(escape).join(','), ...rows.map(r => r.map(escape).join(','))].join('\r\n');
+
+  // BOM for Excel compatibility
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'ock_activities_' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+
+  toast('Exported ' + list.length + ' rows to CSV', 'success');
 }
 
 /* =========================================================
@@ -1742,8 +1892,18 @@ document.addEventListener('keydown', function (e) {
 /* =========================================================
    INIT
    ========================================================= */
-renderAuthBar();
-fetchLive();
+(function init() {
+  loadUser();
+  loadFilters();
+  renderAuthBar();
+
+  // Restore saved view
+  let savedView = 'summary';
+  try { savedView = localStorage.getItem(LS_VIEW_KEY) || 'summary'; } catch (e) {}
+  switchView(savedView);
+
+  fetchLive();
+})();
 </script>
 </body>
 </html>
