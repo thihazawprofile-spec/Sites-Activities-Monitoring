@@ -21,172 +21,95 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* =========================================================
-       iOS 26 LIQUID GLASS — complete
-       ========================================================= */
     :root {
       color-scheme: light dark;
-
-      --ios-green: #34c759;
-      --ios-green-dark: #28a745;
-      --ios-green-hover: #30d158;
-      --ios-orange: #ff9500;
-      --ios-red: #ff3b30;
-      --ios-gray: #8e8e93;
-      --ios-blue: #007aff;
-
-      --text-main: #000;
-      --text-secondary: rgba(60, 60, 67, 0.6);
-      --text-tertiary: rgba(60, 60, 67, 0.3);
+      --ios-green: #34c759; --ios-green-dark: #28a745; --ios-green-hover: #30d158;
+      --ios-orange: #ff9500; --ios-red: #ff3b30; --ios-gray: #8e8e93; --ios-blue: #007aff;
+      --text-main: #000; --text-secondary: rgba(60, 60, 67, 0.6); --text-tertiary: rgba(60, 60, 67, 0.3);
       --separator: rgba(60, 60, 67, 0.15);
-
-      --bg: #eef0f6;
-      --surface: rgba(255, 255, 255, 0.55);
-      --surface-strong: rgba(255, 255, 255, 0.8);
+      --bg: #eef0f6; --surface: rgba(255, 255, 255, 0.55); --surface-strong: rgba(255, 255, 255, 0.8);
       --surface-header: rgba(248, 249, 252, 0.72);
-
-      --color-done-bg: rgba(52, 199, 89, 0.15);
-      --color-done-text: #1a7f37;
-      --color-prog-bg: rgba(255, 149, 0, 0.15);
-      --color-prog-text: #a85e00;
-      --color-block-bg: rgba(255, 59, 48, 0.15);
-      --color-block-text: #c1271e;
-      --color-notstart-bg: rgba(142, 142, 147, 0.18);
-      --color-notstart-text: #636366;
-
-      --r-sm: 12px;
-      --r-md: 18px;
-      --r-lg: 26px;
-      --r-pill: 999px;
-
+      --color-done-bg: rgba(52, 199, 89, 0.15); --color-done-text: #1a7f37;
+      --color-prog-bg: rgba(255, 149, 0, 0.15); --color-prog-text: #a85e00;
+      --color-block-bg: rgba(255, 59, 48, 0.15); --color-block-text: #c1271e;
+      --color-notstart-bg: rgba(142, 142, 147, 0.18); --color-notstart-text: #636366;
+      --r-sm: 12px; --r-md: 18px; --r-lg: 26px; --r-pill: 999px;
       --glass-shadow:
-        0 1px 1px rgba(0, 0, 0, 0.03),
-        0 8px 24px rgba(31, 38, 90, 0.08),
+        0 1px 1px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(31, 38, 90, 0.08),
         0 24px 48px -12px rgba(31, 38, 90, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
-
+        inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(255, 255, 255, 0.3);
       --glass-shadow-hover:
-        0 1px 1px rgba(0, 0, 0, 0.03),
-        0 12px 32px rgba(31, 38, 90, 0.12),
+        0 1px 1px rgba(0, 0, 0, 0.03), 0 12px 32px rgba(31, 38, 90, 0.12),
         0 32px 64px -12px rgba(31, 38, 90, 0.16),
-        inset 0 1px 0 rgba(255, 255, 255, 0.95),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.35);
-
+        inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 0 rgba(255, 255, 255, 0.35);
       --shadow-modal:
-        0 1px 1px rgba(0, 0, 0, 0.04),
-        0 24px 64px rgba(20, 24, 60, 0.24),
+        0 1px 1px rgba(0, 0, 0, 0.04), 0 24px 64px rgba(20, 24, 60, 0.24),
         inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
-
-    /* =========================================================
-       DARK THEME — manual toggle OR auto (follows OS)
-       ========================================================= */
     html[data-theme="dark"] {
       color-scheme: dark;
-
-      --text-main: #ffffff;
-      --text-secondary: rgba(235, 235, 245, 0.6);
-      --text-tertiary: rgba(235, 235, 245, 0.3);
+      --text-main: #ffffff; --text-secondary: rgba(235, 235, 245, 0.6); --text-tertiary: rgba(235, 235, 245, 0.3);
       --separator: rgba(84, 84, 88, 0.65);
-
-      --bg: #0b0d12;
-      --surface: rgba(30, 32, 38, 0.6);
-      --surface-strong: rgba(30, 32, 38, 0.85);
+      --bg: #0b0d12; --surface: rgba(30, 32, 38, 0.6); --surface-strong: rgba(30, 32, 38, 0.85);
       --surface-header: rgba(20, 22, 28, 0.75);
-
-      --color-done-bg: rgba(52, 199, 89, 0.22);
-      --color-done-text: #4ade80;
-      --color-prog-bg: rgba(255, 149, 0, 0.22);
-      --color-prog-text: #fbbf24;
-      --color-block-bg: rgba(255, 59, 48, 0.22);
-      --color-block-text: #f87171;
-      --color-notstart-bg: rgba(142, 142, 147, 0.25);
-      --color-notstart-text: #a1a1aa;
-
+      --color-done-bg: rgba(52, 199, 89, 0.22); --color-done-text: #4ade80;
+      --color-prog-bg: rgba(255, 149, 0, 0.22); --color-prog-text: #fbbf24;
+      --color-block-bg: rgba(255, 59, 48, 0.22); --color-block-text: #f87171;
+      --color-notstart-bg: rgba(142, 142, 147, 0.25); --color-notstart-text: #a1a1aa;
       --glass-shadow:
-        0 1px 1px rgba(0, 0, 0, 0.3),
-        0 8px 24px rgba(0, 0, 0, 0.35),
+        0 1px 1px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35),
         0 24px 48px -12px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.2);
       --glass-shadow-hover:
-        0 1px 1px rgba(0, 0, 0, 0.4),
-        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 1px 1px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.4),
         0 32px 64px -12px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+        inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(0, 0, 0, 0.25);
       --shadow-modal:
-        0 1px 1px rgba(0, 0, 0, 0.3),
-        0 24px 64px rgba(0, 0, 0, 0.6),
+        0 1px 1px rgba(0, 0, 0, 0.3), 0 24px 64px rgba(0, 0, 0, 0.6),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
-
     @media (prefers-color-scheme: dark) {
       html[data-theme="auto"] {
         color-scheme: dark;
-        --text-main: #ffffff;
-        --text-secondary: rgba(235, 235, 245, 0.6);
-        --text-tertiary: rgba(235, 235, 245, 0.3);
+        --text-main: #ffffff; --text-secondary: rgba(235, 235, 245, 0.6); --text-tertiary: rgba(235, 235, 245, 0.3);
         --separator: rgba(84, 84, 88, 0.65);
-        --bg: #0b0d12;
-        --surface: rgba(30, 32, 38, 0.6);
-        --surface-strong: rgba(30, 32, 38, 0.85);
+        --bg: #0b0d12; --surface: rgba(30, 32, 38, 0.6); --surface-strong: rgba(30, 32, 38, 0.85);
         --surface-header: rgba(20, 22, 28, 0.75);
-        --color-done-bg: rgba(52, 199, 89, 0.22);
-        --color-done-text: #4ade80;
-        --color-prog-bg: rgba(255, 149, 0, 0.22);
-        --color-prog-text: #fbbf24;
-        --color-block-bg: rgba(255, 59, 48, 0.22);
-        --color-block-text: #f87171;
-        --color-notstart-bg: rgba(142, 142, 147, 0.25);
-        --color-notstart-text: #a1a1aa;
+        --color-done-bg: rgba(52, 199, 89, 0.22); --color-done-text: #4ade80;
+        --color-prog-bg: rgba(255, 149, 0, 0.22); --color-prog-text: #fbbf24;
+        --color-block-bg: rgba(255, 59, 48, 0.22); --color-block-text: #f87171;
+        --color-notstart-bg: rgba(142, 142, 147, 0.25); --color-notstart-text: #a1a1aa;
         --glass-shadow:
-          0 1px 1px rgba(0, 0, 0, 0.3),
-          0 8px 24px rgba(0, 0, 0, 0.35),
+          0 1px 1px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35),
           0 24px 48px -12px rgba(0, 0, 0, 0.5),
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+          inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 0 rgba(0, 0, 0, 0.2);
         --glass-shadow-hover:
-          0 1px 1px rgba(0, 0, 0, 0.4),
-          0 12px 32px rgba(0, 0, 0, 0.4),
+          0 1px 1px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.4),
           0 32px 64px -12px rgba(0, 0, 0, 0.6),
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+          inset 0 1px 0 rgba(255, 255, 255, 0.12), inset 0 -1px 0 rgba(0, 0, 0, 0.25);
         --shadow-modal:
-          0 1px 1px rgba(0, 0, 0, 0.3),
-          0 24px 64px rgba(0, 0, 0, 0.6),
+          0 1px 1px rgba(0, 0, 0, 0.3), 0 24px 64px rgba(0, 0, 0, 0.6),
           inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { background: var(--bg); -webkit-text-size-adjust: 100%; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
                    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      font-size: 15px;
-      line-height: 1.4;
-      color: var(--text-main);
-      min-height: 100vh;
-      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      font-size: 15px; line-height: 1.4; color: var(--text-main);
+      min-height: 100vh; overflow-x: hidden;
       padding-bottom: env(safe-area-inset-bottom, 20px);
-      position: relative;
-      isolation: isolate;
+      position: relative; isolation: isolate;
       background:
         radial-gradient(1200px 700px at 12% -10%, rgba(167, 158, 255, 0.35), transparent 55%),
         radial-gradient(1000px 700px at 95% 8%, rgba(120, 210, 255, 0.32), transparent 55%),
         radial-gradient(900px 700px at 70% 110%, rgba(214, 176, 255, 0.32), transparent 55%),
         linear-gradient(180deg, #eef1f9 0%, #f4f4fb 40%, #eaf2fa 100%);
-      background-attachment: fixed;
-      transition: background .25s ease, color .25s ease;
+      background-attachment: fixed; transition: background .25s ease, color .25s ease;
     }
-
-    /* Dark background — overrides the main page background completely */
     html[data-theme="dark"] body {
       background:
         radial-gradient(1200px 700px at 12% -10%, rgba(80, 70, 160, 0.35), transparent 55%),
@@ -203,28 +126,15 @@
           linear-gradient(180deg, #0b0d12 0%, #0e1016 40%, #0a0c10 100%);
       }
     }
-
     body::before, body::after {
-      content: "";
-      position: fixed;
-      z-index: -1;
-      pointer-events: none;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.55;
-      will-change: transform;
-      transition: background .25s ease;
+      content: ""; position: fixed; z-index: -1; pointer-events: none;
+      border-radius: 50%; filter: blur(90px); opacity: 0.55;
+      will-change: transform; transition: background .25s ease;
     }
-    body::before {
-      background: radial-gradient(circle at 30% 30%, #b7a9ff, #6f7dff 60%, transparent 70%);
-      width: 480px; height: 480px;
-      top: -120px; left: -140px;
-    }
-    body::after {
-      background: radial-gradient(circle at 70% 70%, #8ed8ff, #6cc1ff 60%, transparent 70%);
-      width: 520px; height: 520px;
-      right: -180px; bottom: -160px;
-    }
+    body::before { background: radial-gradient(circle at 30% 30%, #b7a9ff, #6f7dff 60%, transparent 70%);
+      width: 480px; height: 480px; top: -120px; left: -140px; }
+    body::after { background: radial-gradient(circle at 70% 70%, #8ed8ff, #6cc1ff 60%, transparent 70%);
+      width: 520px; height: 520px; right: -180px; bottom: -160px; }
     html[data-theme="dark"] body::before { background: radial-gradient(circle at 30% 30%, #5a4dc7, #3a4a8f 60%, transparent 70%); }
     html[data-theme="dark"] body::after  { background: radial-gradient(circle at 70% 70%, #3d7eae, #2e6a99 60%, transparent 70%); }
     @media (prefers-color-scheme: dark) {
@@ -232,30 +142,19 @@
       html[data-theme="auto"] body::after  { background: radial-gradient(circle at 70% 70%, #3d7eae, #2e6a99 60%, transparent 70%); }
     }
 
-    /* ---- Header ---- */
     .header {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 30;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; flex-wrap: wrap;
       padding: calc(env(safe-area-inset-top, 0px) + 12px) 22px 12px;
       background: var(--surface-header);
       -webkit-backdrop-filter: saturate(180%) blur(24px);
       backdrop-filter: saturate(180%) blur(24px);
-      border-bottom: 0.5px solid var(--separator);
-      margin-bottom: 22px;
-      box-shadow: 0 1px 0 var(--separator);
-      transition: background .25s ease;
+      border-bottom: 0.5px solid var(--separator); margin-bottom: 22px;
+      box-shadow: 0 1px 0 var(--separator); transition: background .25s ease;
     }
     .header::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 1px;
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9) 30%, rgba(255,255,255,0.9) 70%, transparent);
       pointer-events: none;
     }
@@ -267,36 +166,18 @@
         background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15) 30%, rgba(255,255,255,0.15) 70%, transparent);
       }
     }
-    .header h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.022em;
-      color: var(--text-main);
-    }
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-left: auto;
-    }
+    .header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.022em; color: var(--text-main); }
+    .header-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-left: auto; }
 
-    /* ---- Theme toggle ---- */
     .theme-toggle {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--surface);
-      color: var(--text-main);
+      width: 36px; height: 36px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface); color: var(--text-main);
       border: 0.5px solid var(--separator);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
       transition: transform .15s cubic-bezier(0.34, 1.56, 0.64, 1), background .15s ease;
     }
     .theme-toggle:hover { background: var(--surface-strong); }
@@ -304,219 +185,124 @@
     .theme-toggle svg { display: block; }
 
     .container { max-width: 1400px; margin: auto; padding: 0 20px; }
-
     .auth-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
     .role-badge {
-      padding: 5px 11px;
-      border-radius: var(--r-pill);
-      background: var(--surface);
+      padding: 5px 11px; border-radius: var(--r-pill); background: var(--surface);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
-      font-size: 0.78em;
-      font-weight: 500;
-      color: var(--text-main);
+      font-size: 0.78em; font-weight: 500; color: var(--text-main);
       border: 0.5px solid var(--separator);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .role-badge.editor {
       background: linear-gradient(180deg, rgba(48, 209, 88, 0.25), rgba(48, 209, 88, 0.12));
-      color: var(--color-done-text);
-      border-color: rgba(52, 199, 89, 0.35);
+      color: var(--color-done-text); border-color: rgba(52, 199, 89, 0.35);
     }
 
     .btn, .btn-login, .btn-logout {
-      font-family: inherit;
-      cursor: pointer;
-      border: none;
+      font-family: inherit; cursor: pointer; border: none;
       -webkit-tap-highlight-color: transparent;
-      transition: transform .16s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  opacity .16s ease,
-                  box-shadow .2s ease,
-                  background .2s ease;
+      transition: transform .16s cubic-bezier(0.34, 1.56, 0.64, 1), opacity .16s ease,
+                  box-shadow .2s ease, background .2s ease;
       position: relative;
     }
-
     .btn-login {
-      font-size: 0.85em;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: var(--r-pill);
-      color: #fff;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.35), transparent 50%),
-        linear-gradient(180deg, #3ad46a, #24a04a);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.55),
-        0 8px 20px -4px rgba(52, 199, 89, 0.35);
+      font-size: 0.85em; font-weight: 600; padding: 8px 16px; border-radius: var(--r-pill); color: #fff;
+      background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent 50%),
+                  linear-gradient(180deg, #3ad46a, #24a04a);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 20px -4px rgba(52, 199, 89, 0.35);
     }
     .btn-login:active { transform: scale(0.96); }
-
     .btn-logout {
-      font-size: 0.85em;
-      font-weight: 500;
-      padding: 7px 14px;
-      border-radius: var(--r-pill);
-      background: var(--surface);
-      color: var(--text-main);
+      font-size: 0.85em; font-weight: 500; padding: 7px 14px; border-radius: var(--r-pill);
+      background: var(--surface); color: var(--text-main);
       border: 0.5px solid var(--separator);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .btn-logout:hover { background: var(--surface-strong); }
     .btn-logout:active { transform: scale(0.96); }
-
-    .btn {
-      padding: 9px 16px;
-      border-radius: var(--r-pill);
-      font-size: 0.88em;
-      font-weight: 600;
-    }
+    .btn { padding: 9px 16px; border-radius: var(--r-pill); font-size: 0.88em; font-weight: 600; }
     .btn:active { transform: scale(0.96); }
-
     .btn-primary {
       color: #fff;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.35), transparent 50%),
-        linear-gradient(180deg, #3ad46a, #24a04a);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.55),
-        0 8px 20px -4px rgba(52, 199, 89, 0.35);
+      background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent 50%),
+                  linear-gradient(180deg, #3ad46a, #24a04a);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 20px -4px rgba(52, 199, 89, 0.35);
     }
     .btn-primary:hover {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.4), transparent 50%),
-        linear-gradient(180deg, #40dd72, #27b050);
+      background: linear-gradient(180deg, rgba(255,255,255,0.4), transparent 50%),
+                  linear-gradient(180deg, #40dd72, #27b050);
     }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
     .btn-secondary {
-      color: var(--ios-blue);
-      background: var(--surface);
+      color: var(--ios-blue); background: var(--surface);
       border: 0.5px solid var(--separator);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .btn-secondary:hover { background: var(--surface-strong); }
-
     .btn-danger {
-      color: var(--ios-red);
-      background: rgba(255, 59, 48, 0.1);
-      border: 0.5px solid rgba(255, 59, 48, 0.18);
-      font-weight: 500;
+      color: var(--ios-red); background: rgba(255, 59, 48, 0.1);
+      border: 0.5px solid rgba(255, 59, 48, 0.18); font-weight: 500;
     }
     .btn-danger:hover { background: rgba(255, 59, 48, 0.18); }
-
     .btn-sm { padding: 6px 12px; font-size: 0.78em; border-radius: var(--r-pill); }
 
     .btn-icon {
-      width: 30px;
-      height: 30px;
-      padding: 0;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--surface);
-      color: var(--ios-blue);
+      width: 30px; height: 30px; padding: 0; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface); color: var(--ios-blue);
       border: 0.5px solid var(--separator);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
       transition: transform .15s cubic-bezier(0.34, 1.56, 0.64, 1),
                   background .15s ease, color .15s ease;
     }
     .btn-icon:hover { background: var(--surface-strong); }
     .btn-icon:active { transform: scale(0.92); }
     .btn-icon svg { width: 15px; height: 15px; display: block; }
-
-    .btn-icon.danger {
-      background: rgba(255, 59, 48, 0.1);
-      color: var(--ios-red);
-      border-color: rgba(255, 59, 48, 0.18);
-    }
+    .btn-icon.danger { background: rgba(255, 59, 48, 0.1); color: var(--ios-red); border-color: rgba(255, 59, 48, 0.18); }
     .btn-icon.danger:hover { background: rgba(255, 59, 48, 0.2); }
 
-    .search-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-      align-items: stretch;
-    }
-
+    .search-row { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; align-items: stretch; }
     .search-box { position: relative; flex: 1; min-width: 220px; }
     .search-box input {
-      width: 100%;
-      height: 42px;
-      padding: 0 12px 0 38px;
-      border: 0.5px solid var(--separator);
-      border-radius: var(--r-sm);
-      font-size: 0.92em;
-      font-family: inherit;
-      background: var(--surface);
-      color: var(--text-main);
+      width: 100%; height: 42px; padding: 0 12px 0 38px;
+      border: 0.5px solid var(--separator); border-radius: var(--r-sm);
+      font-size: 0.92em; font-family: inherit; background: var(--surface); color: var(--text-main);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
       transition: box-shadow .2s, border-color .2s, background .2s;
     }
     .search-box input:focus {
-      outline: none;
-      border-color: rgba(52, 199, 89, 0.5);
-      background: var(--surface-strong);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        0 0 0 3px rgba(52, 199, 89, 0.18);
+      outline: none; border-color: rgba(52, 199, 89, 0.5); background: var(--surface-strong);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 0 0 3px rgba(52, 199, 89, 0.18);
     }
     .search-box input::placeholder { color: var(--text-tertiary); }
     .search-box .icon {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-secondary);
-      pointer-events: none;
-      display: flex;
-      align-items: center;
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      color: var(--text-secondary); pointer-events: none; display: flex; align-items: center;
     }
     .search-box .clear-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      border: none;
-      background: rgba(0, 0, 0, 0.08);
-      color: var(--text-secondary);
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 0.75em;
-      line-height: 1;
-      display: none;
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      border: none; background: rgba(0, 0, 0, 0.08); color: var(--text-secondary);
+      width: 18px; height: 18px; border-radius: 50%; cursor: pointer; font-size: 0.75em; line-height: 1; display: none;
     }
     .search-box .clear-btn:hover { background: rgba(0, 0, 0, 0.15); }
     .search-box.has-value .clear-btn { display: block; }
 
     .ms-wrap { position: relative; }
     .ms-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      padding: 0 12px;
-      height: 42px;
-      border: 0.5px solid var(--separator);
-      border-radius: var(--r-sm);
-      font-size: 0.88em;
-      font-family: inherit;
-      font-weight: 500;
+      display: flex; align-items: center; justify-content: space-between; gap: 6px;
+      padding: 0 12px; height: 42px;
+      border: 0.5px solid var(--separator); border-radius: var(--r-sm);
+      font-size: 0.88em; font-family: inherit; font-weight: 500;
       background: var(--surface);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      min-width: 150px;
-      color: var(--text-main);
-      user-select: none;
+      cursor: pointer; min-width: 150px; color: var(--text-main); user-select: none;
       -webkit-tap-highlight-color: transparent;
       transition: background .15s, transform .15s, box-shadow .2s;
     }
@@ -524,123 +310,65 @@
     .ms-btn:active { transform: scale(0.98); }
     .ms-btn.active {
       background: linear-gradient(180deg, rgba(52, 199, 89, 0.18), rgba(52, 199, 89, 0.1));
-      border-color: rgba(52, 199, 89, 0.35);
-      color: var(--color-done-text);
-      font-weight: 600;
+      border-color: rgba(52, 199, 89, 0.35); color: var(--color-done-text); font-weight: 600;
     }
     .ms-btn .ms-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ms-btn .ms-count {
-      background: var(--ios-green);
-      color: #fff;
-      border-radius: var(--r-pill);
-      padding: 1px 6px;
-      font-size: 0.7em;
-      font-weight: 700;
-      min-width: 16px;
-      text-align: center;
+      background: var(--ios-green); color: #fff; border-radius: var(--r-pill);
+      padding: 1px 6px; font-size: 0.7em; font-weight: 700; min-width: 16px; text-align: center;
     }
     .ms-btn .ms-count:empty { display: none; }
     .ms-btn .ms-caret { color: var(--text-secondary); font-size: 0.55em; }
     .ms-btn.active .ms-caret { color: var(--color-done-text); }
 
     .ms-panel {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 0;
-      z-index: 50;
+      position: absolute; top: calc(100% + 8px); left: 0; z-index: 50;
       background: var(--surface-header);
       -webkit-backdrop-filter: saturate(180%) blur(30px);
       backdrop-filter: saturate(180%) blur(30px);
-      border: 0.5px solid var(--separator);
-      border-radius: var(--r-md);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        0 12px 40px -8px rgba(20, 28, 70, 0.22);
-      min-width: 220px;
-      max-height: 300px;
-      overflow-y: auto;
-      padding: 8px;
-      display: none;
-      flex-direction: column;
+      border: 0.5px solid var(--separator); border-radius: var(--r-md);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 12px 40px -8px rgba(20, 28, 70, 0.22);
+      min-width: 220px; max-height: 300px; overflow-y: auto; padding: 8px;
+      display: none; flex-direction: column;
     }
     .ms-panel.show { display: flex; animation: popIn 0.18s ease; }
     @keyframes popIn {
       from { opacity: 0; transform: translateY(-4px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-
     .ms-select-all-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 8px;
-      border-bottom: 0.5px solid var(--separator);
-      margin-bottom: 4px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 8px; border-bottom: 0.5px solid var(--separator); margin-bottom: 4px;
     }
     .ms-select-all-btn {
-      font-size: 0.75em;
-      color: var(--ios-green);
-      font-weight: 600;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
+      font-size: 0.75em; color: var(--ios-green); font-weight: 600;
+      cursor: pointer; background: none; border: none; padding: 0;
     }
     .ms-select-all-btn:active { opacity: 0.6; }
-
     .ms-panel .ms-search {
-      width: 100%;
-      padding: 7px 10px;
-      border: 0.5px solid var(--separator);
-      border-radius: var(--r-sm);
-      font-size: 0.82em;
-      font-family: inherit;
-      margin-bottom: 6px;
-      background: var(--surface-strong);
-      color: var(--text-main);
+      width: 100%; padding: 7px 10px;
+      border: 0.5px solid var(--separator); border-radius: var(--r-sm);
+      font-size: 0.82em; font-family: inherit; margin-bottom: 6px;
+      background: var(--surface-strong); color: var(--text-main);
     }
     .ms-panel .ms-search:focus {
-      outline: none;
-      border-color: rgba(52, 199, 89, 0.5);
+      outline: none; border-color: rgba(52, 199, 89, 0.5);
       box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.12);
     }
-
     .ms-option {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 8px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.88em;
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 8px; border-radius: 8px; cursor: pointer; font-size: 0.88em;
     }
     .ms-option:hover { background: rgba(118, 118, 128, 0.08); }
-    .ms-option input[type="checkbox"] {
-      accent-color: var(--ios-green);
-      cursor: pointer;
-      width: 15px; height: 15px;
-    }
+    .ms-option input[type="checkbox"] { accent-color: var(--ios-green); cursor: pointer; width: 15px; height: 15px; }
     .ms-option label { cursor: pointer; flex: 1; font-weight: 400; }
-
-    .ms-empty {
-      color: var(--text-secondary);
-      padding: 12px;
-      font-size: 0.82em;
-      text-align: center;
-    }
+    .ms-empty { color: var(--text-secondary); padding: 12px; font-size: 0.82em; text-align: center; }
 
     .btn-clear {
-      border: 0.5px solid var(--separator);
-      background: var(--surface);
-      padding: 0 14px;
-      height: 42px;
-      border-radius: var(--r-sm);
-      cursor: pointer;
-      font-size: 0.85em;
-      font-weight: 500;
-      color: var(--text-main);
-      display: none;
-      font-family: inherit;
+      border: 0.5px solid var(--separator); background: var(--surface);
+      padding: 0 14px; height: 42px; border-radius: var(--r-sm);
+      cursor: pointer; font-size: 0.85em; font-weight: 500; color: var(--text-main);
+      display: none; font-family: inherit;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
       transition: transform .15s, background .15s;
     }
@@ -649,66 +377,46 @@
 
     .site-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
     .site-tab {
-      background: var(--surface);
-      border: 0.5px solid var(--separator);
-      padding: 8px 14px;
-      border-radius: var(--r-pill);
-      cursor: pointer;
-      font-size: 0.85em;
-      font-weight: 500;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      color: var(--text-main);
+      background: var(--surface); border: 0.5px solid var(--separator);
+      padding: 8px 14px; border-radius: var(--r-pill); cursor: pointer;
+      font-size: 0.85em; font-weight: 500; user-select: none;
+      -webkit-tap-highlight-color: transparent; color: var(--text-main);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
       transition: background .15s, transform .15s, color .15s;
     }
     .site-tab:hover { background: var(--surface-strong); }
     .site-tab:active { transform: scale(0.97); }
     .site-tab.active {
-      color: #fff;
-      font-weight: 600;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.35), transparent 55%),
-        linear-gradient(180deg, #3ad46a, #24a04a);
+      color: #fff; font-weight: 600;
+      background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent 55%),
+                  linear-gradient(180deg, #3ad46a, #24a04a);
       border-color: transparent;
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.55),
-        0 8px 20px -4px rgba(52, 199, 89, 0.35);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 20px -4px rgba(52, 199, 89, 0.35);
     }
     .site-tab .count { opacity: 0.7; font-size: 0.85em; margin-left: 3px; font-weight: 500; }
 
-        .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
+    .stats {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px; margin-bottom: 20px;
     }
     .stat-card {
-      padding: 14px 16px;
-      border-radius: var(--r-md);
-      background: var(--surface);
+      padding: 14px 16px; border-radius: var(--r-md); background: var(--surface);
       -webkit-backdrop-filter: blur(28px) saturate(180%);
       backdrop-filter: blur(28px) saturate(180%);
-      border: 0.5px solid var(--separator);
-      box-shadow: var(--glass-shadow);
+      border: 0.5px solid var(--separator); box-shadow: var(--glass-shadow);
       user-select: none;
       transition: transform .2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .2s ease;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .stat-card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 50%;
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 50%;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent);
-      border-radius: inherit;
-      pointer-events: none;
+      border-radius: inherit; pointer-events: none;
     }
     html[data-theme="dark"] .stat-card::before {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent);
     }
-    @media (prefers-color-scheme: dark) {
+        @media (prefers-color-scheme: dark) {
       html[data-theme="auto"] .stat-card::before {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent);
       }
@@ -721,19 +429,12 @@
       box-shadow: var(--glass-shadow), 0 0 0 3px rgba(52, 199, 89, 0.18);
     }
     .stat-card .stat-label {
-      position: relative;
-      font-size: 0.75em;
-      color: var(--text-secondary);
-      font-weight: 500;
-      margin-bottom: 2px;
+      position: relative; font-size: 0.75em; color: var(--text-secondary);
+      font-weight: 500; margin-bottom: 2px;
     }
     .stat-card .stat-value {
-      position: relative;
-      font-size: 1.65em;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-top: 2px;
-      color: var(--text-main);
+      position: relative; font-size: 1.65em; font-weight: 700;
+      letter-spacing: -0.03em; margin-top: 2px; color: var(--text-main);
     }
     .stat-value.green { color: var(--color-done-text); }
     .stat-value.yellow { color: var(--color-prog-text); }
@@ -741,35 +442,22 @@
     .stat-value.gray { color: var(--color-notstart-text); }
 
     .view-tabs {
-      display: inline-flex;
-      margin-bottom: 18px;
-      background: rgba(118, 118, 128, 0.12);
-      padding: 3px;
-      border-radius: var(--r-sm);
-      width: fit-content;
+      display: inline-flex; margin-bottom: 18px;
+      background: rgba(118, 118, 128, 0.12); padding: 3px; border-radius: var(--r-sm);
+      width: fit-content; flex-wrap: wrap;
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .view-tab {
-      padding: 7px 20px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: 500;
-      font-size: 0.88em;
-      color: var(--text-main);
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      transition: background .18s, color .18s, box-shadow .18s;
+      padding: 7px 20px; border-radius: 9px; cursor: pointer; font-weight: 500;
+      font-size: 0.88em; color: var(--text-main); -webkit-tap-highlight-color: transparent;
+      user-select: none; transition: background .18s, color .18s, box-shadow .18s;
     }
     .view-tab.active {
-      background: var(--surface-strong);
-      color: var(--text-main);
-      font-weight: 600;
-      box-shadow:
-        0 3px 8px rgba(0, 0, 0, 0.08),
-        0 1px 1px rgba(0, 0, 0, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 1);
+      background: var(--surface-strong); color: var(--text-main); font-weight: 600;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(0, 0, 0, 0.04),
+                  inset 0 1px 0 rgba(255, 255, 255, 1);
     }
     html[data-theme="dark"] .view-tab.active { background: #2a2d36; color: #fff; }
     @media (prefers-color-scheme: dark) {
@@ -784,50 +472,29 @@
     }
 
     .card {
-      position: relative;
-      background: var(--surface);
+      position: relative; background: var(--surface);
       -webkit-backdrop-filter: blur(32px) saturate(190%);
       backdrop-filter: blur(32px) saturate(190%);
-      padding: 20px;
-      border-radius: var(--r-lg);
-      border: 0.5px solid var(--separator);
-      margin-bottom: 18px;
-      box-shadow: var(--glass-shadow);
-      overflow: hidden;
+      padding: 20px; border-radius: var(--r-lg);
+      border: 0.5px solid var(--separator); margin-bottom: 18px;
+      box-shadow: var(--glass-shadow); overflow: hidden;
     }
     .card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 40%;
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 40%;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent);
-      border-radius: inherit;
-      pointer-events: none;
-      z-index: 0;
+      border-radius: inherit; pointer-events: none; z-index: 0;
     }
     .card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 0.5px;
+      content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 0.5px;
       background: conic-gradient(
         from 220deg at 50% 50%,
-        rgba(255, 255, 255, 0.9),
-        rgba(167, 158, 255, 0.5),
-        rgba(120, 210, 255, 0.5),
-        rgba(255, 255, 255, 0.9),
-        rgba(214, 176, 255, 0.5),
-        rgba(255, 255, 255, 0.9)
-      );
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
+        rgba(255, 255, 255, 0.9), rgba(167, 158, 255, 0.5),
+        rgba(120, 210, 255, 0.5), rgba(255, 255, 255, 0.9),
+        rgba(214, 176, 255, 0.5), rgba(255, 255, 255, 0.9));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
               mask-composite: exclude;
-      pointer-events: none;
-      opacity: 0.55;
-      z-index: 1;
+      pointer-events: none; opacity: 0.55; z-index: 1;
     }
     html[data-theme="dark"] .card::before {
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent);
@@ -842,101 +509,55 @@
     .card > * { position: relative; z-index: 2; }
 
     .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      gap: 10px;
-      flex-wrap: wrap;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 14px; gap: 10px; flex-wrap: wrap;
     }
     .card-title { font-size: 1.1em; font-weight: 600; letter-spacing: -0.022em; }
 
     .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
     .filter-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      display: inline-flex; align-items: center; gap: 6px;
       background: linear-gradient(180deg, rgba(52, 199, 89, 0.18), rgba(52, 199, 89, 0.08));
-      color: var(--color-done-text);
-      padding: 5px 11px;
-      border-radius: var(--r-pill);
-      font-size: 0.78em;
-      font-weight: 500;
-      border: 0.5px solid rgba(52, 199, 89, 0.25);
+      color: var(--color-done-text); padding: 5px 11px; border-radius: var(--r-pill);
+      font-size: 0.78em; font-weight: 500; border: 0.5px solid rgba(52, 199, 89, 0.25);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .filter-chip button {
-      background: none;
-      border: none;
-      color: var(--color-done-text);
-      cursor: pointer;
-      font-size: 1.1em;
-      line-height: 1;
-      padding: 0;
-      opacity: 0.6;
+      background: none; border: none; color: var(--color-done-text);
+      cursor: pointer; font-size: 1.1em; line-height: 1; padding: 0; opacity: 0.6;
     }
     .filter-chip button:active { opacity: 1; }
 
     .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .chart-card {
-      min-width: 0;
-      padding: 16px;
-      border-radius: var(--r-md);
+      min-width: 0; padding: 16px; border-radius: var(--r-md);
       background: var(--surface);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
       border: 0.5px solid var(--separator);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
+      display: flex; flex-direction: column; align-items: center; position: relative;
     }
     .chart-card h3 {
-      font-size: 0.92em;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text-main);
-      align-self: flex-start;
-      letter-spacing: -0.01em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-      justify-content: space-between;
+      font-size: 0.92em; font-weight: 600; margin-bottom: 8px; color: var(--text-main);
+      align-self: flex-start; letter-spacing: -0.01em;
+      display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between;
     }
     .chart-reset {
-      font-size: 0.85em;
-      font-weight: 500;
-      color: var(--ios-blue);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 2px 6px;
-      border-radius: 6px;
-      display: none;
+      font-size: 0.85em; font-weight: 500; color: var(--ios-blue);
+      background: none; border: none; cursor: pointer;
+      padding: 2px 6px; border-radius: 6px; display: none;
       -webkit-tap-highlight-color: transparent;
     }
     .chart-reset:hover { background: rgba(0, 122, 255, 0.1); }
     .chart-reset.show { display: inline-block; }
-
-    .chart-wrapper {
-      position: relative;
-      width: 100%;
-      height: 240px;
-      cursor: pointer;
-    }
+    .chart-wrapper { position: relative; width: 100%; height: 240px; cursor: pointer; }
     .chart-wrapper.doughnut {
-      height: 260px;
-      max-width: 300px;
-      margin-inline: auto;
-      align-self: center;
+      height: 260px; max-width: 300px; margin-inline: auto; align-self: center;
     }
 
     .table-container {
-      width: 100%;
-      overflow: auto;
-      border-radius: var(--r-md);
+      width: 100%; overflow: auto; border-radius: var(--r-md);
       background: var(--surface);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
@@ -944,18 +565,11 @@
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .table-view { display: flex; flex-direction: column; min-width: 950px; }
-
     .table-header {
-      display: grid;
-      grid-template-columns: 130px 1.5fr 140px 1fr 1.5fr 78px;
-      gap: 12px;
-      padding: 10px 14px;
-      background: var(--surface-strong);
-      border-bottom: 0.5px solid var(--separator);
-      font-size: 0.72em;
-      font-weight: 600;
-      color: var(--text-secondary);
-      align-items: center;
+      display: grid; grid-template-columns: 130px 1.5fr 140px 1fr 1.5fr 78px;
+      gap: 12px; padding: 10px 14px; background: var(--surface-strong);
+      border-bottom: 0.5px solid var(--separator); font-size: 0.72em;
+      font-weight: 600; color: var(--text-secondary); align-items: center;
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       backdrop-filter: blur(20px) saturate(180%);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
@@ -964,15 +578,9 @@
     @media (prefers-color-scheme: dark) {
       html[data-theme="auto"] .table-header { background: rgba(30, 32, 40, 0.85); }
     }
-
     .th-sort {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
       transition: color .15s;
     }
     .th-sort:hover { color: var(--text-main); }
@@ -981,13 +589,9 @@
     .th-sort.active .sort-icon { opacity: 1; }
 
     .activity-row {
-      display: grid;
-      grid-template-columns: 130px 1.5fr 140px 1fr 1.5fr 78px;
-      gap: 12px;
-      align-items: center;
-      padding: 11px 14px;
-      border-bottom: 0.5px solid var(--separator);
-      transition: background .12s;
+      display: grid; grid-template-columns: 130px 1.5fr 140px 1fr 1.5fr 78px;
+      gap: 12px; align-items: center; padding: 11px 14px;
+      border-bottom: 0.5px solid var(--separator); transition: background .12s;
     }
     .activity-row:hover { background: rgba(255, 255, 255, 0.05); }
     .activity-row:active { background: rgba(0, 0, 0, 0.04); }
@@ -998,40 +602,18 @@
       html[data-theme="auto"] .activity-row:hover { background: rgba(255,255,255,0.03); }
       html[data-theme="auto"] .activity-row:active { background: rgba(255,255,255,0.06); }
     }
-
     .col-site {
-      font-size: 0.9em;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: var(--text-main);
+      font-size: 0.9em; font-weight: 600; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; color: var(--text-main);
     }
-    .col-activity {
-      font-weight: 500;
-      font-size: 0.88em;
-      color: var(--text-main);
-      word-break: break-word;
-    }
-    .col-owner {
-      font-size: 0.82em;
-      color: var(--text-secondary);
-      word-break: break-word;
-    }
-
+    .col-activity { font-weight: 500; font-size: 0.88em; color: var(--text-main); word-break: break-word; }
+    .col-owner { font-size: 0.82em; color: var(--text-secondary); word-break: break-word; }
     .col-status { display: flex; flex-direction: column; gap: 6px; }
 
     .status-badge {
-      display: inline-block;
-      padding: 5px 12px;
-      border-radius: var(--r-pill);
-      font-size: 0.78em;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      text-align: center;
-      cursor: default;
-      -webkit-user-select: none;
-      user-select: none;
+      display: inline-block; padding: 5px 12px; border-radius: var(--r-pill);
+      font-size: 0.78em; font-weight: 600; letter-spacing: -0.01em; text-align: center;
+      cursor: default; -webkit-user-select: none; user-select: none;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
     .status-badge.editable { cursor: pointer; -webkit-tap-highlight-color: transparent; }
@@ -1040,38 +622,24 @@
     .status-badge.InProgress{ background: var(--color-prog-bg);     color: var(--color-prog-text); }
     .status-badge.Blocked   { background: var(--color-block-bg);    color: var(--color-block-text); }
     .status-badge.NotStarted{ background: var(--color-notstart-bg); color: var(--color-notstart-text); }
-
     .status-select-hidden {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
-      width: 100%;
-      border: none;
-      background: transparent;
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
+      border: none; background: transparent;
     }
     .status-badge-wrap { position: relative; display: inline-block; }
 
     .date-block {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      font-size: 0.75em;
-      color: var(--text-main);
+      display: flex; flex-direction: column; gap: 2px;
+      font-size: 0.75em; color: var(--text-main);
     }
     .date-row { display: flex; justify-content: space-between; gap: 6px; }
     .date-row .lbl { color: var(--text-secondary); font-weight: 500; }
     .date-row .val { font-weight: 500; }
     .date-row.overdue .val { color: var(--ios-red); }
     .date-row.soon .val { color: var(--ios-orange); }
-
     .duration-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 6px;
-      margin-top: 2px;
-      padding-top: 4px;
-      border-top: 0.5px dashed var(--separator);
+      display: flex; justify-content: space-between; gap: 6px;
+      margin-top: 2px; padding-top: 4px; border-top: 0.5px dashed var(--separator);
     }
     .duration-row .lbl { color: var(--text-secondary); font-weight: 600; }
     .duration-row .val { font-weight: 600; color: var(--text-main); }
@@ -1079,125 +647,77 @@
     .duration-row.running .lbl { color: var(--ios-orange); }
 
     .col-notes {
-      font-size: 0.8em;
-      color: var(--text-secondary);
-      line-height: 1.35;
-      white-space: pre-wrap;
-      word-break: break-word;
-      max-height: 3.2em;
-      overflow: hidden;
-      cursor: help;
-      transition: max-height .2s ease;
+      font-size: 0.8em; color: var(--text-secondary); line-height: 1.35;
+      white-space: pre-wrap; word-break: break-word; max-height: 3.2em;
+      overflow: hidden; cursor: help; transition: max-height .2s ease;
     }
     .col-notes.expanded { max-height: 20em; }
-    .col-notes.truncated { -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%); mask-image: linear-gradient(180deg, #000 60%, transparent 100%); }
+    .col-notes.truncated {
+      -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+      mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+    }
     .col-notes.expanded.truncated { -webkit-mask-image: none; mask-image: none; }
     .col-notes .no-notes { color: var(--text-tertiary); font-style: italic; }
     .col-actions { display: flex; gap: 6px; justify-content: flex-end; }
 
-    .empty-state {
-      padding: 40px 20px;
-      text-align: center;
-      color: var(--text-secondary);
-    }
+    .empty-state { padding: 40px 20px; text-align: center; color: var(--text-secondary); }
     .empty-state h3 {
-      font-size: 1.05em;
-      color: var(--text-main);
-      margin-bottom: 6px;
-      font-weight: 600;
+      font-size: 1.05em; color: var(--text-main);
+      margin-bottom: 6px; font-weight: 600;
     }
-    .empty-state p {
-      font-size: 0.88em;
-      margin-bottom: 16px;
-    }
+    .empty-state p { font-size: 0.88em; margin-bottom: 16px; }
     .empty-state .actions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 
     .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(20, 24, 45, 0.35);
+      position: fixed; inset: 0; background: rgba(20, 24, 45, 0.35);
       -webkit-backdrop-filter: blur(20px) saturate(140%);
       backdrop-filter: blur(20px) saturate(140%);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      padding: 20px;
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 20px;
     }
     .modal-backdrop.show { display: flex; }
     .modal {
-      position: relative;
-      background: var(--surface-header);
+      position: relative; background: var(--surface-header);
       -webkit-backdrop-filter: blur(40px) saturate(200%);
       backdrop-filter: blur(40px) saturate(200%);
-      border: 0.5px solid var(--separator);
-      border-radius: var(--r-lg);
-      padding: 22px;
-      max-width: 440px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      box-shadow: var(--shadow-modal);
+      border: 0.5px solid var(--separator); border-radius: var(--r-lg);
+      padding: 22px; max-width: 440px; width: 100%; max-height: 90vh;
+      overflow-y: auto; box-shadow: var(--shadow-modal);
       animation: modalIn 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .modal::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 40%;
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 40%;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), transparent);
-      border-radius: inherit;
-      pointer-events: none;
+      border-radius: inherit; pointer-events: none;
     }
     .modal > * { position: relative; z-index: 1; }
-
     .modal.confirm-modal { max-width: 340px; text-align: center; }
     .modal.confirm-modal h2 { margin-bottom: 8px; }
-    .modal.confirm-modal p {
-      color: var(--text-secondary);
-      font-size: 0.9em;
-      margin-bottom: 20px;
-    }
+    .modal.confirm-modal p { color: var(--text-secondary); font-size: 0.9em; margin-bottom: 20px; }
     .modal.confirm-modal .modal-actions { justify-content: center; }
     .modal.confirm-modal .modal-actions .btn { min-width: 100px; }
-
     @keyframes modalIn {
       from { opacity: 0; transform: scale(0.94) translateY(8px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
     .modal h2 {
-      font-size: 1.2em;
-      margin-bottom: 16px;
-      font-weight: 700;
+      font-size: 1.2em; margin-bottom: 16px; font-weight: 700;
       letter-spacing: -0.022em;
     }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .form-group { margin-bottom: 12px; }
     .form-group label {
-      display: block;
-      font-size: 0.8em;
-      font-weight: 500;
-      margin-bottom: 5px;
-      color: var(--text-secondary);
+      display: block; font-size: 0.8em; font-weight: 500;
+      margin-bottom: 5px; color: var(--text-secondary);
     }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px 12px;
-      border: 0.5px solid var(--separator);
-      border-radius: var(--r-sm);
-      font-size: 0.92em;
-      font-family: inherit;
-      background: var(--surface-strong);
-      color: var(--text-main);
-      transition: border-color .15s, box-shadow .15s, background .15s;
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 12px;
+      border: 0.5px solid var(--separator); border-radius: var(--r-sm);
+      font-size: 0.92em; font-family: inherit; background: var(--surface-strong);
+      color: var(--text-main); transition: border-color .15s, box-shadow .15s, background .15s;
     }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: rgba(52, 199, 89, 0.6);
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: rgba(52, 199, 89, 0.6);
       box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.15);
     }
     .form-group textarea { resize: vertical; min-height: 64px; }
@@ -1206,88 +726,307 @@
 
     .login-modal { max-width: 340px; }
     .login-modal .error-msg {
-      color: var(--ios-red);
-      font-size: 0.82em;
-      margin-top: 6px;
-      display: none;
-      font-weight: 500;
+      color: var(--ios-red); font-size: 0.82em; margin-top: 6px;
+      display: none; font-weight: 500;
     }
 
     .toast-container {
-      position: fixed;
-      top: calc(env(safe-area-inset-top, 0px) + 14px);
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      pointer-events: none;
+      position: fixed; top: calc(env(safe-area-inset-top, 0px) + 14px);
+      left: 50%; transform: translateX(-50%); z-index: 200;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; pointer-events: none;
     }
     .toast {
       background: rgba(30, 30, 32, 0.85);
       -webkit-backdrop-filter: blur(24px) saturate(200%);
       backdrop-filter: blur(24px) saturate(200%);
-      color: #fff;
-      padding: 11px 18px;
-      border-radius: var(--r-pill);
-      font-size: 0.85em;
-      font-weight: 500;
-      transform: translateY(-24px);
-      opacity: 0;
-      transition: opacity .25s, transform .25s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 10px 30px rgba(0, 0, 0, 0.22);
+      color: #fff; padding: 11px 18px; border-radius: var(--r-pill);
+      font-size: 0.85em; font-weight: 500; transform: translateY(-24px);
+      opacity: 0; transition: opacity .25s, transform .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0, 0, 0, 0.22);
     }
     .toast.show { opacity: 1; transform: translateY(0); }
     .toast.success { background: linear-gradient(180deg, rgba(56, 210, 100, 0.95), rgba(44, 180, 84, 0.95)); }
     .toast.error   { background: linear-gradient(180deg, rgba(255, 74, 64, 0.95), rgba(220, 50, 40, 0.95)); }
 
-    .loading {
-      text-align: center;
-      padding: 24px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      font-size: 0.9em;
-    }
+    .loading { text-align: center; padding: 24px; color: var(--text-secondary); font-weight: 500; font-size: 0.9em; }
     .spinner {
-      border: 2px solid rgba(60, 60, 67, 0.1);
-      border-top: 2px solid var(--ios-green);
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 10px;
+      border: 2px solid rgba(60, 60, 67, 0.1); border-top: 2px solid var(--ios-green);
+      border-radius: 50%; width: 22px; height: 22px;
+      animation: spin 0.8s linear infinite; margin: 0 auto 10px;
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
     .btn.spinning svg { animation: spin 0.8s linear infinite; }
-    .empty {
-      text-align: center;
-      padding: 24px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      font-size: 0.9em;
-    }
+    .empty { text-align: center; padding: 24px; color: var(--text-secondary); font-weight: 500; font-size: 0.9em; }
 
     .sync-time {
-      font-size: 0.7em;
-      color: var(--text-tertiary);
-      margin-left: auto;
-      padding: 0 4px;
-      font-weight: 400;
-      align-self: center;
-      white-space: nowrap;
+      font-size: 0.7em; color: var(--text-tertiary);
+      margin-left: auto; padding: 0 4px; font-weight: 400;
+      align-self: center; white-space: nowrap;
     }
-
     button, input, select, textarea { font: inherit; }
     button { -webkit-tap-highlight-color: transparent; }
     :focus-visible {
       outline: 3px solid rgba(52, 199, 89, 0.4);
-      outline-offset: 2px;
-      border-radius: 6px;
+      outline-offset: 2px; border-radius: 6px;
     }
+
+    /* ---- Operational Insights ---- */
+    .insights-list { display: flex; flex-direction: column; gap: 10px; }
+    .insights-empty {
+      padding: 18px; text-align: center; color: var(--text-secondary); font-size: 0.88em;
+    }
+    .insight {
+      position: relative; display: flex; align-items: flex-start; gap: 12px;
+      padding: 13px 15px 13px 15px; border-radius: var(--r-md);
+      border: 0.5px solid var(--separator); background: var(--surface-strong);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transition: transform .15s ease, box-shadow .2s ease; overflow: hidden;
+    }
+    .insight::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 4px; border-radius: 4px 0 0 4px;
+    }
+    .insight.critical::before { background: var(--ios-red); }
+    .insight.warning::before  { background: var(--ios-orange); }
+    .insight.info::before     { background: var(--ios-blue); }
+    .insight.success::before  { background: var(--ios-green); }
+    .insight .ins-icon {
+      flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin-left: 2px;
+    }
+    .insight.critical .ins-icon { background: rgba(255, 59, 48, 0.15); color: var(--ios-red); }
+    .insight.warning  .ins-icon { background: rgba(255, 149, 0, 0.15); color: var(--ios-orange); }
+    .insight.info     .ins-icon { background: rgba(0, 122, 255, 0.15); color: var(--ios-blue); }
+    .insight.success  .ins-icon { background: rgba(52, 199, 89, 0.15); color: var(--ios-green); }
+    .insight .ins-body { flex: 1; min-width: 0; }
+    .insight .ins-title {
+      font-size: 0.9em; font-weight: 600; color: var(--text-main);
+      margin-bottom: 3px; letter-spacing: -0.01em;
+    }
+    .insight .ins-desc {
+      font-size: 0.82em; color: var(--text-secondary);
+      line-height: 1.45; word-break: break-word;
+    }
+    .insight .ins-desc strong { color: var(--text-main); font-weight: 600; }
+    .insight .ins-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .insight .ins-chip {
+      font-size: 0.74em; font-weight: 500; padding: 3px 9px; border-radius: var(--r-pill);
+      background: rgba(118, 118, 128, 0.12); color: var(--text-main);
+      border: 0.5px solid var(--separator); cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .15s, transform .15s;
+    }
+    .insight .ins-chip:hover { background: rgba(118, 118, 128, 0.2); }
+    .insight .ins-chip:active { transform: scale(0.96); }
+    .insight .ins-chip.accent {
+      background: linear-gradient(180deg, rgba(52,199,89,0.2), rgba(52,199,89,0.1));
+      color: var(--color-done-text); border-color: rgba(52,199,89,0.3);
+    }
+    .insight.critical .ins-chip.accent { background: rgba(255,59,48,0.15); color: var(--ios-red); border-color: rgba(255,59,48,0.3); }
+    .insight.warning .ins-chip.accent  { background: rgba(255,149,0,0.15); color: var(--color-prog-text); border-color: rgba(255,149,0,0.3); }
+    #insights-body.collapsed { display: none; }
+
+    /* ============ SITES VIEW ============ */
+    .sites-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;
+    }
+    .site-card {
+      position: relative; padding: 16px; border-radius: var(--r-md);
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      backdrop-filter: blur(24px) saturate(180%);
+      border: 0.5px solid var(--separator); box-shadow: var(--glass-shadow);
+      cursor: pointer;
+      transition: transform .18s cubic-bezier(0.34,1.56,0.64,1), box-shadow .2s;
+      overflow: hidden;
+    }
+    .site-card::before {
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 40%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.35), transparent);
+      pointer-events: none;
+    }
+    html[data-theme="dark"] .site-card::before {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+    }
+    .site-card:hover { transform: translateY(-3px); box-shadow: var(--glass-shadow-hover); }
+    .site-card:active { transform: scale(0.985); }
+    .site-card-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 8px; margin-bottom: 4px;
+    }
+    .site-card-title {
+      font-size: 1.02em; font-weight: 700; letter-spacing: -0.01em;
+      color: var(--text-main); word-break: break-word; line-height: 1.25;
+    }
+    .site-card-pct {
+      font-size: 1.35em; font-weight: 800; letter-spacing: -0.03em;
+      color: var(--color-done-text); flex-shrink: 0;
+    }
+    .site-card-meta { font-size: 0.78em; color: var(--text-secondary); margin-bottom: 12px; }
+    .site-progress {
+      height: 8px; width: 100%; background: rgba(118,118,128,0.18);
+      border-radius: 4px; overflow: hidden; display: flex; margin-bottom: 12px;
+    }
+    .site-progress span { display: block; height: 100%; transition: width .3s ease; }
+    .site-progress .seg-done  { background: var(--ios-green); }
+    .site-progress .seg-prog  { background: var(--ios-orange); }
+    .site-progress .seg-block { background: var(--ios-red); }
+    .site-progress .seg-notstart { background: var(--ios-gray); }
+    .site-chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .site-chip {
+      font-size: 0.7em; font-weight: 600; padding: 3px 8px; border-radius: var(--r-pill);
+      border: 0.5px solid var(--separator); background: var(--surface-strong);
+      color: var(--text-secondary);
+    }
+    .site-chip.alert-block  { background: rgba(255,59,48,0.15); color: var(--ios-red); border-color: rgba(255,59,48,0.3); }
+    .site-chip.alert-late   { background: rgba(255,149,0,0.15); color: var(--color-prog-text); border-color: rgba(255,149,0,0.3); }
+    .site-chip.alert-owner  { background: rgba(0,122,255,0.12); color: var(--ios-blue); border-color: rgba(0,122,255,0.28); }
+
+    /* ============ OWNER WORKLOAD ============ */
+    .owner-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px; margin-top: 14px;
+    }
+    .owner-card {
+      padding: 13px 15px; border-radius: var(--r-md);
+      background: var(--surface-strong); border: 0.5px solid var(--separator);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+      cursor: pointer; transition: transform .15s, box-shadow .2s;
+    }
+    .owner-card:hover { transform: translateY(-2px); box-shadow: var(--glass-shadow); }
+    .owner-card:active { transform: scale(0.985); }
+    .owner-card.overloaded { border-color: rgba(255,149,0,0.4); }
+    .owner-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8px; gap: 8px;
+    }
+    .owner-name {
+      font-size: 0.9em; font-weight: 700; color: var(--text-main);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .owner-count { font-size: 0.75em; font-weight: 600; color: var(--text-secondary); flex-shrink: 0; }
+    .owner-bar {
+      height: 8px; border-radius: 4px; overflow: hidden; display: flex;
+      background: rgba(118,118,128,0.15);
+    }
+    .owner-bar span { display: block; height: 100%; }
+
+    /* ============ TIMELINE / GANTT ============ */
+    .timeline-wrap {
+      position: relative; overflow-x: auto; overflow-y: hidden;
+      border-radius: var(--r-md); border: 0.5px solid var(--separator);
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+    }
+    .timeline-inner { min-width: 900px; }
+    .tl-header {
+      display: flex; position: sticky; top: 0; z-index: 3;
+      background: var(--surface-header);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 0.5px solid var(--separator);
+      font-size: 0.72em; font-weight: 600; color: var(--text-secondary);
+    }
+        .tl-label-col {
+      width: 220px; flex-shrink: 0; padding: 10px 12px;
+      border-right: 0.5px solid var(--separator);
+      position: sticky; left: 0; z-index: 2;
+      background: var(--surface-header);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+    }
+    .tl-track-col { flex: 1; display: flex; position: relative; }
+    .tl-month {
+      flex: 1; text-align: center; padding: 10px 0;
+      border-right: 0.5px solid var(--separator);
+      font-size: 0.9em; font-weight: 600; white-space: nowrap;
+    }
+    .tl-month:last-child { border-right: none; }
+    .tl-body { position: relative; }
+    .tl-row {
+      display: flex; border-bottom: 0.5px solid var(--separator);
+      min-height: 38px; align-items: center;
+    }
+    .tl-row:last-child { border-bottom: none; }
+    .tl-row-label {
+      width: 220px; flex-shrink: 0; padding: 8px 12px;
+      border-right: 0.5px solid var(--separator);
+      position: sticky; left: 0; z-index: 1;
+      background: var(--surface);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+      font-size: 0.82em; overflow: hidden;
+    }
+    .tl-row-label .tl-site {
+      font-size: 0.78em; font-weight: 600; color: var(--text-secondary);
+      margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .tl-row-label .tl-name {
+      font-size: 0.85em; font-weight: 500; color: var(--text-main);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .tl-track {
+      flex: 1; position: relative; height: 38px;
+      background-image: linear-gradient(to right, rgba(118,118,128,0.08) 1px, transparent 1px);
+      background-size: calc(100% / var(--tl-months, 6)) 100%;
+    }
+    .tl-bar {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      height: 20px; border-radius: 10px; cursor: pointer;
+      transition: filter .15s, transform .15s;
+      display: flex; align-items: center; padding: 0 8px;
+      font-size: 0.68em; font-weight: 600; color: #fff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .tl-bar:hover { filter: brightness(1.1); transform: translateY(-50%) scaleY(1.1); }
+    .tl-bar:active { transform: translateY(-50%) scaleY(0.95); }
+    .tl-bar.status-Done        { background: linear-gradient(180deg, #4ade80, #34c759); }
+    .tl-bar.status-InProgress  { background: linear-gradient(180deg, #fbbf24, #ff9500); }
+    .tl-bar.status-Blocked     { background: linear-gradient(180deg, #f87171, #ff3b30); }
+    .tl-bar.status-NotStarted  { background: linear-gradient(180deg, #a1a1aa, #8e8e93); }
+    .tl-today-marker {
+      position: absolute; top: 0; bottom: 0; width: 2px;
+      background: var(--ios-red); z-index: 2; pointer-events: none; opacity: 0.7;
+    }
+    .tl-today-marker::before {
+      content: "Today"; position: absolute; top: -18px; left: -18px;
+      font-size: 0.65em; font-weight: 700; color: var(--ios-red); white-space: nowrap;
+    }
+    .tl-empty { padding: 40px 20px; text-align: center; color: var(--text-secondary); font-size: 0.9em; }
+
+    /* ============ TRENDS ============ */
+    .trends-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 900px) { .trends-grid { grid-template-columns: 1fr; } }
+    .trend-chart-card {
+      padding: 16px; border-radius: var(--r-md);
+      background: var(--surface-strong); border: 0.5px solid var(--separator);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+    }
+    .trend-chart-card h3 {
+      font-size: 0.9em; font-weight: 600; margin-bottom: 4px; color: var(--text-main);
+    }
+    .trend-chart-card .subtitle {
+      font-size: 0.75em; color: var(--text-secondary); margin-bottom: 10px;
+    }
+    .trend-chart-box { height: 220px; position: relative; }
+    .trend-kpi-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px; margin-bottom: 16px;
+    }
+    .trend-kpi {
+      padding: 12px 14px; border-radius: var(--r-md);
+      background: var(--surface-strong); border: 0.5px solid var(--separator);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+    }
+    .trend-kpi .kpi-label { font-size: 0.72em; color: var(--text-secondary); font-weight: 500; }
+    .trend-kpi .kpi-value { font-size: 1.5em; font-weight: 800; letter-spacing: -0.03em; margin-top: 2px; }
+    .trend-kpi .kpi-delta { font-size: 0.7em; font-weight: 600; margin-top: 2px; }
+    .trend-kpi .kpi-delta.up   { color: var(--ios-red); }
+    .trend-kpi .kpi-delta.down { color: var(--ios-green); }
+    .trend-kpi .kpi-delta.flat { color: var(--text-secondary); }
 
     @media (max-width: 900px) {
       .header { padding: 10px 14px; }
@@ -1295,9 +1034,7 @@
       .container { padding: 0 14px; }
       .table-header { display: none; }
       .activity-row {
-        grid-template-columns: 1fr;
-        gap: 8px;
-        padding: 14px;
+        grid-template-columns: 1fr; gap: 8px; padding: 14px;
         border-bottom: 0.5px solid var(--separator);
       }
       .col-site { font-size: 1em; }
@@ -1315,10 +1052,9 @@
       .stat-card { padding: 12px; }
       .stat-card .stat-value { font-size: 1.4em; }
       .view-tabs { width: 100%; display: flex; }
-      .view-tab { flex: 1; text-align: center; }
+      .view-tab { flex: 1; text-align: center; font-size: 0.78em; padding: 7px 8px; }
       .chart-wrapper { height: 210px; }
     }
-
     @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
       .card, .stat-card, .chart-card, .ms-panel, .modal, .ms-btn,
       .btn-clear, .role-badge, .search-box input, .site-tab, .header,
@@ -1330,7 +1066,6 @@
   </style>
 </head>
 <body>
-
 <!-- ============ STICKY HEADER ============ -->
 <div class="header">
   <h1>OCK-Site Activities</h1>
@@ -1411,7 +1146,7 @@
       </div>
     </div>
 
-        <button class="btn-clear" id="btn-clear-filters" onclick="clearAllFilters()">Clear</button>
+    <button class="btn-clear" id="btn-clear-filters" onclick="clearAllFilters()">Clear</button>
     <button class="btn btn-secondary" onclick="exportCsv()" title="Export CSV">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1432,10 +1167,13 @@
   <div id="site-tabs" class="site-tabs" role="tablist"></div>
   <div id="stats" class="stats"></div>
 
-  <!-- ============ SEGMENTED CONTROL ============ -->
+  <!-- ============ VIEW TABS ============ -->
   <div class="view-tabs" role="tablist">
-    <div class="view-tab active" id="tab-summary" onclick="switchView('summary')" role="tab" tabindex="0" aria-selected="true">Summary</div>
-    <div class="view-tab" id="tab-list" onclick="switchView('list')" role="tab" tabindex="0" aria-selected="false">List</div>
+    <div class="view-tab active" id="tab-summary"  onclick="switchView('summary')"  role="tab" tabindex="0" aria-selected="true">Summary</div>
+    <div class="view-tab"        id="tab-list"     onclick="switchView('list')"     role="tab" tabindex="0" aria-selected="false">List</div>
+    <div class="view-tab"        id="tab-sites"    onclick="switchView('sites')"    role="tab" tabindex="0" aria-selected="false">Sites</div>
+    <div class="view-tab"        id="tab-timeline" onclick="switchView('timeline')" role="tab" tabindex="0" aria-selected="false">Timeline</div>
+    <div class="view-tab"        id="tab-trends"   onclick="switchView('trends')"   role="tab" tabindex="0" aria-selected="false">Trends</div>
   </div>
 
   <!-- ================= SUMMARY VIEW ================= -->
@@ -1444,7 +1182,6 @@
       <div class="card-header">
         <div class="card-title">Dashboard</div>
       </div>
-
       <div class="charts-grid">
         <div class="chart-card">
           <h3>Status Breakdown <button class="chart-reset" id="reset-status" onclick="resetChartFilter('status')">Reset</button></h3>
@@ -1461,6 +1198,28 @@
       </div>
     </div>
 
+    <div class="card" id="insights-card">
+      <div class="card-header">
+        <div class="card-title">
+          <span style="display:inline-flex;align-items:center;gap:8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            Operational Insights
+          </span>
+          <span id="insights-count" style="margin-left:8px;font-size:0.72em;font-weight:500;color:var(--text-secondary);"></span>
+        </div>
+        <button class="chart-reset" id="insights-collapse" onclick="toggleInsights()" style="font-size:0.8em;display:inline-block;">Hide</button>
+      </div>
+      <div id="insights-body">
+        <div id="insights-list" class="insights-list">
+          <div class="insights-empty">Analyzing data…</div>
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="card-header">
         <div class="card-title">
@@ -1469,9 +1228,7 @@
         </div>
         <button id="btn-new-activity-summary" class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>
       </div>
-
       <div class="filter-chips" id="filter-chips-summary"></div>
-
       <div class="table-container" style="margin-top: 12px;">
         <div class="table-view">
           <div class="table-header">
@@ -1501,9 +1258,7 @@
         </div>
         <button id="btn-new-activity" class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>
       </div>
-
       <div class="filter-chips" id="filter-chips-list"></div>
-
       <div class="table-container" style="margin-top: 12px;">
         <div class="table-view">
           <div class="table-header">
@@ -1522,6 +1277,85 @@
       </div>
     </div>
   </div>
+
+  <!-- ================= SITES VIEW ================= -->
+  <div class="view-container" id="view-sites">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          Sites Overview
+          <span id="sites-count" style="color:var(--text-secondary);font-weight:400;font-size:0.82em;margin-left:8px;"></span>
+        </div>
+      </div>
+      <div id="sites-grid" class="sites-grid">
+        <div class="loading"><div class="spinner"></div><div>Loading…</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          Owner Workload
+          <span id="owners-count" style="color:var(--text-secondary);font-weight:400;font-size:0.82em;margin-left:8px;"></span>
+        </div>
+      </div>
+      <div id="owner-grid" class="owner-grid"></div>
+    </div>
+  </div>
+
+  <!-- ================= TIMELINE VIEW ================= -->
+  <div class="view-container" id="view-timeline">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          Timeline
+          <span id="timeline-range" style="color:var(--text-secondary);font-weight:400;font-size:0.82em;margin-left:8px;"></span>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="setTimelineRange('3')">3 mo</button>
+          <button class="btn btn-secondary btn-sm" onclick="setTimelineRange('6')">6 mo</button>
+          <button class="btn btn-secondary btn-sm" onclick="setTimelineRange('12')">12 mo</button>
+        </div>
+      </div>
+      <div id="timeline-wrap" class="timeline-wrap">
+        <div class="timeline-inner" id="timeline-inner">
+          <div class="tl-empty">Loading…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TRENDS VIEW ================= -->
+  <div class="view-container" id="view-trends">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Trends</div>
+      </div>
+      <div id="trend-kpis" class="trend-kpi-row"></div>
+      <div class="trends-grid">
+        <div class="trend-chart-card">
+          <h3>Completion pace</h3>
+          <div class="subtitle">Activities starting vs. finishing per week</div>
+          <div class="trend-chart-box"><canvas id="chartTrendPace"></canvas></div>
+        </div>
+        <div class="trend-chart-card">
+          <h3>Risk over time</h3>
+          <div class="subtitle">Blocked &amp; overdue by week (based on due date)</div>
+          <div class="trend-chart-box"><canvas id="chartTrendRisk"></canvas></div>
+        </div>
+        <div class="trend-chart-card">
+          <h3>Status mix over time</h3>
+          <div class="subtitle">Active work breakdown per week</div>
+          <div class="trend-chart-box"><canvas id="chartTrendMix"></canvas></div>
+        </div>
+        <div class="trend-chart-card">
+          <h3>Throughput by site</h3>
+          <div class="subtitle">Done vs. total per site</div>
+          <div class="trend-chart-box"><canvas id="chartTrendSite"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ========== ACTIVITY MODAL ========== -->
@@ -1530,18 +1364,12 @@
     <h2 id="modal-title">New Activity</h2>
     <div class="form-group">
       <label>Site *</label>
-      <input id="f-site" type="text" list="site-datalist" placeholder="e.g. AY0001">
+      <input id="f-site" type="text" list="site-datalist" placeholder="e.g. OCK0001">
       <datalist id="site-datalist"></datalist>
       <div class="hint">Free text — new sites appear automatically.</div>
     </div>
-    <div class="form-group">
-      <label>Activity Name *</label>
-      <input id="f-name" type="text" placeholder="e.g. MOH/ FIP Faulty/ Etc...">
-    </div>
-    <div class="form-group">
-      <label>Owner</label>
-      <input id="f-owner" type="text" placeholder="e.g. WPS/ RM/ DGE/ FT/ Etc...">
-    </div>
+    <div class="form-group"><label>Activity Name *</label><input id="f-name" type="text" placeholder="e.g. FIP/Radiator/PC Controller/etc..."></div>
+    <div class="form-group"><label>Owner</label><input id="f-owner" type="text" placeholder="e.g. FT/DGE/RM/RC/WPS/etc..."></div>
     <div class="form-group">
       <label>Status</label>
       <select id="f-status">
@@ -1552,19 +1380,10 @@
       </select>
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label>Start Date</label>
-        <input id="f-start" type="date">
-      </div>
-      <div class="form-group">
-        <label>Due Date</label>
-        <input id="f-due" type="date">
-      </div>
+      <div class="form-group"><label>Start Date</label><input id="f-start" type="date"></div>
+      <div class="form-group"><label>Due Date</label><input id="f-due" type="date"></div>
     </div>
-    <div class="form-group">
-      <label>Notes</label>
-      <textarea id="f-notes" placeholder="Optional notes…"></textarea>
-    </div>
+    <div class="form-group"><label>Notes</label><textarea id="f-notes" placeholder="Optional notes…"></textarea></div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
       <button id="btn-save" class="btn btn-primary" onclick="saveActivity()">Save</button>
@@ -1576,17 +1395,11 @@
 <div id="login-modal" class="modal-backdrop" role="dialog" aria-modal="true">
   <div class="modal login-modal">
     <h2>Sign in</h2>
-    <div class="form-group">
-      <label>Email</label>
-      <input id="login-email" type="email" placeholder="editor@ock" autocomplete="username">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password">
-    </div>
+    <div class="form-group"><label>Email</label><input id="login-email" type="email" placeholder="editor@ock" autocomplete="username"></div>
+    <div class="form-group"><label>Password</label><input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password"></div>
     <div id="login-error" class="error-msg"></div>
     <div class="hint" style="font-size:0.72em; color:var(--text-tertiary); margin-top:8px;">
-      Contact Admin
+      Contact Admin...
     </div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeLoginModal()">Cancel</button>
@@ -1614,18 +1427,17 @@
    CONFIG
    ========================================================= */
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzTmDmNiTlDPfLPeMOe-TTvaZ2L5vAA6lF9yKIUo_FLfBNcQ-niGGsqaAm0OGkbyJLdAA/exec';
-
 const AUTH_USERS = {
   'editor@ock':  { password: 'editor@123', role: 'editor' },
   'viewer@ock':  { password: 'viewer@123', role: 'viewer' }
 };
-
 const ALL_STATUSES = ['Not Started', 'In Progress', 'Blocked', 'Done'];
-
 const LS_USER_KEY    = 'ock_user';
 const LS_FILTERS_KEY = 'ock_filters';
 const LS_VIEW_KEY    = 'ock_view';
 const LS_THEME_KEY   = 'ock_theme';
+const LS_INSIGHTS_COLLAPSED_KEY = 'ock_insights_collapsed';
+const LS_TIMELINE_KEY = 'ock_timeline_months';
 
 let currentUser = null;
 let selectedSites = [];
@@ -1633,54 +1445,42 @@ let selectedStatuses = [];
 let searchQuery = '';
 let selectedActivities = [];
 let selectedDueDates = [];
-
 let chartFilterStatus = null;
 let chartFilterOwner = null;
 let chartFilterActivity = null;
-
 let editingId = null;
 let state = { sites: [], activities: [] };
-
 let sortCol = null;
 let sortDir = 'asc';
-
-let charts = { status: null, owner: null, activity: null };
-
+let charts = { status: null, owner: null, activity: null, trendPace: null, trendRisk: null, trendMix: null, trendSite: null };
 let pendingConfirmResolver = null;
 let lastSyncAt = null;
+let timelineMonths = 6;
 
 /* =========================================================
-   THEME — light → dark → auto
+   THEME
    ========================================================= */
 const THEMES = ['light', 'dark', 'auto'];
-
-function getStoredTheme() {
-  try { return localStorage.getItem(LS_THEME_KEY) || 'auto'; } catch (e) { return 'auto'; }
-}
-
+function getStoredTheme() { try { return localStorage.getItem(LS_THEME_KEY) || 'auto'; } catch (e) { return 'auto'; } }
 function applyTheme(theme) {
   if (!THEMES.includes(theme)) theme = 'auto';
   document.documentElement.setAttribute('data-theme', theme);
   try { localStorage.setItem(LS_THEME_KEY, theme); } catch (e) {}
   updateThemeIcon(theme);
-  /* Re-render charts so tick/legend text pick up the new theme */
-  try {
-    if (typeof renderCharts === 'function'
-        && state.activities.length
-        && document.getElementById('view-summary')
-        && document.getElementById('view-summary').classList.contains('active')) {
-      setTimeout(() => { try { renderCharts(); } catch (e) {} }, 40);
-    }
-  } catch (e) {}
+  setTimeout(() => {
+    try {
+      const active = document.querySelector('.view-container.active');
+      if (active?.id === 'view-summary')  renderCharts();
+      if (active?.id === 'view-trends')   renderTrends();
+    } catch (e) {}
+  }, 40);
 }
-
 function updateThemeIcon(theme) {
   ['auto', 'light', 'dark'].forEach(t => {
     const el = document.getElementById('theme-icon-' + t);
     if (el) el.style.display = (t === theme) ? 'block' : 'none';
   });
 }
-
 function cycleTheme() {
   const current = getStoredTheme();
   const idx = THEMES.indexOf(current);
@@ -1701,7 +1501,6 @@ function saveFilters() {
   };
   try { localStorage.setItem(LS_FILTERS_KEY, JSON.stringify(data)); } catch (e) {}
 }
-
 function loadFilters() {
   try {
     const raw = localStorage.getItem(LS_FILTERS_KEY);
@@ -1717,7 +1516,6 @@ function loadFilters() {
     chartFilterActivity  = d.chartFilterActivity || null;
     sortCol              = d.sortCol || null;
     sortDir              = d.sortDir || 'asc';
-
     const inp = document.getElementById('search-input');
     if (inp && searchQuery) {
       inp.value = searchQuery;
@@ -1725,18 +1523,25 @@ function loadFilters() {
     }
   } catch (e) {}
 }
-
 function saveUser() {
   try {
     if (currentUser) localStorage.setItem(LS_USER_KEY, JSON.stringify(currentUser));
     else localStorage.removeItem(LS_USER_KEY);
   } catch (e) {}
 }
-
 function loadUser() {
   try {
     const raw = localStorage.getItem(LS_USER_KEY);
     if (raw) currentUser = JSON.parse(raw);
+  } catch (e) {}
+}
+function saveTimelineMonths() {
+  try { localStorage.setItem(LS_TIMELINE_KEY, String(timelineMonths)); } catch (e) {}
+}
+function loadTimelineMonths() {
+  try {
+    const v = localStorage.getItem(LS_TIMELINE_KEY);
+    if (v) timelineMonths = Math.max(1, Math.min(24, Number(v) || 6));
   } catch (e) {}
 }
 
@@ -1749,17 +1554,16 @@ function switchView(viewId) {
     t.setAttribute('aria-selected', 'false');
   });
   document.querySelectorAll('.view-container').forEach(c => c.classList.remove('active'));
-
   const tab = document.getElementById('tab-' + viewId);
-  if (tab) {
-    tab.classList.add('active');
-    tab.setAttribute('aria-selected', 'true');
-  }
-  document.getElementById('view-' + viewId).classList.add('active');
-
+  if (tab) { tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); }
+  const container = document.getElementById('view-' + viewId);
+  if (container) container.classList.add('active');
   try { localStorage.setItem(LS_VIEW_KEY, viewId); } catch (e) {}
 
-  if (viewId === 'summary') renderCharts();
+  if (viewId === 'summary')  { renderCharts(); renderInsights(); }
+  if (viewId === 'sites')    { renderSitesView(); }
+  if (viewId === 'timeline') { renderTimeline(); }
+  if (viewId === 'trends')   { renderTrends(); }
 }
 
 /* =========================================================
@@ -1767,7 +1571,6 @@ function switchView(viewId) {
    ========================================================= */
 function getBaseFilteredList() {
   let list = state.activities;
-
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     list = list.filter(a =>
@@ -1787,52 +1590,41 @@ function getBaseFilteredList() {
   }
   return list;
 }
-
 function getActivitiesFilteredExceptStatusChart() {
   let list = getBaseFilteredList();
-  if (selectedActivities.length) {
-    list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
-  }
-  if (chartFilterOwner) {
-    list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
-  }
-  if (chartFilterActivity) {
-    list = list.filter(a => String(a['Activity Name'] || 'Unknown').trim() === chartFilterActivity);
-  }
+  if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
+  if (chartFilterOwner)    list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
+  if (chartFilterActivity) list = list.filter(a => String(a['Activity Name'] || 'Unknown').trim() === chartFilterActivity);
   return list;
 }
-
 function getActivitiesFilteredExceptOwnerChart() {
   let list = getBaseFilteredList();
-  if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
+  if (selectedStatuses.length)  list = list.filter(a => selectedStatuses.includes(a.Status));
   if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
-  if (chartFilterStatus) list = list.filter(a => a.Status === chartFilterStatus);
+  if (chartFilterStatus)   list = list.filter(a => a.Status === chartFilterStatus);
   if (chartFilterActivity) list = list.filter(a => String(a['Activity Name'] || 'Unknown').trim() === chartFilterActivity);
   return list;
 }
-
 function getActivitiesFilteredExceptActivityChart() {
   let list = getBaseFilteredList();
-  if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
+  if (selectedStatuses.length)  list = list.filter(a => selectedStatuses.includes(a.Status));
   if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
   if (chartFilterStatus) list = list.filter(a => a.Status === chartFilterStatus);
-  if (chartFilterOwner) list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
+  if (chartFilterOwner)  list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
   return list;
 }
-
 function getTableActivities() {
   let list = getBaseFilteredList();
-  if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
+  if (selectedStatuses.length)   list = list.filter(a => selectedStatuses.includes(a.Status));
   if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
-  if (chartFilterStatus) list = list.filter(a => a.Status === chartFilterStatus);
-  if (chartFilterOwner) list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
+  if (chartFilterStatus)   list = list.filter(a => a.Status === chartFilterStatus);
+  if (chartFilterOwner)    list = list.filter(a => (String(a.Owner || 'Unassigned').trim() || 'Unassigned') === chartFilterOwner);
   if (chartFilterActivity) list = list.filter(a => String(a['Activity Name'] || 'Unknown').trim() === chartFilterActivity);
   return list;
 }
-
 function getFilteredActivities() {
   let list = getBaseFilteredList();
-  if (selectedStatuses.length) list = list.filter(a => selectedStatuses.includes(a.Status));
+  if (selectedStatuses.length)   list = list.filter(a => selectedStatuses.includes(a.Status));
   if (selectedActivities.length) list = list.filter(a => selectedActivities.includes(String(a['Activity Name'] || '').trim()));
   return list;
 }
@@ -1844,7 +1636,6 @@ const CHART_FONT = {
   family: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif',
   size: 11
 };
-
 const STATUS_ORDER = ['Done', 'In Progress', 'Blocked', 'Not Started'];
 const STATUS_COLORS = {
   'Done':        '#34c759',
@@ -1858,76 +1649,59 @@ const STATUS_COLORS_DIM = {
   'Blocked':     'rgba(255,59,48,0.22)',
   'Not Started': 'rgba(142,142,147,0.22)'
 };
+function isDarkMode() {
+  return document.documentElement.getAttribute('data-theme') === 'dark'
+      || (document.documentElement.getAttribute('data-theme') === 'auto'
+          && window.matchMedia('(prefers-color-scheme: dark)').matches);
+}
 
 function renderCharts() {
-  const canvasStatus = document.getElementById('chartStatus');
-  const canvasOwner = document.getElementById('chartOwner');
+  const canvasStatus   = document.getElementById('chartStatus');
+  const canvasOwner    = document.getElementById('chartOwner');
   const canvasActivity = document.getElementById('chartActivity');
   if (!canvasStatus || !canvasOwner || !canvasActivity) return;
 
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-    || (document.documentElement.getAttribute('data-theme') === 'auto'
-        && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const isDark = isDarkMode();
   const tickColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(120,120,128,0.6)';
   const axisColor = isDark ? 'rgba(235,235,245,0.85)' : 'rgba(120,120,128,0.85)';
 
-  /* ---- Status doughnut ---- */
+  /* Status doughnut */
   const statusData = getActivitiesFilteredExceptStatusChart();
   const statusCounts = { 'Done': 0, 'In Progress': 0, 'Blocked': 0, 'Not Started': 0 };
-  statusData.forEach(a => {
-    if (statusCounts[a.Status] !== undefined) statusCounts[a.Status]++;
-  });
-
+  statusData.forEach(a => { if (statusCounts[a.Status] !== undefined) statusCounts[a.Status]++; });
   const hasStatusSel = selectedStatuses.length > 0;
   const donutColors = STATUS_ORDER.map(s =>
     !hasStatusSel || selectedStatuses.includes(s) ? STATUS_COLORS[s] : STATUS_COLORS_DIM[s]
   );
 
   if (charts.status) charts.status.destroy();
-  const ctxStatus = canvasStatus.getContext('2d');
-  charts.status = new Chart(ctxStatus, {
+  charts.status = new Chart(canvasStatus.getContext('2d'), {
     type: 'doughnut',
     data: {
       labels: STATUS_ORDER,
-      datasets: [{
-        data: STATUS_ORDER.map(s => statusCounts[s]),
-        backgroundColor: donutColors,
-        borderWidth: 0,
-        hoverOffset: 6
-      }]
+      datasets: [{ data: STATUS_ORDER.map(s => statusCounts[s]), backgroundColor: donutColors, borderWidth: 0, hoverOffset: 6 }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '65%',
+      responsive: true, maintainAspectRatio: false, cutout: '60%',
       onClick: (evt, elements) => {
         if (!elements.length) return;
         const label = STATUS_ORDER[elements[0].index];
         toggleStatusSelection(label, !selectedStatuses.includes(label));
       },
       plugins: {
-          legend: {
+        legend: {
           position: 'right',
           onClick: (evt, item) => {
             const label = STATUS_ORDER[item.index];
             toggleStatusSelection(label, !selectedStatuses.includes(label));
           },
           labels: {
-            usePointStyle: true,
-            pointStyle: 'circle',
-            boxWidth: 8,
-            boxHeight: 8,
-            padding: 14,
+            usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8, padding: 14,
             font: { ...CHART_FONT, size: 12 },
-              color: ctx => {
+            color: ctx => {
               const label = STATUS_ORDER[ctx.index];
-              const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-                || (document.documentElement.getAttribute('data-theme') === 'auto'
-                    && window.matchMedia('(prefers-color-scheme: dark)').matches);
               const active = !hasStatusSel || selectedStatuses.includes(label);
-              if (isDark) {
-                return active ? 'rgba(235,235,245,0.9)' : 'rgba(235,235,245,0.35)';
-              }
+              if (isDark) return active ? 'rgba(235,235,245,0.9)' : 'rgba(235,235,245,0.35)';
               return active ? 'rgba(60,60,67,0.85)' : 'rgba(60,60,67,0.35)';
             },
             generateLabels: (chart) => chart.data.labels.map((label, i) => {
@@ -1936,27 +1710,21 @@ function renderCharts() {
                 text: label,
                 fillStyle: dim ? STATUS_COLORS_DIM[label] : STATUS_COLORS[label],
                 strokeStyle: dim ? STATUS_COLORS_DIM[label] : STATUS_COLORS[label],
-                lineWidth: 0,
-                pointStyle: 'circle',
-                hidden: false,
-                index: i
+                lineWidth: 0, pointStyle: 'circle', hidden: false, index: i
               };
             })
           }
         },
         tooltip: {
-          backgroundColor: 'rgba(30,30,30,0.92)',
-          padding: 10,
-          cornerRadius: 10,
-          titleFont: CHART_FONT,
-          bodyFont: CHART_FONT,
+          backgroundColor: 'rgba(30,30,30,0.92)', padding: 10, cornerRadius: 10,
+          titleFont: CHART_FONT, bodyFont: CHART_FONT,
           callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.parsed}` }
         }
       }
     }
   });
 
-  /* ---- Owner bar ---- */
+  /* Owner bar */
   const ownerData = getActivitiesFilteredExceptOwnerChart();
   const ownerCounts = {};
   ownerData.forEach(a => {
@@ -1966,60 +1734,40 @@ function renderCharts() {
   const sortedOwners = Object.entries(ownerCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
 
   if (charts.owner) charts.owner.destroy();
-  const ctxOwner = canvasOwner.getContext('2d');
-  charts.owner = new Chart(ctxOwner, {
+  charts.owner = new Chart(canvasOwner.getContext('2d'), {
     type: 'bar',
     data: {
       labels: sortedOwners.map(o => o[0]),
       datasets: [{
         label: 'Activities',
         data: sortedOwners.map(o => o[1]),
-        backgroundColor: sortedOwners.map(o =>
-          o[0] === chartFilterOwner ? '#34c759' : 'rgba(52, 199, 89, 0.45)'
-        ),
-        borderRadius: 8,
-        borderSkipped: false,
-        barThickness: 20
+        backgroundColor: sortedOwners.map(o => o[0] === chartFilterOwner ? '#34c759' : 'rgba(52, 199, 89, 0.45)'),
+        borderRadius: 8, borderSkipped: false, barThickness: 20
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       onClick: (evt, elements) => {
         if (!elements.length) return;
         const label = sortedOwners[elements[0].index][0];
         chartFilterOwner = (chartFilterOwner === label) ? null : label;
-        saveFilters();
-        renderAll();
+        saveFilters(); renderAll();
       },
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: 'rgba(30,30,30,0.92)',
-          padding: 10,
-          cornerRadius: 10,
-          titleFont: CHART_FONT,
-          bodyFont: CHART_FONT
+          backgroundColor: 'rgba(30,30,30,0.92)', padding: 10, cornerRadius: 10,
+          titleFont: CHART_FONT, bodyFont: CHART_FONT
         }
       },
       scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { stepSize: 1, font: CHART_FONT, color: tickColor },
-          grid: { display: false },
-          border: { display: false }
-        },
-        x: {
-          grid: { display: false },
-          border: { display: false },
-          ticks: { font: CHART_FONT, color: axisColor }
-        }
+        y: { beginAtZero: true, ticks: { stepSize: 1, font: CHART_FONT, color: tickColor }, grid: { display: false }, border: { display: false } },
+        x: { grid: { display: false }, border: { display: false }, ticks: { font: CHART_FONT, color: axisColor } }
       }
     }
   });
-  charts.owner._sortedLabels = sortedOwners.map(o => o[0]);
 
-  /* ---- Activity bar ---- */
+  /* Activity bar */
   const actData = getActivitiesFilteredExceptActivityChart();
   const actCounts = {};
   actData.forEach(a => {
@@ -2029,65 +1777,40 @@ function renderCharts() {
   const sortedActs = Object.entries(actCounts).sort((a, b) => b[1] - a[1]);
 
   if (charts.activity) charts.activity.destroy();
-  const ctxAct = canvasActivity.getContext('2d');
-  charts.activity = new Chart(ctxAct, {
+  charts.activity = new Chart(canvasActivity.getContext('2d'), {
     type: 'bar',
     data: {
       labels: sortedActs.map(a => a[0]),
       datasets: [{
         label: 'Activities',
         data: sortedActs.map(a => a[1]),
-        backgroundColor: sortedActs.map(a =>
-          a[0] === chartFilterActivity ? '#34c759' : 'rgba(52, 199, 89, 0.45)'
-        ),
-        borderRadius: 8,
-        borderSkipped: false,
-        barThickness: 20
+        backgroundColor: sortedActs.map(a => a[0] === chartFilterActivity ? '#34c759' : 'rgba(52, 199, 89, 0.45)'),
+        borderRadius: 8, borderSkipped: false, barThickness: 20
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      responsive: true, maintainAspectRatio: false,
       onClick: (evt, elements) => {
         if (!elements.length) return;
         const label = sortedActs[elements[0].index][0];
         chartFilterActivity = (chartFilterActivity === label) ? null : label;
-        saveFilters();
-        renderAll();
+        saveFilters(); renderAll();
       },
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: 'rgba(30,30,30,0.92)',
-          padding: 10,
-          cornerRadius: 10,
-          titleFont: CHART_FONT,
-          bodyFont: CHART_FONT
+          backgroundColor: 'rgba(30,30,30,0.92)', padding: 10, cornerRadius: 10,
+          titleFont: CHART_FONT, bodyFont: CHART_FONT
         }
       },
       scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { stepSize: 1, font: CHART_FONT, color: tickColor },
-          grid: { display: false },
-          border: { display: false }
-        },
-        x: {
-          grid: { display: false },
-          border: { display: false },
-          ticks: {
-            font: CHART_FONT,
-            color: axisColor,
-            maxRotation: 45,
-            minRotation: 45
-          }
-        }
+        y: { beginAtZero: true, ticks: { stepSize: 1, font: CHART_FONT, color: tickColor }, grid: { display: false }, border: { display: false } },
+        x: { grid: { display: false }, border: { display: false },
+             ticks: { font: CHART_FONT, color: axisColor, maxRotation: 45, minRotation: 45 } }
       }
     }
   });
-  charts.activity._sortedLabels = sortedActs.map(a => a[0]);
 
-  /* ---- Show/hide reset buttons ---- */
   const rs = document.getElementById('reset-status');
   const ro = document.getElementById('reset-owner');
   const ra = document.getElementById('reset-activity');
@@ -2095,21 +1818,20 @@ function renderCharts() {
   if (ro) ro.classList.toggle('show', !!chartFilterOwner);
   if (ra) ra.classList.toggle('show', !!chartFilterActivity);
 }
-
 function resetChartFilter(type) {
   if (type === 'status')   selectedStatuses = [];
   if (type === 'owner')    chartFilterOwner = null;
   if (type === 'activity') chartFilterActivity = null;
-  saveFilters();
-  renderAll();
+  saveFilters(); renderAll();
 }
 
-/* React to system theme changes when in auto mode */
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-  if (getStoredTheme() === 'auto' && state.activities.length
-      && document.getElementById('view-summary')
-      && document.getElementById('view-summary').classList.contains('active')) {
-    try { renderCharts(); } catch (e) {}
+  if (getStoredTheme() === 'auto') {
+    const active = document.querySelector('.view-container.active');
+    try {
+      if (active?.id === 'view-summary') renderCharts();
+      if (active?.id === 'view-trends')  renderTrends();
+    } catch (e) {}
   }
 });
 
@@ -2125,12 +1847,9 @@ function isLoggedIn(){ return !!currentUser; }
    ========================================================= */
 function renderAuthBar() {
   const bar = document.getElementById('auth-bar');
-  if (!isLoggedIn()) {
-    bar.innerHTML = `<button class="btn-login" onclick="openLoginModal()">Log in</button>`;
-    return;
-  }
+  if (!isLoggedIn()) { bar.innerHTML = `<button class="btn-login" onclick="openLoginModal()">Log in</button>`; return; }
   const badgeClass = isEditor() ? 'role-badge editor' : 'role-badge';
-  const roleLabel = isEditor() ? 'Editor' : 'Viewer';
+  const roleLabel  = isEditor() ? 'Editor' : 'Viewer';
   bar.innerHTML = `
     <span class="${badgeClass}">${roleLabel} · ${escapeHtml(currentUser.email)}</span>
     <button class="btn-logout" onclick="logout()">Log out</button>
@@ -2171,10 +1890,7 @@ function confirmDialog(title, message, okLabel = 'Delete') {
 }
 function closeConfirm(result) {
   document.getElementById('confirm-modal').classList.remove('show');
-  if (pendingConfirmResolver) {
-    pendingConfirmResolver(result);
-    pendingConfirmResolver = null;
-  }
+  if (pendingConfirmResolver) { pendingConfirmResolver(result); pendingConfirmResolver = null; }
 }
 
 /* =========================================================
@@ -2187,52 +1903,39 @@ function openLoginModal() {
   document.getElementById('login-modal').classList.add('show');
   setTimeout(() => document.getElementById('login-email').focus(), 50);
 }
-function closeLoginModal() {
-  document.getElementById('login-modal').classList.remove('show');
-}
+function closeLoginModal() { document.getElementById('login-modal').classList.remove('show'); }
 
 async function attemptLogin() {
   const email = document.getElementById('login-email').value.trim().toLowerCase();
   const pass  = document.getElementById('login-password').value;
-  const errorEl = document.getElementById('login-error');
+  const errorEl   = document.getElementById('login-error');
   const submitBtn = document.getElementById('btn-login-submit');
-
   errorEl.style.display = 'none';
   submitBtn.disabled = true;
   submitBtn.textContent = 'Checking…';
-
   try {
     let authOk = false, role = null;
     try {
       const res = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'login', email, password: pass })
+        method: 'POST', body: JSON.stringify({ action: 'login', email, password: pass })
       });
       const json = await res.json();
-      if (json && json.success && json.role) {
-        authOk = true;
-        role = json.role;
-      } else if (json && json.error === 'invalid_credentials') {
+      if (json && json.success && json.role) { authOk = true; role = json.role; }
+      else if (json && json.error === 'invalid_credentials') {
         errorEl.textContent = 'Invalid email or password.';
         errorEl.style.display = 'block';
         return;
       }
-    } catch (e) { /* fall through to local */ }
-
+    } catch (e) {}
     if (!authOk) {
       const user = AUTH_USERS[email];
-      if (user && user.password === pass) {
-        authOk = true;
-        role = user.role;
-      }
+      if (user && user.password === pass) { authOk = true; role = user.role; }
     }
-
     if (!authOk) {
       errorEl.textContent = 'Invalid email or password.';
       errorEl.style.display = 'block';
       return;
     }
-
     currentUser = { email, role };
     saveUser();
     closeLoginModal();
@@ -2244,7 +1947,6 @@ async function attemptLogin() {
     submitBtn.textContent = 'Login';
   }
 }
-
 function logout() {
   currentUser = null;
   saveUser();
@@ -2261,9 +1963,8 @@ async function fetchLive() {
   const dash2 = document.getElementById('dashboard-summary');
   const refreshBtn = document.getElementById('refresh-btn');
   if (refreshBtn) refreshBtn.classList.add('spinning');
-  if (dash) dash.innerHTML = '<div class="loading"><div class="spinner"></div><div>Fetching data…</div></div>';
+  if (dash)  dash.innerHTML  = '<div class="loading"><div class="spinner"></div><div>Fetching data…</div></div>';
   if (dash2) dash2.innerHTML = '<div class="loading"><div class="spinner"></div><div>Fetching data…</div></div>';
-
   try {
     if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_WEB_APP_URL_HERE') {
       if (dash) dash.innerHTML = '<div class="empty">Not configured. Paste your Apps Script /exec URL into SCRIPT_URL.</div>';
@@ -2284,7 +1985,6 @@ async function fetchLive() {
     renderSyncTime();
   }
 }
-
 function renderSyncTime() {
   const el = document.getElementById('sync-time');
   if (!el || !lastSyncAt) return;
@@ -2302,19 +2002,15 @@ function deriveSites() {
   });
   state.sites = Array.from(set).sort((a, b) => a.localeCompare(b));
 }
-
-/* Remove filter values that no longer exist in the data */
 function sanitizeStaleFilters() {
   const sites = new Set(state.sites);
   selectedSites = selectedSites.filter(s => sites.has(s));
-
   const acts = new Set();
   (state.activities || []).forEach(a => {
     const n = String(a['Activity Name'] || '').trim();
     if (n) acts.add(n);
   });
   selectedActivities = selectedActivities.filter(a => acts.has(a));
-
   const dues = new Set();
   (state.activities || []).forEach(a => {
     const d = String(a['Due Date'] || '').slice(0, 10);
@@ -2322,7 +2018,6 @@ function sanitizeStaleFilters() {
   });
   selectedDueDates = selectedDueDates.filter(d => dues.has(d));
 }
-
 async function postAction(payload) {
   const res = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
   const json = await res.json();
@@ -2341,7 +2036,6 @@ function toggleMsPanel(which) {
     else p.classList.remove('show');
   });
 }
-
 document.addEventListener('click', function (e) {
   ['activity', 'status', 'due'].forEach(id => {
     const wrap = document.getElementById('ms-' + id + '-wrap');
@@ -2350,17 +2044,13 @@ document.addEventListener('click', function (e) {
     }
   });
 });
-
 function toggleSelectAll(type) {
   if (type === 'activity') {
     const container = document.getElementById('ms-activity-options');
     const checkboxes = Array.from(container.querySelectorAll('input[type="checkbox"]'));
     if (!checkboxes.length) return;
     const allChecked = checkboxes.every(cb => cb.checked);
-    checkboxes.forEach(cb => {
-      cb.checked = !allChecked;
-      cb.dispatchEvent(new Event('change'));
-    });
+    checkboxes.forEach(cb => { cb.checked = !allChecked; cb.dispatchEvent(new Event('change')); });
   }
   else if (type === 'status') {
     if (selectedStatuses.length === ALL_STATUSES.length) selectedStatuses = [];
@@ -2378,17 +2068,12 @@ function toggleSelectAll(type) {
     const checkboxes = Array.from(container.querySelectorAll('input[type="checkbox"]'));
     if (!checkboxes.length) return;
     const allChecked = checkboxes.every(cb => cb.checked);
-    checkboxes.forEach(cb => {
-      cb.checked = !allChecked;
-      cb.dispatchEvent(new Event('change'));
-    });
+    checkboxes.forEach(cb => { cb.checked = !allChecked; cb.dispatchEvent(new Event('change')); });
   }
 }
-
 function renderMsActivityOptions() {
   const box = document.getElementById('ms-activity-options');
   const search = (document.getElementById('ms-activity-search').value || '').toLowerCase();
-
   const names = new Set();
   state.activities.forEach(a => {
     const n = String(a['Activity Name'] || '').trim();
@@ -2396,7 +2081,6 @@ function renderMsActivityOptions() {
   });
   let sorted = Array.from(names).sort((a, b) => a.localeCompare(b));
   if (search) sorted = sorted.filter(n => n.toLowerCase().includes(search));
-
   if (!sorted.length) {
     box.innerHTML = '<div class="ms-empty">No matching activities</div>';
     updateMsActivityButton();
@@ -2411,22 +2095,13 @@ function renderMsActivityOptions() {
   `).join('');
   updateMsActivityButton();
 }
-
 function toggleActivitySelection(name, checked) {
-  if (checked) {
-    if (!selectedActivities.includes(name)) selectedActivities.push(name);
-  } else {
-    selectedActivities = selectedActivities.filter(n => n !== name);
-  }
+  if (checked) { if (!selectedActivities.includes(name)) selectedActivities.push(name); }
+  else { selectedActivities = selectedActivities.filter(n => n !== name); }
   saveFilters();
-  renderActivityTabs();
-  renderStats();
-  renderDashboard();
-  renderCharts();
-  updateClearButton();
-  updateMsActivityButton();
+  renderActivityTabs(); renderStats(); renderDashboard(); renderCharts();
+  updateClearButton(); updateMsActivityButton();
 }
-
 function updateMsActivityButton() {
   const btn = document.getElementById('ms-activity-btn');
   const label = document.getElementById('ms-activity-label');
@@ -2437,7 +2112,6 @@ function updateMsActivityButton() {
   else if (selectedActivities.length === 1) label.textContent = selectedActivities[0];
   else label.textContent = selectedActivities.length + ' activities';
 }
-
 function renderMsStatusOptions() {
   const box = document.getElementById('ms-status-options');
   box.innerHTML = ALL_STATUSES.map(s => `
@@ -2449,22 +2123,13 @@ function renderMsStatusOptions() {
   `).join('');
   updateMsStatusButton();
 }
-
 function toggleStatusSelection(status, checked) {
-  if (checked) {
-    if (!selectedStatuses.includes(status)) selectedStatuses.push(status);
-  } else {
-    selectedStatuses = selectedStatuses.filter(s => s !== status);
-  }
+  if (checked) { if (!selectedStatuses.includes(status)) selectedStatuses.push(status); }
+  else { selectedStatuses = selectedStatuses.filter(s => s !== status); }
   saveFilters();
-  renderActivityTabs();
-  renderStats();
-  renderDashboard();
-  renderCharts();
-  updateClearButton();
-  updateMsStatusButton();
+  renderActivityTabs(); renderStats(); renderDashboard(); renderCharts();
+  updateClearButton(); updateMsStatusButton();
 }
-
 function updateMsStatusButton() {
   const btn = document.getElementById('ms-status-btn');
   const label = document.getElementById('ms-status-label');
@@ -2475,7 +2140,6 @@ function updateMsStatusButton() {
   else if (selectedStatuses.length === 1) label.textContent = selectedStatuses[0];
   else label.textContent = selectedStatuses.length + ' statuses';
 }
-
 function renderMsDueOptions() {
   const box = document.getElementById('ms-due-options');
   const dates = new Set();
@@ -2485,7 +2149,6 @@ function renderMsDueOptions() {
   });
   selectedDueDates.forEach(d => dates.add(d));
   const sorted = Array.from(dates).sort();
-
   if (!sorted.length) {
     box.innerHTML = '<div class="ms-empty">No due dates in data</div>';
     updateMsDueButton();
@@ -2500,22 +2163,13 @@ function renderMsDueOptions() {
   `).join('');
   updateMsDueButton();
 }
-
 function toggleDueSelection(date, checked) {
-  if (checked) {
-    if (!selectedDueDates.includes(date)) selectedDueDates.push(date);
-  } else {
-    selectedDueDates = selectedDueDates.filter(d => d !== date);
-  }
+  if (checked) { if (!selectedDueDates.includes(date)) selectedDueDates.push(date); }
+  else { selectedDueDates = selectedDueDates.filter(d => d !== date); }
   saveFilters();
-  renderActivityTabs();
-  renderStats();
-  renderDashboard();
-  renderCharts();
-  updateClearButton();
-  updateMsDueButton();
+  renderActivityTabs(); renderStats(); renderDashboard(); renderCharts();
+  updateClearButton(); updateMsDueButton();
 }
-
 function addSpecificDueDate() {
   const input = document.getElementById('ms-due-search');
   const val = input.value;
@@ -2523,14 +2177,9 @@ function addSpecificDueDate() {
   if (!selectedDueDates.includes(val)) selectedDueDates.push(val);
   input.value = '';
   saveFilters();
-  renderMsDueOptions();
-  renderActivityTabs();
-  renderStats();
-  renderDashboard();
-  renderCharts();
+  renderMsDueOptions(); renderActivityTabs(); renderStats(); renderDashboard(); renderCharts();
   updateClearButton();
 }
-
 function updateMsDueButton() {
   const btn = document.getElementById('ms-due-btn');
   const label = document.getElementById('ms-due-label');
@@ -2541,7 +2190,6 @@ function updateMsDueButton() {
   else if (selectedDueDates.length === 1) label.textContent = formatDisplayDate(selectedDueDates[0]);
   else label.textContent = selectedDueDates.length + ' dates';
 }
-
 function formatDisplayDate(iso) {
   if (!iso) return '';
   try {
@@ -2558,15 +2206,9 @@ function sortData(col) {
   if (sortCol === col) {
     if (sortDir === 'asc') sortDir = 'desc';
     else if (sortDir === 'desc') { sortCol = null; sortDir = 'asc'; }
-  } else {
-    sortCol = col;
-    sortDir = 'asc';
-  }
-  saveFilters();
-  updateSortIndicators();
-  renderDashboard();
+  } else { sortCol = col; sortDir = 'asc'; }
+  saveFilters(); updateSortIndicators(); renderDashboard();
 }
-
 function updateSortIndicators() {
   document.querySelectorAll('.th-sort').forEach(el => {
     const col = el.dataset.col;
@@ -2579,7 +2221,6 @@ function updateSortIndicators() {
     }
   });
 }
-
 function sortList(list) {
   if (!sortCol) return list;
   return [...list].sort((a, b) => {
@@ -2610,36 +2251,33 @@ function renderAll() {
   renderMsStatusOptions();
   renderMsDueOptions();
   renderStats();
-  if (document.getElementById('view-summary').classList.contains('active')) {
-    renderCharts();
-  }
+
+  const active = (id) => document.getElementById(id)?.classList.contains('active');
+  if (active('view-summary'))  { renderCharts(); renderInsights(); }
+  if (active('view-sites'))    { renderSitesView(); }
+  if (active('view-timeline')) { renderTimeline(); }
+  if (active('view-trends'))   { renderTrends(); }
+
   renderDashboard();
   updateSortIndicators();
   updateClearButton();
   applyPermissions();
 }
-
 function renderActivityTabs() {
   const el = document.getElementById('site-tabs');
   el.innerHTML = '';
-
   const contextActivities = getFilteredActivities();
   const activityCounts = {};
   contextActivities.forEach(a => {
     const n = String(a['Activity Name'] || '').trim();
     if (n) activityCounts[n] = (activityCounts[n] || 0) + 1;
   });
-
   el.appendChild(makeTab('__all__', 'All Activities', contextActivities.length));
-
   const visibleActivities = Object.keys(activityCounts).sort((a, b) => a.localeCompare(b));
-
   visibleActivities.forEach(name => {
     el.appendChild(makeTab(name, name, activityCounts[name]));
   });
-
   selectedActivities = selectedActivities.filter(a => visibleActivities.includes(a));
-
   el.querySelectorAll('.site-tab').forEach(t => {
     const id = t.dataset.id;
     const active = (id === '__all__' && selectedActivities.length === 0)
@@ -2648,7 +2286,6 @@ function renderActivityTabs() {
     t.setAttribute('aria-selected', active ? 'true' : 'false');
   });
 }
-
 function makeTab(id, label, count) {
   const tab = document.createElement('div');
   tab.className = 'site-tab';
@@ -2657,17 +2294,12 @@ function makeTab(id, label, count) {
   tab.setAttribute('tabindex', '0');
   tab.innerHTML = escapeHtml(label) + ' <span class="count">(' + count + ')</span>';
   const handler = () => {
-    if (id === '__all__') {
-      selectedActivities = [];
-    } else {
-      if (selectedActivities.includes(id)) {
-        selectedActivities = selectedActivities.filter(a => a !== id);
-      } else {
-        selectedActivities.push(id);
-      }
+    if (id === '__all__') { selectedActivities = []; }
+    else {
+      if (selectedActivities.includes(id)) selectedActivities = selectedActivities.filter(a => a !== id);
+      else selectedActivities.push(id);
     }
-    saveFilters();
-    renderAll();
+    saveFilters(); renderAll();
   };
   tab.onclick = handler;
   tab.onkeydown = (e) => {
@@ -2675,7 +2307,6 @@ function makeTab(id, label, count) {
   };
   return tab;
 }
-
 function renderDatalist() {
   const dl = document.getElementById('site-datalist');
   dl.innerHTML = state.sites.map(s => '<option value="' + escapeHtml(s) + '"></option>').join('');
@@ -2687,13 +2318,11 @@ function renderDatalist() {
 function renderStats() {
   const statsEl = document.getElementById('stats');
   const list = getTableActivities();
-
   const total      = list.length;
   const done       = list.filter(a => a.Status === 'Done').length;
   const inProg     = list.filter(a => a.Status === 'In Progress').length;
   const blocked    = list.filter(a => a.Status === 'Blocked').length;
   const notStarted = list.filter(a => a.Status === 'Not Started').length;
-
   statsEl.innerHTML = '';
   const cards = [
     { key: null,           label: 'Total',       value: total,      cls: '' },
@@ -2702,7 +2331,6 @@ function renderStats() {
     { key: 'Blocked',      label: 'Blocked',     value: blocked,    cls: 'red' },
     { key: 'Not Started',  label: 'Not Started', value: notStarted, cls: 'gray' }
   ];
-
   cards.forEach(c => {
     const card = document.createElement('div');
     card.className = 'stat-card filterable';
@@ -2714,41 +2342,29 @@ function renderStats() {
     statsEl.appendChild(card);
   });
 }
-
 function toggleStatusCard(status) {
-  if (status === null) {
-    selectedStatuses = [];
-  } else if (selectedStatuses.includes(status)) {
-    selectedStatuses = selectedStatuses.filter(s => s !== status);
-  } else {
-    selectedStatuses.push(status);
-  }
+  if (status === null) selectedStatuses = [];
+  else if (selectedStatuses.includes(status)) selectedStatuses = selectedStatuses.filter(s => s !== status);
+  else selectedStatuses.push(status);
   saveFilters();
-  renderMsStatusOptions();
-  renderActivityTabs();
-  renderStats();
-  renderDashboard();
-  renderCharts();
+  renderMsStatusOptions(); renderActivityTabs(); renderStats(); renderDashboard(); renderCharts();
   updateClearButton();
 }
 
 /* =========================================================
-   DASHBOARD
+   DASHBOARD (table rows)
    ========================================================= */
 function renderDashboard() {
   const tableList = sortList(getTableActivities());
   const listList  = sortList(getFilteredActivities());
-
   renderFilterSummary(tableList, listList);
   populateTable('dashboard', tableList, listList);
   populateTable('dashboard-summary', tableList, tableList);
   renderFilterChips();
 }
-
 function populateTable(containerId, list, listForEmptyState) {
   const container = document.getElementById(containerId);
   if (!container) return;
-
   if (list.length === 0) {
     const totalCount = listForEmptyState ? listForEmptyState.length : 0;
     const hasFilters = selectedSites.length || selectedStatuses.length || searchQuery
@@ -2756,16 +2372,10 @@ function populateTable(containerId, list, listForEmptyState) {
                     || chartFilterStatus || chartFilterOwner || chartFilterActivity;
     let html = '<div class="empty-state">';
     html += '<h3>' + (totalCount === 0 ? 'No activities yet' : 'No matches') + '</h3>';
-    html += '<p>' + (totalCount === 0
-      ? 'Create your first activity to get started.'
-      : 'Your filters don\'t match any activities.') + '</p>';
+    html += '<p>' + (totalCount === 0 ? 'Create your first activity to get started.' : 'Your filters don\'t match any activities.') + '</p>';
     html += '<div class="actions">';
-    if (hasFilters) {
-      html += '<button class="btn btn-secondary" onclick="clearAllFilters()">Clear filters</button>';
-    }
-    if (isEditor()) {
-      html += '<button class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>';
-    }
+    if (hasFilters) html += '<button class="btn btn-secondary" onclick="clearAllFilters()">Clear filters</button>';
+    if (isEditor()) html += '<button class="btn btn-primary" onclick="openCreateModal()">+ New Activity</button>';
     html += '</div></div>';
     container.innerHTML = html;
     return;
@@ -2774,16 +2384,10 @@ function populateTable(containerId, list, listForEmptyState) {
   list.forEach(a => container.appendChild(renderRow(a)));
   applyPermissions();
 }
-
 function renderFilterSummary(tableList, listList) {
   const countText = (n) => '<span style="color:var(--text-secondary); font-weight:400; font-size:0.82em; margin-left:8px;">' + n + ' shown</span>';
-
-  const elMain = document.getElementById('filter-summary');
-  if (elMain) elMain.innerHTML = countText(tableList.length);
-
   const elList = document.getElementById('filter-summary-list');
   if (elList) elList.innerHTML = countText(listList.length);
-
   const elSum = document.getElementById('filter-summary-summary');
   if (elSum) elSum.innerHTML = countText(tableList.length);
 }
@@ -2793,64 +2397,36 @@ function renderFilterSummary(tableList, listList) {
    ========================================================= */
 function renderFilterChips() {
   const parts = [];
-
-  selectedSites.forEach(s => {
-    parts.push({ label: 'Site: ' + s, remove: `removeChip('site','${escapeHtmlAttr(s)}')` });
-  });
-  selectedStatuses.forEach(s => {
-    parts.push({ label: 'Status: ' + s, remove: `removeChip('status','${escapeHtmlAttr(s)}')` });
-  });
-  if (searchQuery) {
-    parts.push({ label: 'Search: "' + searchQuery + '"', remove: `removeChip('search')` });
-  }
-  selectedActivities.forEach(a => {
-    parts.push({ label: 'Activity: ' + a, remove: `removeChip('activity','${escapeHtmlAttr(a)}')` });
-  });
-  selectedDueDates.forEach(d => {
-    parts.push({ label: 'Due: ' + formatDisplayDate(d), remove: `removeChip('due','${escapeHtmlAttr(d)}')` });
-  });
-  if (chartFilterStatus) {
-    parts.push({ label: 'Status: ' + chartFilterStatus, remove: `removeChip('chartStatus')` });
-  }
-  if (chartFilterOwner) {
-    parts.push({ label: 'Owner: ' + chartFilterOwner, remove: `removeChip('chartOwner')` });
-  }
-  if (chartFilterActivity) {
-    parts.push({ label: 'Activity: ' + chartFilterActivity, remove: `removeChip('chartActivity')` });
-  }
-
+  selectedSites.forEach(s => parts.push({ label: 'Site: ' + s, remove: `removeChip('site','${escapeHtmlAttr(s)}')` }));
+  selectedStatuses.forEach(s => parts.push({ label: 'Status: ' + s, remove: `removeChip('status','${escapeHtmlAttr(s)}')` }));
+  if (searchQuery) parts.push({ label: 'Search: "' + searchQuery + '"', remove: `removeChip('search')` });
+  selectedActivities.forEach(a => parts.push({ label: 'Activity: ' + a, remove: `removeChip('activity','${escapeHtmlAttr(a)}')` }));
+  selectedDueDates.forEach(d => parts.push({ label: 'Due: ' + formatDisplayDate(d), remove: `removeChip('due','${escapeHtmlAttr(d)}')` }));
+  if (chartFilterStatus) parts.push({ label: 'Status: ' + chartFilterStatus, remove: `removeChip('chartStatus')` });
+  if (chartFilterOwner)  parts.push({ label: 'Owner: ' + chartFilterOwner, remove: `removeChip('chartOwner')` });
+  if (chartFilterActivity) parts.push({ label: 'Activity: ' + chartFilterActivity, remove: `removeChip('chartActivity')` });
   const html = parts.map(p =>
     `<span class="filter-chip">${escapeHtml(p.label)} <button onclick="${p.remove}" title="Remove">×</button></span>`
   ).join('');
-
   ['filter-chips-summary', 'filter-chips-list'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = html;
   });
 }
-
 function removeChip(type, value) {
-  if (type === 'site') {
-    selectedSites = selectedSites.filter(s => s !== value);
-  } else if (type === 'status') {
-    selectedStatuses = selectedStatuses.filter(s => s !== value);
-  } else if (type === 'search') {
+  if (type === 'site')         selectedSites = selectedSites.filter(s => s !== value);
+  else if (type === 'status')  selectedStatuses = selectedStatuses.filter(s => s !== value);
+  else if (type === 'search')  {
     searchQuery = '';
     document.getElementById('search-input').value = '';
     document.getElementById('search-box').classList.remove('has-value');
-  } else if (type === 'activity') {
-    selectedActivities = selectedActivities.filter(a => a !== value);
-  } else if (type === 'due') {
-    selectedDueDates = selectedDueDates.filter(d => d !== value);
-  } else if (type === 'chartStatus') {
-    chartFilterStatus = null;
-  } else if (type === 'chartOwner') {
-    chartFilterOwner = null;
-  } else if (type === 'chartActivity') {
-    chartFilterActivity = null;
   }
-  saveFilters();
-  renderAll();
+  else if (type === 'activity') selectedActivities = selectedActivities.filter(a => a !== value);
+  else if (type === 'due')      selectedDueDates = selectedDueDates.filter(d => d !== value);
+  else if (type === 'chartStatus')   chartFilterStatus = null;
+  else if (type === 'chartOwner')    chartFilterOwner = null;
+  else if (type === 'chartActivity') chartFilterActivity = null;
+  saveFilters(); renderAll();
 }
 
 /* =========================================================
@@ -2859,45 +2435,33 @@ function removeChip(type, value) {
 function renderRow(a) {
   const row = document.createElement('div');
   row.className = 'activity-row';
-
   const statusNoSpace = String(a.Status || 'Not Started').replace(/\s/g, '');
   const siteLabel = a.Site ? escapeHtml(a.Site) : '<em style="color:var(--text-tertiary)">no site</em>';
-
   const startDate = a['Start Date'] ? formatDate(a['Start Date']) : '';
   const dueDate   = a['Due Date']   ? formatDate(a['Due Date'])   : '';
-
   const statusOptions = ALL_STATUSES
     .map(s => '<option value="' + s + '"' + (s === a.Status ? ' selected' : '') + '>' + s + '</option>')
     .join('');
-
   let datesHtml = '<div class="date-block">';
-  if (startDate) {
-    datesHtml += '<div class="date-row"><span class="lbl">Start</span><span class="val">' + escapeHtml(startDate) + '</span></div>';
-  }
+  if (startDate) datesHtml += '<div class="date-row"><span class="lbl">Start</span><span class="val">' + escapeHtml(startDate) + '</span></div>';
   if (dueDate) {
     const cls = dueClass(a['Due Date'], a.Status);
     datesHtml += '<div class="date-row ' + cls + '"><span class="lbl">Due</span><span class="val">' + escapeHtml(dueDate) + '</span></div>';
   }
-  if (!startDate && !dueDate) {
-    datesHtml += '<div class="date-row"><span class="val" style="color:var(--text-tertiary);">No dates</span></div>';
-  }
-
+  if (!startDate && !dueDate) datesHtml += '<div class="date-row"><span class="val" style="color:var(--text-tertiary);">No dates</span></div>';
   const dur = computeDuration(a);
   if (dur) {
     const durCls = dur.running ? ' running' : '';
-    datesHtml +=
-      '<div class="duration-row' + durCls + '">' +
+    datesHtml += '<div class="duration-row' + durCls + '">' +
         '<span class="lbl">Duration</span>' +
         '<span class="val">' + escapeHtml(dur.label) + (dur.running ? ' (running)' : '') + '</span>' +
       '</div>';
   }
   datesHtml += '</div>';
-
   const noteText = a.Notes ? escapeHtml(a.Notes) : '';
   const notesHtml = a.Notes
     ? '<div class="col-notes ' + (a.Notes.length > 100 ? 'truncated' : '') + '" onclick="this.classList.toggle(\'expanded\')">' + noteText + '</div>'
     : '<div class="col-notes"><span class="no-notes">No notes</span></div>';
-
   row.innerHTML =
     '<div class="col-site">' + siteLabel + '</div>' +
     '<div class="col-activity">' + escapeHtml(a['Activity Name'] || 'Unnamed') + '</div>' +
@@ -2906,28 +2470,21 @@ function renderRow(a) {
       '<div class="status-badge-wrap">' +
         '<span class="status-badge ' + statusNoSpace + '">' + escapeHtml(a.Status || 'Not Started') + '</span>' +
         '<select class="status-select-hidden" data-id="' + escapeHtml(a.ID) + '">' + statusOptions + '</select>' +
-      '</div>' +
-      datesHtml +
-    '</div>' +
+      '</div>' + datesHtml + '</div>' +
     notesHtml +
     '<div class="col-actions">' +
       '<button class="btn-icon" data-edit="' + escapeHtml(a.ID) + '" title="Edit" aria-label="Edit">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-          '<path d="M12 20h9"></path>' +
-          '<path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>' +
-        '</svg>' +
-      '</button>' +
+          '<path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>' +
+        '</svg></button>' +
       '<button class="btn-icon danger" data-del="' + escapeHtml(a.ID) + '" title="Delete" aria-label="Delete">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
           '<polyline points="3 6 5 6 21 6"></polyline>' +
           '<path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>' +
-          '<path d="M10 11v6"></path>' +
-          '<path d="M14 11v6"></path>' +
+          '<path d="M10 11v6"></path><path d="M14 11v6"></path>' +
           '<path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>' +
-        '</svg>' +
-      '</button>' +
+        '</svg></button>' +
     '</div>';
-
   row.querySelector('select.status-select-hidden').addEventListener('change', function () {
     if (!isEditor()) { this.value = a.Status; return; }
     changeStatus(this.dataset.id, this.value);
@@ -2938,7 +2495,6 @@ function renderRow(a) {
   row.querySelector('[data-del]').addEventListener('click', function () {
     if (isEditor()) deleteActivity(this.dataset.del);
   });
-
   return row;
 }
 
@@ -2950,37 +2506,30 @@ function computeDuration(a) {
   if (!startRaw) return null;
   const start = parseDateSafe(startRaw);
   if (!start) return null;
-
   const isDone = a.Status === 'Done';
   let end;
   if (isDone) {
     if (!a['Due Date']) return null;
     end = parseDateSafe(a['Due Date']);
     if (!end) return null;
-  } else {
-    end = new Date();
-  }
+  } else { end = new Date(); }
   start.setHours(0, 0, 0, 0);
   end.setHours(0, 0, 0, 0);
   const days = Math.round((end - start) / (1000 * 60 * 60 * 24));
   if (days < 0) return { label: '0 days', running: !isDone };
   return { label: days + (days === 1 ? ' day' : ' days'), running: !isDone };
 }
-
 function dueClass(dueRaw, status) {
   if (status === 'Done' || !dueRaw) return '';
   const due = parseDateSafe(dueRaw);
   if (!due) return '';
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
+  const now = new Date(); now.setHours(0, 0, 0, 0);
   due.setHours(0, 0, 0, 0);
   const diffDays = Math.round((due - now) / (1000 * 60 * 60 * 24));
   if (diffDays < 0) return 'overdue';
   if (diffDays <= 3) return 'soon';
   return '';
 }
-
-/* Safe date parse */
 function parseDateSafe(v) {
   if (!v) return null;
   const s = String(v).trim();
@@ -3002,26 +2551,28 @@ function onSearchInput() {
   searchQuery = input.value.trim();
   box.classList.toggle('has-value', searchQuery.length > 0);
   saveFilters();
-  renderActivityTabs();
-  renderStats();
-  if (document.getElementById('view-summary').classList.contains('active')) renderCharts();
-  renderDashboard();
-  updateClearButton();
+  renderActivityTabs(); renderStats();
+  const active = document.querySelector('.view-container.active');
+  if (active?.id === 'view-summary') { renderCharts(); renderInsights(); }
+  if (active?.id === 'view-sites')    renderSitesView();
+  if (active?.id === 'view-timeline') renderTimeline();
+  if (active?.id === 'view-trends')   renderTrends();
+  renderDashboard(); updateClearButton();
 }
-
 function clearSearch() {
   document.getElementById('search-input').value = '';
   searchQuery = '';
   document.getElementById('search-box').classList.remove('has-value');
   saveFilters();
-  renderActivityTabs();
-  renderStats();
-  if (document.getElementById('view-summary').classList.contains('active')) renderCharts();
-  renderDashboard();
-  updateClearButton();
+  renderActivityTabs(); renderStats();
+  const active = document.querySelector('.view-container.active');
+  if (active?.id === 'view-summary') { renderCharts(); renderInsights(); }
+  if (active?.id === 'view-sites')    renderSitesView();
+  if (active?.id === 'view-timeline') renderTimeline();
+  if (active?.id === 'view-trends')   renderTrends();
+  renderDashboard(); updateClearButton();
   document.getElementById('search-input').focus();
 }
-
 function updateClearButton() {
   const btn = document.getElementById('btn-clear-filters');
   const hasFilters = selectedSites.length || selectedStatuses.length || searchQuery
@@ -3029,59 +2580,38 @@ function updateClearButton() {
                   || chartFilterStatus || chartFilterOwner || chartFilterActivity;
   btn.classList.toggle('show', !!hasFilters);
 }
-
 function clearAllFilters() {
-  selectedSites = [];
-  selectedStatuses = [];
-  searchQuery = '';
-  selectedActivities = [];
-  selectedDueDates = [];
-  chartFilterStatus = null;
-  chartFilterOwner = null;
-  chartFilterActivity = null;
-
+  selectedSites = []; selectedStatuses = []; searchQuery = '';
+  selectedActivities = []; selectedDueDates = [];
+  chartFilterStatus = null; chartFilterOwner = null; chartFilterActivity = null;
   document.getElementById('search-input').value = '';
   document.getElementById('search-box').classList.remove('has-value');
   document.getElementById('ms-activity-search').value = '';
   document.getElementById('ms-due-search').value = '';
-
-  saveFilters();
-  renderAll();
+  saveFilters(); renderAll();
 }
 
 /* =========================================================
-   CSV EXPORT (editor only)
+   CSV EXPORT
    ========================================================= */
 function exportCsv() {
   if (!isEditor()) { toast('Viewers cannot export data', 'error'); return; }
-
   const list = sortList(getTableActivities());
   if (!list.length) { toast('No data to export', 'error'); return; }
-
   const headers = ['Site', 'Activity Name', 'Owner', 'Status', 'Start Date', 'Due Date', 'Notes'];
   const rows = list.map(a => [
-    a.Site || '',
-    a['Activity Name'] || '',
-    a.Owner || '',
-    a.Status || '',
-    a['Start Date'] || '',
-    a['Due Date'] || '',
-    a.Notes || ''
+    a.Site || '', a['Activity Name'] || '', a.Owner || '', a.Status || '',
+    a['Start Date'] || '', a['Due Date'] || '', a.Notes || ''
   ]);
-
   const escape = (val) => '"' + String(val).replace(/"/g, '""') + '"';
   const csv = [headers.map(escape).join(','), ...rows.map(r => r.map(escape).join(','))].join('\r\n');
-
   const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
   link.download = 'ock_activities_' + new Date().toISOString().slice(0, 10) + '.csv';
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  document.body.appendChild(link); link.click(); document.body.removeChild(link);
   URL.revokeObjectURL(url);
-
   toast('Exported ' + list.length + ' rows', 'success');
 }
 
@@ -3096,16 +2626,13 @@ async function changeStatus(id, status) {
     renderAll();
     toast('Status → ' + status, 'success');
   } catch (err) {
-    toast('Error: ' + err.message, 'error');
-    renderAll();
+    toast('Error: ' + err.message, 'error'); renderAll();
   }
 }
-
 function updateLocal(id, changes) {
   const a = state.activities.find(x => String(x.ID) === String(id));
   if (a) Object.assign(a, changes);
 }
-
 async function deleteActivity(id) {
   if (!isEditor()) { toast('Viewers cannot delete', 'error'); return; }
   const ok = await confirmDialog('Delete activity?', 'This action cannot be undone.', 'Delete');
@@ -3113,12 +2640,9 @@ async function deleteActivity(id) {
   try {
     await postAction({ action: 'deleteActivity', id: id });
     state.activities = state.activities.filter(a => String(a.ID) !== String(id));
-    deriveSites();
-    renderAll();
+    deriveSites(); renderAll();
     toast('Activity deleted', 'success');
-  } catch (err) {
-    toast('Error: ' + err.message, 'error');
-  }
+  } catch (err) { toast('Error: ' + err.message, 'error'); }
 }
 
 /* =========================================================
@@ -3128,78 +2652,65 @@ function openCreateModal() {
   if (!isEditor()) { toast('Viewers cannot create activities', 'error'); return; }
   editingId = null;
   document.getElementById('modal-title').textContent = 'New Activity';
-  document.getElementById('f-site').value = selectedSites.length === 1 ? selectedSites[0] : '';
-  document.getElementById('f-name').value = '';
+  document.getElementById('f-site').value  = selectedSites.length === 1 ? selectedSites[0] : '';
+  document.getElementById('f-name').value  = '';
   document.getElementById('f-owner').value = '';
   document.getElementById('f-status').value = 'Not Started';
   document.getElementById('f-start').value = todayISO();
-  document.getElementById('f-due').value = '';
+  document.getElementById('f-due').value   = '';
   document.getElementById('f-notes').value = '';
   document.getElementById('modal').classList.add('show');
   setTimeout(() => document.getElementById('f-site').focus(), 50);
 }
-
 function openEditModal(id) {
   if (!isEditor()) { toast('Viewers cannot edit activities', 'error'); return; }
   const a = state.activities.find(x => String(x.ID) === String(id));
   if (!a) return;
   editingId = id;
   document.getElementById('modal-title').textContent = 'Edit Activity';
-  document.getElementById('f-site').value = a.Site || '';
-  document.getElementById('f-name').value = a['Activity Name'] || '';
+  document.getElementById('f-site').value  = a.Site || '';
+  document.getElementById('f-name').value  = a['Activity Name'] || '';
   document.getElementById('f-owner').value = a.Owner || '';
   document.getElementById('f-status').value = a.Status || 'Not Started';
   document.getElementById('f-start').value = a['Start Date'] ? String(a['Start Date']).slice(0, 10) : '';
-  document.getElementById('f-due').value = a['Due Date'] ? String(a['Due Date']).slice(0, 10) : '';
+  document.getElementById('f-due').value   = a['Due Date']   ? String(a['Due Date']).slice(0, 10)   : '';
   document.getElementById('f-notes').value = a.Notes || '';
   document.getElementById('modal').classList.add('show');
 }
-
 function closeModal() {
   document.getElementById('modal').classList.remove('show');
   editingId = null;
 }
-
 async function saveActivity() {
   if (!isEditor()) { toast('Viewers cannot save activities', 'error'); return; }
-
   const site = document.getElementById('f-site').value.trim();
   const name = document.getElementById('f-name').value.trim();
   if (!site) { toast('Site is required', 'error'); return; }
   if (!name) { toast('Activity name is required', 'error'); return; }
-
   const data = {
     Site: site,
     'Activity Name': name,
     Owner: document.getElementById('f-owner').value.trim(),
     Status: document.getElementById('f-status').value,
     'Start Date': document.getElementById('f-start').value,
-    'Due Date': document.getElementById('f-due').value,
+    'Due Date':   document.getElementById('f-due').value,
     Notes: document.getElementById('f-notes').value.trim()
   };
-
   const btn = document.getElementById('btn-save');
-  btn.disabled = true;
-  btn.textContent = 'Saving…';
-
+  btn.disabled = true; btn.textContent = 'Saving…';
   try {
     if (editingId) {
       await postAction({ action: 'updateActivity', data: Object.assign({ id: editingId }, data) });
       updateLocal(editingId, data);
-      toast('Activity updated', 'success');
-      closeModal();
-      renderAll();
+      toast('Activity updated', 'success'); closeModal(); renderAll();
     } else {
       await postAction({ action: 'createActivity', data: data });
-      toast('Activity created', 'success');
-      closeModal();
-      await fetchLive();
+      toast('Activity created', 'success'); closeModal(); await fetchLive();
     }
   } catch (err) {
     toast('Error: ' + err.message, 'error');
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'Save';
+    btn.disabled = false; btn.textContent = 'Save';
   }
 }
 
@@ -3208,28 +2719,19 @@ async function saveActivity() {
    ========================================================= */
 function escapeHtml(str) {
   return String(str == null ? '' : str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
-
 function escapeHtmlAttr(str) {
   return String(str == null ? '' : str)
-    .replace(/\\/g, '\\\\')
-    .replace(/'/g, "\\'")
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
-
 function encodeId(str) {
   return btoa(unescape(encodeURIComponent(String(str))))
     .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
-
 function formatDate(v) {
   if (!v) return '';
   const d = parseDateSafe(v);
@@ -3239,16 +2741,15 @@ function formatDate(v) {
   const day = String(d.getDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
 }
-
 function todayISO() {
   const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
-
-/* ---- Toast stack ---- */
+function formatShortDate(d) {
+  if (!d) return '';
+  try { return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); }
+  catch (e) { return ''; }
+}
 function toast(msg, type) {
   const container = document.getElementById('toast-container');
   const el = document.createElement('div');
@@ -3256,14 +2757,797 @@ function toast(msg, type) {
   el.textContent = msg;
   container.appendChild(el);
   requestAnimationFrame(() => el.classList.add('show'));
-  setTimeout(() => {
-    el.classList.remove('show');
-    setTimeout(() => el.remove(), 400);
-  }, 2400);
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, 2400);
+}
+function daysBetween(a, b) {
+  const A = new Date(a); A.setHours(0,0,0,0);
+  const B = new Date(b); B.setHours(0,0,0,0);
+  return Math.round((B - A) / (1000*60*60*24));
+}
+function getTodayStart() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+
+/* =========================================================
+   OPERATIONAL INSIGHTS ENGINE
+   ========================================================= */
+const INSIGHT_THRESHOLDS = {
+  staleInProgressDays: 14, dueSoonDays: 3,
+  ownerOverloadRatio: 0.5, ownerOverloadMin: 3, siteConcentrationMin: 3
+};
+
+function computeInsights() {
+  const list = getFilteredActivities();
+  const insights = [];
+  if (!list.length) {
+    return { list: [{ severity: 'info', icon: 'ℹ', title: 'No activities in scope',
+      desc: 'Adjust your filters or add activities to see operational insights.', actions: [] }],
+      counts: { critical: 0, warning: 0, info: 1 } };
+  }
+  const today = getTodayStart();
+  const isActive = a => a.Status !== 'Done';
+  const blocked    = list.filter(a => a.Status === 'Blocked');
+  const inProgress = list.filter(a => a.Status === 'In Progress');
+  const done       = list.filter(a => a.Status === 'Done');
+  const active     = list.filter(isActive);
+  const overdue = active.filter(a => {
+    const d = parseDateSafe(a['Due Date']);
+    return d && daysBetween(d, today) > 0;
+  });
+  const dueSoon = active.filter(a => {
+    const d = parseDateSafe(a['Due Date']);
+    if (!d) return false;
+    const diff = daysBetween(today, d);
+    return diff >= 0 && diff <= INSIGHT_THRESHOLDS.dueSoonDays;
+  });
+
+  if (blocked.length) {
+    const sites = groupCount(blocked, a => a.Site || 'No site');
+    const topSite = topKey(sites);
+    insights.push({
+      severity: 'critical', icon: '⛔',
+      title: `${blocked.length} blocked activit${blocked.length === 1 ? 'y' : 'ies'} need unblocking`,
+      desc: `Blocked work is stalled. ` +
+            (topSite ? `Most concentrated at <strong>${escapeHtml(topSite[0])}</strong> (${topSite[1]}). ` : '') +
+            `Review dependencies and escalate blockers.`,
+      actions: [
+        { label: 'Show blocked', kind: 'filterStatus', value: 'Blocked', accent: true },
+        ...(topSite ? [{ label: 'Site: ' + topSite[0], kind: 'filterSite', value: topSite[0] }] : [])
+      ]
+    });
+  }
+  if (overdue.length) {
+    const worst = overdue.map(a => ({ a, days: daysBetween(parseDateSafe(a['Due Date']), today) }))
+      .sort((x, y) => y.days - x.days)[0];
+    const sites = groupCount(overdue, a => a.Site || 'No site');
+    const topSite = topKey(sites);
+    insights.push({
+      severity: 'critical', icon: '⏰',
+      title: `${overdue.length} overdue activit${overdue.length === 1 ? 'y' : 'ies'}`,
+      desc: `Past due and not Done. ` +
+            (worst ? `Oldest: <strong>${escapeHtml(worst.a['Activity Name'] || 'Unnamed')}</strong> (${worst.days}d late). ` : '') +
+            (topSite ? `Top site: <strong>${escapeHtml(topSite[0])}</strong> (${topSite[1]}). ` : '') +
+            `Reassign or reset due dates.`,
+      actions: [
+        { label: 'Sort by due date', kind: 'custom', value: 'overdue', accent: true },
+        ...(topSite ? [{ label: 'Site: ' + topSite[0], kind: 'filterSite', value: topSite[0] }] : [])
+      ]
+    });
+  }
+  if (dueSoon.length) {
+    const names = dueSoon.slice(0, 3).map(a => a['Activity Name'] || 'Unnamed');
+    insights.push({
+      severity: 'warning', icon: '📅',
+      title: `${dueSoon.length} activit${dueSoon.length === 1 ? 'y' : 'ies'} due within ${INSIGHT_THRESHOLDS.dueSoonDays} days`,
+      desc: `Upcoming deadlines: ${names.map(escapeHtml).join(', ')}` +
+            (dueSoon.length > 3 ? ` +${dueSoon.length - 3} more. ` : '. ') +
+            `Prioritize to avoid new overdue items.`,
+      actions: [{ label: 'Sort by due date', kind: 'custom', value: 'duesoon', accent: true }]
+    });
+  }
+  const stale = inProgress.filter(a => {
+    const s = parseDateSafe(a['Start Date']);
+    return s && daysBetween(s, today) > INSIGHT_THRESHOLDS.staleInProgressDays;
+  });
+  if (stale.length) {
+    const oldest = stale.map(a => ({ a, days: daysBetween(parseDateSafe(a['Start Date']), today) }))
+      .sort((x, y) => y.days - x.days)[0];
+    insights.push({
+      severity: 'warning', icon: '🐢',
+      title: `${stale.length} activit${stale.length === 1 ? 'y' : 'ies'} in progress > ${INSIGHT_THRESHOLDS.staleInProgressDays} days`,
+      desc: `Long-running work may be stuck. ` +
+            (oldest ? `Oldest: <strong>${escapeHtml(oldest.a['Activity Name'] || 'Unnamed')}</strong> (${oldest.days}d). ` : '') +
+            `Check status or split the work.`,
+      actions: [{ label: 'Show In Progress', kind: 'filterStatus', value: 'In Progress', accent: true }]
+    });
+  }
+  const activeByOwner = {};
+  active.forEach(a => {
+    const o = String(a.Owner || 'Unassigned').trim() || 'Unassigned';
+    activeByOwner[o] = (activeByOwner[o] || 0) + 1;
+  });
+  const ownerEntries = Object.entries(activeByOwner).sort((a, b) => b[1] - a[1]);
+  const topOwner = ownerEntries[0];
+  if (topOwner && active.length >= INSIGHT_THRESHOLDS.ownerOverloadMin &&
+      topOwner[1] / active.length >= INSIGHT_THRESHOLDS.ownerOverloadRatio &&
+      topOwner[0] !== 'Unassigned') {
+    insights.push({
+      severity: 'warning', icon: '⚖',
+      title: `Workload concentrated on ${escapeHtml(topOwner[0])}`,
+      desc: `<strong>${topOwner[1]} of ${active.length}</strong> active activities (${Math.round(topOwner[1]/active.length*100)}%) assigned to one owner. Redistribute to reduce bottleneck risk.`,
+      actions: [{ label: 'Filter by owner', kind: 'filterOwner', value: topOwner[0], accent: true }]
+    });
+  }
+    const siteIssues = {};
+  [...blocked, ...overdue].forEach(a => {
+    const s = a.Site || 'No site';
+    siteIssues[s] = (siteIssues[s] || 0) + 1;
+  });
+  const siteEntries = Object.entries(siteIssues).sort((a, b) => b[1] - a[1]);
+  const topIssueSite = siteEntries[0];
+  if (topIssueSite && topIssueSite[1] >= INSIGHT_THRESHOLDS.siteConcentrationMin) {
+    insights.push({
+      severity: 'warning', icon: '📍',
+      title: `Site "${escapeHtml(topIssueSite[0])}" has ${topIssueSite[1]} problem item${topIssueSite[1] === 1 ? '' : 's'}`,
+      desc: `This site has the most blocked + overdue work. Consider a site-level review or extra resourcing.`,
+      actions: [{ label: 'Filter to site', kind: 'filterSite', value: topIssueSite[0], accent: true }]
+    });
+  }
+  const unassigned = active.filter(a => !String(a.Owner || '').trim());
+  if (unassigned.length) {
+    insights.push({
+      severity: 'info', icon: '👤',
+      title: `${unassigned.length} active activit${unassigned.length === 1 ? 'y has' : 'ies have'} no owner`,
+      desc: `Unassigned work is unlikely to progress. Assign owners to keep momentum.`,
+      actions: []
+    });
+  }
+  const noDates = active.filter(a => !a['Start Date'] && !a['Due Date']);
+  if (noDates.length) {
+    insights.push({
+      severity: 'info', icon: '📝',
+      title: `${noDates.length} active activit${noDates.length === 1 ? 'y' : 'ies'} missing dates`,
+      desc: `Without start or due dates, durations and overdue tracking can't work. Add dates.`,
+      actions: []
+    });
+  }
+  const pctDone = list.length ? Math.round(done.length / list.length * 100) : 0;
+  if (list.length >= 3) {
+    if (pctDone >= 70) {
+      insights.push({
+        severity: 'success', icon: '✅',
+        title: `Strong momentum: ${pctDone}% complete`,
+        desc: `${done.length} of ${list.length} activities are Done. Keep it up.`,
+        actions: [{ label: 'Show Done', kind: 'filterStatus', value: 'Done' }]
+      });
+    } else if (pctDone <= 20 && active.length >= 5) {
+      insights.push({
+        severity: 'info', icon: '🚧',
+        title: `Early stage: ${pctDone}% complete`,
+        desc: `${active.length} active activities, ${done.length} done. ` +
+              `${blocked.length ? blocked.length + ' blocked, ' : ''}${overdue.length ? overdue.length + ' overdue. ' : ''}Focus on unblocking first.`,
+        actions: []
+      });
+    }
+  }
+  if (!insights.length) {
+    insights.push({
+      severity: 'success', icon: '🎉',
+      title: 'All clear — no urgent issues',
+      desc: `No blocked, overdue, or stale items detected in the current view. Nice work!`,
+      actions: []
+    });
+  }
+  const counts = {
+    critical: insights.filter(i => i.severity === 'critical').length,
+    warning:  insights.filter(i => i.severity === 'warning').length,
+    info:     insights.filter(i => i.severity === 'info').length
+  };
+  return { list: insights, counts };
+}
+function groupCount(arr, keyFn) {
+  const map = {};
+  arr.forEach(item => { const k = keyFn(item); map[k] = (map[k] || 0) + 1; });
+  return map;
+}
+function topKey(obj) {
+  const e = Object.entries(obj).sort((a, b) => b[1] - a[1])[0];
+  return e || null;
+}
+function renderInsights() {
+  const container = document.getElementById('insights-list');
+  const countEl = document.getElementById('insights-count');
+  if (!container) return;
+  const { list, counts } = computeInsights();
+  const badge = [];
+  if (counts.critical) badge.push(counts.critical + ' critical');
+  if (counts.warning)  badge.push(counts.warning + ' warning');
+  if (counts.info)     badge.push(counts.info + ' info');
+  if (countEl) countEl.textContent = badge.length ? '· ' + badge.join(' · ') : '';
+  container.innerHTML = list.map(ins => {
+    const iconSvg = insightIconSvg(ins.icon);
+    const actionsHtml = (ins.actions || []).map(act => {
+      const cls = act.accent ? 'ins-chip accent' : 'ins-chip';
+      const data = `data-kind="${act.kind}" data-value="${escapeHtmlAttr(act.value || '')}"`;
+      return `<button class="${cls}" ${data} onclick="handleInsightAction(this)">${escapeHtml(act.label)}</button>`;
+    }).join('');
+    return `
+      <div class="insight ${ins.severity}">
+        <div class="ins-icon">${iconSvg}</div>
+        <div class="ins-body">
+          <div class="ins-title">${ins.title}</div>
+          <div class="ins-desc">${ins.desc}</div>
+          ${actionsHtml ? `<div class="ins-actions">${actionsHtml}</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+}
+function insightIconSvg(glyph) {
+  const map = {
+    '⛔': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>',
+    '⏰': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/></svg>',
+    '📅': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>',
+    '🐢': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="14" r="6"/><path d="M12 8v-3"/><path d="M8 5l4-2 4 2"/></svg>',
+    '⚖': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"/><path d="M5 21h14"/><path d="M5 7l7-4 7 4"/><path d="M3 13a3 3 0 0 0 6 0L6 7z"/><path d="M15 13a3 3 0 0 0 6 0l-3-6z"/></svg>',
+    '📍': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-6 8-12a8 8 0 1 0-16 0c0 6 8 12 8 12z"/><circle cx="12" cy="10" r="3"/></svg>',
+    '👤': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
+    '📝': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h12l4 4v12H4z"/><path d="M8 10h8M8 14h6"/></svg>',
+    '✅': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    '🚧': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="10" width="18" height="8" rx="1"/><line x1="7" y1="10" x2="7" y2="18"/><line x1="11" y1="10" x2="11" y2="18"/><line x1="15" y1="10" x2="15" y2="18"/><line x1="19" y1="10" x2="19" y2="18"/></svg>',
+    '🎉': '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 21l5-13 7 7z"/><path d="M14 3v4M20 9h-4M16 5l-2 2M18 11l-2-2"/></svg>',
+    'ℹ':  '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  };
+  return map[glyph] || map['ℹ'];
+}
+function handleInsightAction(btn) {
+  const kind  = btn.dataset.kind;
+  const value = btn.dataset.value;
+  if (kind === 'custom') {
+    clearAllFilters();
+    sortCol = 'Due Date'; sortDir = 'asc';
+    saveFilters(); renderAll();
+    toast('Sorted by due date — check top rows', 'success');
+    return;
+  }
+  if (kind === 'filterStatus') {
+    if (!selectedStatuses.includes(value)) selectedStatuses.push(value);
+    else selectedStatuses = selectedStatuses.filter(s => s !== value);
+    saveFilters(); renderAll();
+  } else if (kind === 'filterSite') {
+    if (!selectedSites.includes(value)) selectedSites.push(value);
+    saveFilters(); renderAll();
+  } else if (kind === 'filterOwner') {
+    chartFilterOwner = (chartFilterOwner === value) ? null : value;
+    saveFilters(); renderAll();
+  }
+}
+function toggleInsights() {
+  const body = document.getElementById('insights-body');
+  const btn  = document.getElementById('insights-collapse');
+  if (!body) return;
+  const collapsed = body.classList.toggle('collapsed');
+  if (btn) btn.textContent = collapsed ? 'Show' : 'Hide';
+  try { localStorage.setItem(LS_INSIGHTS_COLLAPSED_KEY, collapsed ? '1' : '0'); } catch (e) {}
+}
+function restoreInsightsCollapsed() {
+  try {
+    const collapsed = localStorage.getItem(LS_INSIGHTS_COLLAPSED_KEY) === '1';
+    if (collapsed) {
+      const body = document.getElementById('insights-body');
+      const btn  = document.getElementById('insights-collapse');
+      if (body) body.classList.add('collapsed');
+      if (btn) btn.textContent = 'Show';
+    }
+  } catch (e) {}
 }
 
 /* =========================================================
-   FOCUS TRAP for modals
+   SITES VIEW  (Module 12)
+   ========================================================= */
+function renderSitesView() {
+  renderSiteCards();
+  renderOwnerWorkload();
+}
+
+function renderSiteCards() {
+  const grid = document.getElementById('sites-grid');
+  const countEl = document.getElementById('sites-count');
+  if (!grid) return;
+  const list = getFilteredActivities();
+  if (!list.length) {
+    grid.innerHTML = '<div class="tl-empty" style="grid-column:1/-1;">No activities in current view.</div>';
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+  const bySite = {};
+  list.forEach(a => {
+    const s = String(a.Site || '').trim() || '— No site';
+    if (!bySite[s]) bySite[s] = { site: s, total: 0, done: 0, prog: 0, blocked: 0, notStart: 0, overdue: 0, owners: {} };
+    const g = bySite[s];
+    g.total++;
+    if (a.Status === 'Done') g.done++;
+    else if (a.Status === 'In Progress') g.prog++;
+    else if (a.Status === 'Blocked') g.blocked++;
+    else g.notStart++;
+    if (a.Status !== 'Done' && a['Due Date']) {
+      const d = parseDateSafe(a['Due Date']);
+      const t = getTodayStart();
+      if (d && daysBetween(d, t) > 0) g.overdue++;
+    }
+    const o = String(a.Owner || '').trim() || 'Unassigned';
+    g.owners[o] = (g.owners[o] || 0) + 1;
+  });
+  const sites = Object.values(bySite).sort((a, b) =>
+    (b.blocked + b.overdue) - (a.blocked + a.overdue) || b.total - a.total
+  );
+  if (countEl) countEl.textContent = '· ' + sites.length + ' site' + (sites.length === 1 ? '' : 's');
+  grid.innerHTML = sites.map(g => {
+    const pct = g.total ? Math.round(g.done / g.total * 100) : 0;
+    const doneW  = g.total ? (g.done / g.total * 100) : 0;
+    const progW  = g.total ? (g.prog / g.total * 100) : 0;
+    const blockW = g.total ? (g.blocked / g.total * 100) : 0;
+    const nsW    = g.total ? (g.notStart / g.total * 100) : 0;
+    const ownerEntries = Object.entries(g.owners).sort((a, b) => b[1] - a[1]);
+    const ownerChips = ownerEntries.slice(0, 2).map(([name, n]) =>
+      `<span class="site-chip alert-owner">${escapeHtml(name)} · ${n}</span>`
+    ).join('');
+    const moreOwners = ownerEntries.length > 2
+      ? `<span class="site-chip">+${ownerEntries.length - 2}</span>` : '';
+    const alerts = [];
+    if (g.blocked) alerts.push(`<span class="site-chip alert-block">${g.blocked} blocked</span>`);
+    if (g.overdue) alerts.push(`<span class="site-chip alert-late">${g.overdue} overdue</span>`);
+    return `
+      <div class="site-card" onclick="drillInto('site', '${escapeHtmlAttr(g.site === '— No site' ? '' : g.site)}')">
+        <div class="site-card-head">
+          <div class="site-card-title">${escapeHtml(g.site)}</div>
+          <div class="site-card-pct">${pct}%</div>
+        </div>
+        <div class="site-card-meta">${g.total} activit${g.total === 1 ? 'y' : 'ies'} · ${g.done} done</div>
+        <div class="site-progress">
+          <span class="seg-done"     style="width:${doneW}%"></span>
+          <span class="seg-prog"     style="width:${progW}%"></span>
+          <span class="seg-block"    style="width:${blockW}%"></span>
+          <span class="seg-notstart" style="width:${nsW}%"></span>
+        </div>
+        <div class="site-chip-row">
+          ${alerts.join('')}
+          ${ownerChips}
+          ${moreOwners}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderOwnerWorkload() {
+  const grid = document.getElementById('owner-grid');
+  const countEl = document.getElementById('owners-count');
+  if (!grid) return;
+  const list = getFilteredActivities().filter(a => a.Status !== 'Done');
+  if (!list.length) {
+    grid.innerHTML = '<div class="tl-empty" style="grid-column:1/-1;">No active activities.</div>';
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+  const byOwner = {};
+  list.forEach(a => {
+    const o = String(a.Owner || '').trim() || 'Unassigned';
+    if (!byOwner[o]) byOwner[o] = { owner: o, total: 0, prog: 0, blocked: 0, notStart: 0, overdue: 0 };
+    const g = byOwner[o];
+    g.total++;
+    if (a.Status === 'In Progress') g.prog++;
+    else if (a.Status === 'Blocked') g.blocked++;
+    else g.notStart++;
+    if (a['Due Date']) {
+      const d = parseDateSafe(a['Due Date']);
+      const t = getTodayStart();
+      if (d && daysBetween(d, t) > 0) g.overdue++;
+    }
+  });
+  const owners = Object.values(byOwner).sort((a, b) => b.total - a.total);
+  const maxTotal = owners[0]?.total || 1;
+  if (countEl) countEl.textContent = '· ' + owners.length + ' owner' + (owners.length === 1 ? '' : 's');
+  grid.innerHTML = owners.map(g => {
+    const overloaded = g.total >= 5 && g.total / maxTotal >= 0.6;
+    const progW  = (g.prog / g.total) * 100;
+    const blockW = (g.blocked / g.total) * 100;
+    const nsW    = (g.notStart / g.total) * 100;
+    return `
+      <div class="owner-card ${overloaded ? 'overloaded' : ''}"
+           onclick="drillInto('owner', '${escapeHtmlAttr(g.owner === 'Unassigned' ? '' : g.owner)}')">
+        <div class="owner-head">
+          <div class="owner-name">${escapeHtml(g.owner)}</div>
+          <div class="owner-count">${g.total} active</div>
+        </div>
+        <div class="owner-bar">
+          <span style="width:${progW}%;background:var(--ios-orange);"></span>
+          <span style="width:${blockW}%;background:var(--ios-red);"></span>
+          <span style="width:${nsW}%;background:var(--ios-gray);"></span>
+        </div>
+        <div class="site-chip-row" style="margin-top:8px;">
+          ${g.blocked ? `<span class="site-chip alert-block">${g.blocked} blocked</span>` : ''}
+          ${g.overdue ? `<span class="site-chip alert-late">${g.overdue} overdue</span>` : ''}
+          ${!g.blocked && !g.overdue ? '<span class="site-chip">On track</span>' : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function drillInto(kind, value) {
+  if (kind === 'site') {
+    if (value) {
+      if (!selectedSites.includes(value)) selectedSites = [value];
+      else selectedSites = selectedSites.filter(s => s !== value);
+    } else {
+      selectedSites = [];
+    }
+  } else if (kind === 'owner') {
+    chartFilterOwner = (chartFilterOwner === value || !value) ? null : value;
+  }
+  saveFilters();
+  switchView('summary');
+  renderAll();
+}
+
+/* =========================================================
+   TIMELINE VIEW  (Module 11)
+   ========================================================= */
+function setTimelineRange(months) {
+  timelineMonths = Number(months) || 6;
+  saveTimelineMonths();
+  renderTimeline();
+}
+
+function renderTimeline() {
+  const wrap = document.getElementById('timeline-inner');
+  const rangeEl = document.getElementById('timeline-range');
+  if (!wrap) return;
+  const list = getFilteredActivities().filter(a => a['Start Date'] || a['Due Date']);
+  if (!list.length) {
+    wrap.innerHTML = '<div class="tl-empty">No activities with dates. Add a start or due date to see them on the timeline.</div>';
+    if (rangeEl) rangeEl.textContent = '';
+    return;
+  }
+  const now = new Date();
+  const startWindow = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const endWindow   = new Date(now.getFullYear(), now.getMonth() + timelineMonths, 0);
+  const windowMs = endWindow - startWindow;
+  if (rangeEl) {
+    rangeEl.textContent = '· ' + startWindow.toLocaleDateString(undefined, { month: 'short', year: 'numeric' })
+                       + ' – ' + endWindow.toLocaleDateString(undefined, { month: 'short', year: 'numeric' });
+  }
+  const months = [];
+  let cur = new Date(startWindow);
+  while (cur <= endWindow) {
+    months.push({
+      label: cur.toLocaleDateString(undefined, { month: 'short' }) + ' ' + String(cur.getFullYear()).slice(-2),
+      start: new Date(cur),
+      end: new Date(cur.getFullYear(), cur.getMonth() + 1, 0)
+    });
+    cur = new Date(cur.getFullYear(), cur.getMonth() + 1, 1);
+  }
+  list.sort((a, b) => {
+    const sa = parseDateSafe(a['Start Date']) || parseDateSafe(a['Due Date']) || new Date(8e15);
+    const sb = parseDateSafe(b['Start Date']) || parseDateSafe(b['Due Date']) || new Date(8e15);
+    return sa - sb;
+  });
+  let html = `
+    <div class="tl-header">
+      <div class="tl-label-col">Activity</div>
+      <div class="tl-track-col">
+        ${months.map(m => `<div class="tl-month">${escapeHtml(m.label)}</div>`).join('')}
+      </div>
+    </div>
+    <div class="tl-body" style="--tl-months:${months.length}">
+  `;
+  list.forEach(a => {
+    const start = parseDateSafe(a['Start Date']);
+    const due   = parseDateSafe(a['Due Date']);
+    let barStart = start || due;
+    let barEnd   = due || start;
+    const cs = Math.max(barStart, startWindow);
+    const ce = Math.min(barEnd, endWindow);
+    const inWindow = cs <= ce;
+    const leftPct  = inWindow ? ((cs - startWindow) / windowMs) * 100 : 0;
+    const widthPct = inWindow ? Math.max(0.6, ((ce - cs) / windowMs) * 100) : 0;
+    const statusCls = String(a.Status || 'Not Started').replace(/\s/g, '');
+    const dateLabel = formatShortDate(barStart) + (barEnd > barStart ? ' → ' + formatShortDate(barEnd) : '');
+    html += `
+      <div class="tl-row">
+        <div class="tl-row-label" title="${escapeHtml(a['Activity Name'] || '')}">
+          <div class="tl-site">${escapeHtml(a.Site || '—')}</div>
+          <div class="tl-name">${escapeHtml(a['Activity Name'] || 'Unnamed')}</div>
+        </div>
+        <div class="tl-track">
+          ${inWindow ? `
+            <div class="tl-bar status-${statusCls}"
+                 style="left:${leftPct}%;width:${widthPct}%"
+                 title="${escapeHtml((a['Activity Name'] || '') + ' · ' + dateLabel + ' · ' + (a.Status || ''))}"
+                 onclick="openEditModal('${escapeHtmlAttr(a.ID)}')">
+              ${widthPct > 8 ? escapeHtml(dateLabel) : ''}
+            </div>
+          ` : `<div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:0.7em;color:var(--text-tertiary);">outside range</div>`}
+        </div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  const todayPct = ((now - startWindow) / windowMs) * 100;
+  if (todayPct >= 0 && todayPct <= 100) {
+    html += `<div class="tl-today-marker" style="left: calc(220px + ${todayPct}% * ((100% - 220px) / 100%));"></div>`;
+  }
+  wrap.innerHTML = html;
+}
+
+/* =========================================================
+   TRENDS VIEW  (Module 15)
+   ========================================================= */
+function startOfWeek(d) {
+  const x = new Date(d);
+  const day = x.getDay();
+  const diff = (day === 0 ? -6 : 1) - day;
+  x.setDate(x.getDate() + diff);
+  x.setHours(0, 0, 0, 0);
+  return x;
+}
+function isoWeekKey(d) {
+  const x = startOfWeek(d);
+  return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+}
+function fmtWeekLabel(d) {
+  try { return new Date(d).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); }
+  catch (e) { return d; }
+}
+
+function renderTrends() {
+  const kpiRow = document.getElementById('trend-kpis');
+  const list = getFilteredActivities();
+  if (kpiRow) {
+    const total = list.length;
+    const done = list.filter(a => a.Status === 'Done').length;
+    const blocked = list.filter(a => a.Status === 'Blocked').length;
+    const active = list.filter(a => a.Status !== 'Done').length;
+    const now = getTodayStart();
+    const overdue = list.filter(a => {
+      if (a.Status === 'Done') return false;
+      const d = parseDateSafe(a['Due Date']);
+      return d && daysBetween(d, now) > 0;
+    }).length;
+    const pctDone = total ? Math.round(done / total * 100) : 0;
+
+    const kpis = [
+      { label: 'Total activities', value: total },
+      { label: 'Done', value: done, delta: pctDone + '% complete' },
+      { label: 'Active', value: active },
+      { label: 'Blocked', value: blocked, delta: blocked ? 'needs attention' : 'clear', deltaCls: blocked ? 'up' : 'flat' },
+      { label: 'Overdue', value: overdue, delta: overdue ? 'past due' : 'on track', deltaCls: overdue ? 'up' : 'down' }
+    ];
+    kpiRow.innerHTML = kpis.map(k => `
+      <div class="trend-kpi">
+        <div class="kpi-label">${escapeHtml(k.label)}</div>
+        <div class="kpi-value">${k.value}</div>
+        ${k.delta ? `<div class="kpi-delta ${k.deltaCls || 'flat'}">${escapeHtml(k.delta)}</div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  const isDark = isDarkMode();
+  const tickColor = isDark ? 'rgba(235,235,245,0.6)' : 'rgba(120,120,128,0.6)';
+  const axisColor = isDark ? 'rgba(235,235,245,0.85)' : 'rgba(120,120,128,0.85)';
+  const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)';
+
+  /* Determine the last 8 weeks */
+  const now = getTodayStart();
+  const weeks = [];
+  for (let i = 7; i >= 0; i--) {
+    const w = new Date(now);
+    w.setDate(w.getDate() - i * 7);
+    weeks.push(startOfWeek(w));
+  }
+  const weekKeys = weeks.map(w => isoWeekKey(w));
+  const weekLabels = weeks.map(w => fmtWeekLabel(w));
+
+  /* Pace: started vs done per week */
+  const startedCounts = new Array(weeks.length).fill(0);
+  const doneCounts    = new Array(weeks.length).fill(0);
+  list.forEach(a => {
+    const s = parseDateSafe(a['Start Date']);
+    if (s) {
+      const key = isoWeekKey(s);
+      const idx = weekKeys.indexOf(key);
+      if (idx >= 0) startedCounts[idx]++;
+    }
+    const d = parseDateSafe(a['Due Date']);
+    if (d && a.Status === 'Done') {
+      const key = isoWeekKey(d);
+      const idx = weekKeys.indexOf(key);
+      if (idx >= 0) doneCounts[idx]++;
+    }
+  });
+
+  const paceCanvas = document.getElementById('chartTrendPace');
+  if (paceCanvas) {
+    if (charts.trendPace) charts.trendPace.destroy();
+    charts.trendPace = new Chart(paceCanvas.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: weekLabels,
+        datasets: [
+          { label: 'Started', data: startedCounts, borderColor: '#007aff',
+            backgroundColor: 'rgba(0,122,255,0.12)', tension: 0.3, fill: true, pointRadius: 3 },
+          { label: 'Completed', data: doneCounts, borderColor: '#34c759',
+            backgroundColor: 'rgba(52,199,89,0.12)', tension: 0.3, fill: true, pointRadius: 3 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle',
+            font: CHART_FONT, color: axisColor, padding: 12 } },
+          tooltip: { backgroundColor: 'rgba(30,30,30,0.92)', padding: 10, cornerRadius: 10,
+            titleFont: CHART_FONT, bodyFont: CHART_FONT }
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1, font: CHART_FONT, color: tickColor },
+               grid: { color: gridColor }, border: { display: false } },
+          x: { grid: { display: false }, border: { display: false },
+               ticks: { font: CHART_FONT, color: axisColor } }
+        }
+      }
+    });
+  }
+
+  /* Risk over time: blocked + overdue by due-date week */
+  const blockedByWeek = new Array(weeks.length).fill(0);
+  const overdueByWeek = new Array(weeks.length).fill(0);
+  list.forEach(a => {
+    const d = parseDateSafe(a['Due Date']);
+    if (!d) return;
+    const key = isoWeekKey(d);
+    const idx = weekKeys.indexOf(key);
+    if (idx < 0) return;
+    if (a.Status === 'Blocked') blockedByWeek[idx]++;
+    if (a.Status !== 'Done' && daysBetween(d, now) > 0) overdueByWeek[idx]++;
+  });
+
+  const riskCanvas = document.getElementById('chartTrendRisk');
+  if (riskCanvas) {
+    if (charts.trendRisk) charts.trendRisk.destroy();
+    charts.trendRisk = new Chart(riskCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: weekLabels,
+        datasets: [
+          { label: 'Blocked', data: blockedByWeek, backgroundColor: 'rgba(255,59,48,0.7)', borderRadius: 6, borderSkipped: false },
+          { label: 'Overdue', data: overdueByWeek, backgroundColor: 'rgba(255,149,0,0.7)', borderRadius: 6, borderSkipped: false }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle',
+            font: CHART_FONT, color: axisColor, padding: 12 } },
+          tooltip: { backgroundColor: 'rgba(30,30,30,0.92)', padding: 10, cornerRadius: 10,
+            titleFont: CHART_FONT, bodyFont: CHART_FONT }
+        },
+        scales: {
+          y: { beginAtZero: true, stacked: true, ticks: { stepSize: 1, font: CHART_FONT, color: tickColor },
+               grid: { color: gridColor }, border: { display: false } },
+          x: { stacked: true, grid: { display: false }, border: { display: false },
+               ticks: { font: CHART_FONT, color: axisColor } }
+        }
+      }
+    });
+  }
+
+    /* Status mix over time: start-of-week snapshot per status */
+  const mixDone    = new Array(weeks.length).fill(0);
+  const mixProg    = new Array(weeks.length).fill(0);
+  const mixBlocked = new Array(weeks.length).fill(0);
+  const mixNotStarted = new Array(weeks.length).fill(0);
+
+  weeks.forEach((w, i) => {
+    list.forEach(a => {
+      const s = parseDateSafe(a['Start Date']);
+      const d = parseDateSafe(a['Due Date']);
+
+      // Determine "state as of that week" — a heuristic snapshot:
+      // - Done: if due date is on/before that week and status is Done
+      // - Blocked: if status is Blocked and it started before that week
+      // - In Progress: if started before that week and not done by then
+      // - Not Started: if started after that week (or no start date yet)
+      const startedBefore = s && s <= w;
+      const doneByThen = (a.Status === 'Done') && d && d <= w;
+      const blockedByThen = (a.Status === 'Blocked') && startedBefore;
+      const inProgByThen = startedBefore && !doneByThen && a.Status !== 'Blocked';
+      const notStartedYet = !s || s > w;
+
+      if (doneByThen)               mixDone[i]++;
+      else if (blockedByThen)       mixBlocked[i]++;
+      else if (inProgByThen)        mixProg[i]++;
+      else if (notStartedYet)       mixNotStarted[i]++;
+    });
+  });
+
+  const mixCanvas = document.getElementById('chartTrendMix');
+  if (mixCanvas) {
+    if (charts.trendMix) charts.trendMix.destroy();
+    charts.trendMix = new Chart(mixCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: weekLabels,
+        datasets: [
+          { label: 'Done',         data: mixDone,       backgroundColor: 'rgba(52,199,89,0.8)',   borderRadius: 4, borderSkipped: false },
+          { label: 'In Progress',  data: mixProg,       backgroundColor: 'rgba(255,149,0,0.8)',  borderRadius: 4, borderSkipped: false },
+          { label: 'Blocked',      data: mixBlocked,    backgroundColor: 'rgba(255,59,48,0.8)',  borderRadius: 4, borderSkipped: false },
+          { label: 'Not Started',  data: mixNotStarted, backgroundColor: 'rgba(142,142,147,0.6)', borderRadius: 4, borderSkipped: false }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle',
+            font: CHART_FONT, color: axisColor, padding: 10 } },
+          tooltip: { backgroundColor: 'rgba(30,30,30,0.92)', padding: 10, cornerRadius: 10,
+            titleFont: CHART_FONT, bodyFont: CHART_FONT }
+        },
+        scales: {
+          y: { beginAtZero: true, stacked: true,
+               ticks: { stepSize: 1, font: CHART_FONT, color: tickColor },
+               grid: { color: gridColor }, border: { display: false } },
+          x: { stacked: true, grid: { display: false }, border: { display: false },
+               ticks: { font: CHART_FONT, color: axisColor } }
+        }
+      }
+    });
+  }
+
+  /* Throughput by site: Done vs Total */
+  const siteTotals = {};
+  const siteDone = {};
+  list.forEach(a => {
+    const s = String(a.Site || '').trim() || 'No site';
+    siteTotals[s] = (siteTotals[s] || 0) + 1;
+    if (a.Status === 'Done') siteDone[s] = (siteDone[s] || 0) + 1;
+  });
+  const siteNames = Object.keys(siteTotals).sort((a, b) => siteTotals[b] - siteTotals[a]).slice(0, 12);
+  const totalsArr = siteNames.map(s => siteTotals[s]);
+  const doneArr   = siteNames.map(s => siteDone[s] || 0);
+
+  const siteCanvas = document.getElementById('chartTrendSite');
+  if (siteCanvas) {
+    if (charts.trendSite) charts.trendSite.destroy();
+    charts.trendSite = new Chart(siteCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: siteNames,
+        datasets: [
+          { label: 'Total', data: totalsArr, backgroundColor: 'rgba(0,122,255,0.35)', borderRadius: 6, borderSkipped: false, barPercentage: 0.7 },
+          { label: 'Done',  data: doneArr,   backgroundColor: 'rgba(52,199,89,0.8)',  borderRadius: 6, borderSkipped: false, barPercentage: 0.7 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle',
+            font: CHART_FONT, color: axisColor, padding: 10 } },
+          tooltip: { backgroundColor: 'rgba(30,30,30,0.92)', padding: 10, cornerRadius: 10,
+            titleFont: CHART_FONT, bodyFont: CHART_FONT }
+        },
+        scales: {
+          x: { beginAtZero: true, stacked: false,
+               ticks: { stepSize: 1, font: CHART_FONT, color: tickColor },
+               grid: { color: gridColor }, border: { display: false } },
+          y: { grid: { display: false }, border: { display: false },
+               ticks: { font: CHART_FONT, color: axisColor } }
+        }
+      }
+    });
+  }
+}
+
+/* =========================================================
+   FOCUS TRAP
    ========================================================= */
 function trapFocus(modalEl) {
   const focusable = modalEl.querySelectorAll(
@@ -3272,14 +3556,10 @@ function trapFocus(modalEl) {
   if (!focusable.length) return () => {};
   const first = focusable[0];
   const last  = focusable[focusable.length - 1];
-
   function handler(e) {
     if (e.key !== 'Tab') return;
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault(); last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault(); first.focus();
-    }
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
   modalEl.addEventListener('keydown', handler);
   return () => modalEl.removeEventListener('keydown', handler);
@@ -3292,36 +3572,20 @@ let modalTrapCleanup = null;
 let loginTrapCleanup = null;
 let confirmTrapCleanup = null;
 
-document.getElementById('modal').addEventListener('click', function (e) {
-  if (e.target === this) closeModal();
-});
-document.getElementById('login-modal').addEventListener('click', function (e) {
-  if (e.target === this) closeLoginModal();
-});
-document.getElementById('confirm-modal').addEventListener('click', function (e) {
-  if (e.target === this) closeConfirm(false);
-});
+document.getElementById('modal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+document.getElementById('login-modal').addEventListener('click', function (e) { if (e.target === this) closeLoginModal(); });
+document.getElementById('confirm-modal').addEventListener('click', function (e) { if (e.target === this) closeConfirm(false); });
 
 const observer = new MutationObserver(() => {
-  const modal = document.getElementById('modal');
-  const login = document.getElementById('login-modal');
+  const modal   = document.getElementById('modal');
+  const login   = document.getElementById('login-modal');
   const confirm = document.getElementById('confirm-modal');
-
-  if (modal.classList.contains('show') && !modalTrapCleanup) {
-    modalTrapCleanup = trapFocus(modal);
-  } else if (!modal.classList.contains('show') && modalTrapCleanup) {
-    modalTrapCleanup(); modalTrapCleanup = null;
-  }
-  if (login.classList.contains('show') && !loginTrapCleanup) {
-    loginTrapCleanup = trapFocus(login);
-  } else if (!login.classList.contains('show') && loginTrapCleanup) {
-    loginTrapCleanup(); loginTrapCleanup = null;
-  }
-  if (confirm.classList.contains('show') && !confirmTrapCleanup) {
-    confirmTrapCleanup = trapFocus(confirm);
-  } else if (!confirm.classList.contains('show') && confirmTrapCleanup) {
-    confirmTrapCleanup(); confirmTrapCleanup = null;
-  }
+  if (modal.classList.contains('show') && !modalTrapCleanup) modalTrapCleanup = trapFocus(modal);
+  else if (!modal.classList.contains('show') && modalTrapCleanup) { modalTrapCleanup(); modalTrapCleanup = null; }
+  if (login.classList.contains('show') && !loginTrapCleanup) loginTrapCleanup = trapFocus(login);
+  else if (!login.classList.contains('show') && loginTrapCleanup) { loginTrapCleanup(); loginTrapCleanup = null; }
+  if (confirm.classList.contains('show') && !confirmTrapCleanup) confirmTrapCleanup = trapFocus(confirm);
+  else if (!confirm.classList.contains('show') && confirmTrapCleanup) { confirmTrapCleanup(); confirmTrapCleanup = null; }
 });
 [document.getElementById('modal'), document.getElementById('login-modal'), document.getElementById('confirm-modal')].forEach(m => {
   observer.observe(m, { attributes: true, attributeFilter: ['class'] });
@@ -3342,7 +3606,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-['summary', 'list'].forEach(id => {
+['summary', 'list', 'sites', 'timeline', 'trends'].forEach(id => {
   const tab = document.getElementById('tab-' + id);
   if (tab) tab.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchView(id); }
@@ -3356,8 +3620,9 @@ document.addEventListener('keydown', function (e) {
   /* 1. Persistence */
   loadUser();
   loadFilters();
+  loadTimelineMonths();
 
-  /* 2. Apply theme WITHOUT triggering chart renders (charts not mounted yet) */
+  /* 2. Apply theme without triggering chart renders */
   const t = getStoredTheme();
   if (THEMES.includes(t)) {
     document.documentElement.setAttribute('data-theme', t);
@@ -3366,12 +3631,14 @@ document.addEventListener('keydown', function (e) {
 
   /* 3. Chrome */
   renderAuthBar();
+  restoreInsightsCollapsed();
 
   let savedView = 'summary';
   try { savedView = localStorage.getItem(LS_VIEW_KEY) || 'summary'; } catch (e) {}
+  if (!['summary', 'list', 'sites', 'timeline', 'trends'].includes(savedView)) savedView = 'summary';
   switchView(savedView);
 
-  /* 4. Render empty shell synchronously so we never stay on spinner */
+  /* 4. Render empty shell synchronously */
   try {
     renderAll();
   } catch (e) {
